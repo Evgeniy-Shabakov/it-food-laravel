@@ -40,5 +40,16 @@ Route::group(['namespace' => 'App\Http\Controllers\API\v1', 'prefix' => 'v1'], f
             Route::delete('/restaurants/{restaurant}', DeleteController::class);
         }
     );
+
+    Route::group(['namespace' => 'Category'],
+        function ()
+        {
+            Route::get('/categories', IndexController::class);
+            Route::get('/categories/{category}', ShowController::class);
+            Route::post('/categories', StoreController::class);
+            Route::patch('/categories/{category}', UpdateController::class);
+            Route::delete('/categories/{category}', DeleteController::class);
+        }
+    );
 });
 
