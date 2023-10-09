@@ -13,6 +13,9 @@ class StoreController extends Controller
     {
         $data = $request->validated();
 
+        $maxNumberInList = Category::all()->max('number_in_list');
+        $data['number_in_list'] = $maxNumberInList + 1;
+
         $category = Category::create($data);
 
         return new CategoryResource($category);

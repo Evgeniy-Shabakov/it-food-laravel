@@ -23,11 +23,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => [
-                'required',
-                'string',
-                Rule::unique('categories')->whereNull('deleted_at')->ignore($this->category)
-            ],
+            'title' => ['required', 'string', Rule::unique('categories')->whereNull('deleted_at')->ignore($this->category)],
+            'number_in_list' => ['integer'],
         ];
     }
 
@@ -37,6 +34,7 @@ class UpdateRequest extends FormRequest
             'title.required' => 'Поле обязательно для заполнения',
             'title.string' => 'Поле должно быть строковым значением',
             'title.unique' => 'Такая категория уже есть в базе данных',
+            'number_in_list.integer' => 'Поле должно быть целым числом',
         ];
     }
 }

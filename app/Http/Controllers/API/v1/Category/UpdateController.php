@@ -13,6 +13,19 @@ class UpdateController extends Controller
     {
         $data = $request->validated();
 
+        if(isset($data['number_in_list'])){
+            $maxNumberInList = Category::all()->max('number_in_list');
+            if($data['number_in_list'] < 1 || $data['number_in_list'] > $maxNumberInList) return new CategoryResource($category);
+
+            $categoryToReplace = Category::where('number_in_list', $data['number_in_list']);
+            if($data['number_in_list'] < $category->number_in_list) {
+                $categoryToReplace->update(['number_in_list' => $data['number_in_list'] + 1]);
+            }
+            else {
+                $categoryToReplace->update(['number_in_list' => $data['number_in_list'] - 1]);
+            }
+        }
+
         $category->update($data);
 
         return new CategoryResource($category);

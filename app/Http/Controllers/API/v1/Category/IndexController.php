@@ -10,7 +10,7 @@ class IndexController extends Controller
 {
     public function __invoke()
     {
-        $categories = Category::all();
+        $categories = Category::all()->sortBy('number_in_list');
 
         return CategoryResource::collection($categories);
     }
