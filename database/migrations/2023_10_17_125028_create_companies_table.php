@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('brand_title');
             $table->string('tagline')->nullable();
+            $table->string('favicon_path');
+            $table->string('favicon_url');
             $table->string('logo_path');
             $table->string('logo_url');
             $table->text('about_us')->nullable();

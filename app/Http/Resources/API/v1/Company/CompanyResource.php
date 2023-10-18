@@ -14,6 +14,8 @@ class CompanyResource extends JsonResource
             'title' => $this->title,
             'brand_title' => $this->brand_title,
             'tagline' => $this->tagline,
+            'favicon_path' => $this->favicon_path,
+            'favicon_url' => $this->favicon_url,
             'logo_path' => $this->logo_path,
             'logo_url' => $this->logo_url,
             'about_us' => $this->about_us,
