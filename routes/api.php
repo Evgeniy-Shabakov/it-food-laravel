@@ -51,5 +51,13 @@ Route::group(['namespace' => 'App\Http\Controllers\API\v1', 'prefix' => 'v1'], f
             Route::delete('/categories/{category}', DeleteController::class);
         }
     );
+
+    Route::group(['namespace' => 'Company'],
+        function ()
+        {
+            Route::get('/companies/{company}', ShowController::class);
+            Route::patch('/companies/{company}', UpdateController::class);
+        }
+    );
 });
 
