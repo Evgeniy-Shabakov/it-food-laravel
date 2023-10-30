@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('favicon_url');
             $table->string('logo_path');
             $table->string('logo_url');
-            $table->text('about_us')->nullable();
-            $table->text('contacts')->nullable();
+            $table->string('about_us')->nullable();
+            $table->string('contacts')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

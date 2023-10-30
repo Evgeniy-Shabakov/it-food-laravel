@@ -14,26 +14,37 @@ class UpdateController extends Controller
     {
         $data = $request->validated();
 
-        $faviconFile = $data['favicon_file'];
-        $logoFile = $data['logo_file'];
-        unset($data['favicon_file']);
-        unset($data['logo_file']);
+        if (isset($data['favicon_file'])) {
+            $faviconFile = $data['favicon_file'];
+            unset($data['favicon_file']);
 
-        Storage::disk('public')->delete($company->favicon_path);
-        Storage::disk('public')->delete($company->logo_path);
+            Storage::disk('public')->delete($company->favicon_path);
 
-        $faviconFileName = 'favicon.' . $faviconFile->getClientOriginalExtension();
-        $faviconFilePath = Storage::disk('public')->putFileAs('/images', $faviconFile, $faviconFileName);
-        $faviconFileUrl = url('/storage/' . $faviconFilePath);
+            $faviconFileName = 'favicon.' . $faviconFile->getClientOriginalExtension();
+            $faviconFilePath = Storage::disk('public')->putFileAs('/images', $faviconFile, $faviconFileName);
+            $faviconFileUrl = url('/storage/' . $faviconFilePath);
 
-        $logoFileName = 'logo.' . $logoFile->getClientOriginalExtension();
-        $logoFilePath = Storage::disk('public')->putFileAs('/images', $logoFile, $logoFileName);
-        $logoFileUrl = url('/storage/' . $logoFilePath);
+            $data['favicon_path'] = $faviconFilePath;
+            $data['favicon_url'] = $faviconFileUrl;
+        }
 
-        $data['favicon_path'] = $faviconFilePath;
-        $data['favicon_url'] = $faviconFileUrl;
-        $data['logo_path'] = $logoFilePath;
-        $data['logo_url'] = $logoFileUrl;
+        if (isset($data['logo_file'])) {
+            $logoFile = $data['logo_file'];
+            unset($data['logo_file']);
+
+            Storage::disk('public')->delete($company->logo_path);
+
+            $logoFileName = 'logo.' . $logoFile->getClientOriginalExtension();
+            $logoFilePath = Storage::disk('public')->putFileAs('/images', $logoFile, $logoFileName);
+            $logoFileUrl = url('/storage/' . $logoFilePath);
+
+            $data['logo_path'] = $logoFilePath;
+            $data['logo_url'] = $logoFileUrl;
+        }
+
+        if ($data['tagline'] == 'null') $data['tagline'] = '';
+        if ($data['about_us'] == 'null') $data['about_us'] = '';
+        if ($data['contacts'] == 'null') $data['contacts'] = '';
 
         $company->update($data);
 
