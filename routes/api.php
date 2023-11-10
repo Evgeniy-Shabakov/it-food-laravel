@@ -59,5 +59,16 @@ Route::group(['namespace' => 'App\Http\Controllers\API\v1', 'prefix' => 'v1'], f
             Route::patch('/companies/{company}', UpdateController::class);
         }
     );
+
+    Route::group(['namespace' => 'Product'],
+        function ()
+        {
+            Route::get('/products', IndexController::class);
+            Route::get('/products/{product}', ShowController::class);
+            Route::post('/products', StoreController::class);
+            Route::patch('/products/{product}', UpdateController::class);
+            Route::delete('/products/{product}', DeleteController::class);
+        }
+    );
 });
 

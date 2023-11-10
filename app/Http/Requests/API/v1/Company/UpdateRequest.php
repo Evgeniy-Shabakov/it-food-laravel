@@ -3,8 +3,6 @@
 namespace App\Http\Requests\API\v1\Company;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\File;
 
 class UpdateRequest extends FormRequest
 {
