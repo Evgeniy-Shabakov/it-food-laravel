@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
         return [
             'title' => [ 'required', 'string', Rule::unique('products')->whereNull('deleted_at') ],
             'category_id' => [ 'required', 'integer', 'exists:categories,id' ],
-            'image_file' => [ 'required', 'image', 'max:30' ],
+            'image_file' => [ 'required', 'image', 'max:50' ],
             'description_short' => [ 'string', 'nullable', 'max: 150' ],
             'description_full' => [ 'string', 'nullable', 'max: 1000' ],
             'price_default' => [ 'required', 'decimal: 0,2'],
@@ -41,7 +41,7 @@ class StoreRequest extends FormRequest
             'title.unique' => 'Такое наименование уже есть в базе данных',
             'image_file.required' => 'Поле "Изображение" обязательно для заполнения',
             'image_file.image' => 'Поле "Изображение" должно быть картинкой',
-            'image_file.max' => 'Поле "Изображение" должно быть не более 30 Кбайт',
+            'image_file.max' => 'Поле "Изображение" должно быть не более 50 Кбайт',
             'description_short.string' => 'Поле "Короткое описание" должно быть строковым значением',
             'description_short.max' => 'Поле "Короткое описание" должно быть не более 150 символов',
             'description_full.string' => 'Поле "Полное описание" должно быть строковым значением',

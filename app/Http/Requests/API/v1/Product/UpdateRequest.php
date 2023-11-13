@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'title' => [ 'required', 'string', Rule::unique('products')->whereNull('deleted_at')->ignore($this->product) ],
-            'image_file' => [ 'image', 'max:30' ],
+            'image_file' => [ 'image', 'max:50' ],
             'description_short' => [ 'string', 'nullable', 'max: 150' ],
             'description_full' => [ 'string', 'nullable', 'max: 1000' ],
             'price_default' => [ 'required', 'decimal:0,2'],
@@ -40,7 +40,7 @@ class UpdateRequest extends FormRequest
             'title.string' => 'Поле "Наименование" должно быть строковым значением',
             'title.unique' => 'Такое наименование уже есть в базе данных',
             'image_file.image' => 'Поле "Картинка" должно быть картинкой',
-            'image_file.max' => 'Поле "Картинка" должно быть не более 30 Кбайт',
+            'image_file.max' => 'Поле "Картинка" должно быть не более 50 Кбайт',
             'description_short.string' => 'Поле "Короткое описание" должно быть строковым значением',
             'description_short.max' => 'Поле "Короткое описание" должно быть не более 150 символов',
             'description_full.string' => 'Поле "Полное описание" должно быть строковым значением',
