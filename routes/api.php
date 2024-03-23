@@ -8,6 +8,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['namespace' => 'App\Http\Controllers\API\v1', 'prefix' => 'v1'], function () {
+    Route::group(['namespace' => 'Auth'],
+        function ()
+        {
+            Route::get('/send-verify-code', SendVerifyCodeController::class);
+            Route::post('/login', LoginController::class);
+        }
+    );
+
     Route::group(['namespace' => 'Country'],
         function ()
         {
