@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\v1\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,8 +17,11 @@ class LoginController extends Controller
 
         $data['phone'] = '+'.$data['phone'];
 
-        if(Auth::attempt($data)) return 1111111111;
+        if(Auth::attempt($data)) {
+            $abilities = ['countries:store','countries:delete'];
+            return Auth::user()->createToken('iPhone X', $abilities)->plainTextToken;
+        }
 
-        return 222222222222;
+        return 'Пользователь не аутентифицирован';
     }
 }

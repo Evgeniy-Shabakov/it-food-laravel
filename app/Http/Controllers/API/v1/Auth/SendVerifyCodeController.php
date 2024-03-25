@@ -12,12 +12,13 @@ class SendVerifyCodeController extends Controller
     {
         $data = $request->validate(['phone' => 'required']);
 
-        $code = 4568;
+        $code = rand(1000, 9999);
 
         $data['phone'] = '+'.$data['phone'];
         $data['password'] = $code;
 
-        User::firstOrCreate(['phone' => $data['phone']], $data);
+        $user = User::firstOrCreate(['phone' => $data['phone']], $data);
+        $user->update($data);
 
         return $code;
     }
