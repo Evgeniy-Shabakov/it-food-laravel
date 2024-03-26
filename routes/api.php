@@ -27,9 +27,9 @@ Route::group(['namespace' => 'App\Http\Controllers\API\v1', 'prefix' => 'v1'], f
             Route::get('/countries/{country}', ShowController::class);
 
             Route::middleware('auth:sanctum')->group(function () {
-                Route::post('/countries', StoreController::class)->middleware('ability:countries:store');
-                Route::patch('/countries/{country}', UpdateController::class)->middleware('ability:countries:update');
-                Route::delete('/countries/{country}', DeleteController::class)->middleware('ability:countries:delete');
+                Route::post('/countries', StoreController::class);
+                Route::patch('/countries/{country}', UpdateController::class)->middleware('ability:super-admin');
+                Route::delete('/countries/{country}', DeleteController::class)->middleware('ability:super-admin');
             });
         }
     );
