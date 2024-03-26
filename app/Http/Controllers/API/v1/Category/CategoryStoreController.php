@@ -7,7 +7,7 @@ use App\Http\Requests\API\v1\Category\StoreRequest;
 use App\Http\Resources\API\v1\Category\CategoryResource;
 use App\Models\Category;
 
-class StoreController extends Controller
+class CategoryStoreController extends Controller
 {
     public function __invoke(StoreRequest $request)
     {

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\v1\Category\CategoryResource;
 use App\Models\Category;
 
-class IndexController extends Controller
+class CategoryIndexController extends Controller
 {
     public function __invoke()
     {

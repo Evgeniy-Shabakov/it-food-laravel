@@ -8,7 +8,7 @@ use App\Http\Resources\API\v1\Product\ProductResource;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 
-class UpdateController extends Controller
+class ProductUpdateController extends Controller
 {
     public function __invoke(UpdateRequest $request, Product $product)
     {

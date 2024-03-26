@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\v1\City\CityResource;
 use App\Models\City;
 
-class IndexController extends Controller
+class CityIndexController extends Controller
 {
     public function __invoke()
     {

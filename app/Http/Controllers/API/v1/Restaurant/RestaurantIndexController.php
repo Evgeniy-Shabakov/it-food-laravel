@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\v1\Restaurant\RestaurantResource;
 use App\Models\Restaurant;
 
-class IndexController extends Controller
+class RestaurantIndexController extends Controller
 {
     public function __invoke()
     {

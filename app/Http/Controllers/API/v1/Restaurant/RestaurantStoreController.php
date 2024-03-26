@@ -7,7 +7,7 @@ use App\Http\Requests\API\v1\Restaurant\StoreRequest;
 use App\Http\Resources\API\v1\Restaurant\RestaurantResource;
 use App\Models\Restaurant;
 
-class StoreController extends Controller
+class RestaurantStoreController extends Controller
 {
     public function __invoke(StoreRequest $request)
     {

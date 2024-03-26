@@ -7,7 +7,7 @@ use App\Http\Requests\API\v1\Category\UpdateRequest;
 use App\Http\Resources\API\v1\Category\CategoryResource;
 use App\Models\Category;
 
-class UpdateController extends Controller
+class CategoryUpdateController extends Controller
 {
     public function __invoke(UpdateRequest $request, Category $category)
     {

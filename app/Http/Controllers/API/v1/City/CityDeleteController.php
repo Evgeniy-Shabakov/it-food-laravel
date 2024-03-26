@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\v1\City;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 
-class DeleteController extends Controller
+class CityDeleteController extends Controller
 {
     public function __invoke(City $city)
     {

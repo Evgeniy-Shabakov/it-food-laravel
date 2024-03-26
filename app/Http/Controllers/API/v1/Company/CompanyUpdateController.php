@@ -8,7 +8,7 @@ use App\Http\Resources\API\v1\Company\CompanyResource;
 use App\Models\Company;
 use Illuminate\Support\Facades\Storage;
 
-class UpdateController extends Controller
+class CompanyUpdateController extends Controller
 {
     public function __invoke(UpdateRequest $request, Company $company)
     {

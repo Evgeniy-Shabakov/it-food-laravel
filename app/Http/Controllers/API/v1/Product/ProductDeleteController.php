@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 
-class DeleteController extends Controller
+class ProductDeleteController extends Controller
 {
     public function __invoke(Product $product)
     {

@@ -7,7 +7,7 @@ use App\Http\Resources\API\v1\Company\CompanyResource;
 use App\Models\Company;
 
 
-class ShowController extends Controller
+class CompanyShowController extends Controller
 {
     public function __invoke(Company $company)
     {

@@ -20,12 +20,14 @@ class LoginController extends Controller
 
         if(Auth::attempt($data)) {
             $user = Auth::user();
+            $abilities = [];
 
             foreach ($user->roles as $role) {
                 $abilities[] = $role->title;
             }
-            $abilities[] = 'client';
-            
+
+            $abilities = array_unique($abilities);
+
             return $user->createToken('iPhone X', $abilities)->plainTextToken;
         }
 

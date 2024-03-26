@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\v1\Product\ProductResource;
 use App\Models\Product;
 
-class ShowController extends Controller
+class ProductShowController extends Controller
 {
     public function __invoke(Product $product)
     {

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\v1\Country\CountryResource;
 use App\Models\Country;
 
-class ShowController extends Controller
+class CountryShowController extends Controller
 {
     public function __invoke(Country $country)
     {

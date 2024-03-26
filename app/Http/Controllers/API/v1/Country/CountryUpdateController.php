@@ -7,7 +7,7 @@ use App\Http\Requests\API\v1\Country\UpdateRequest;
 use App\Http\Resources\API\v1\Country\CountryResource;
 use App\Models\Country;
 
-class UpdateController extends Controller
+class CountryUpdateController extends Controller
 {
     public function __invoke(UpdateRequest $request, Country $country)
     {

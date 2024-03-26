@@ -7,7 +7,7 @@ use App\Http\Requests\API\v1\Country\StoreRequest;
 use App\Http\Resources\API\v1\Country\CountryResource;
 use App\Models\Country;
 
-class StoreController extends Controller
+class CountryStoreController extends Controller
 {
     public function __invoke(StoreRequest $request)
     {
