@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\API\v1\Category;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\v1\Category\UpdateRequest;
+use App\Http\Requests\API\v1\Category\CategoryUpdateRequest;
 use App\Http\Resources\API\v1\Category\CategoryResource;
 use App\Models\Category;
 
 class CategoryUpdateController extends Controller
 {
-    public function __invoke(UpdateRequest $request, Category $category)
+    public function __invoke(CategoryUpdateRequest $request, Category $category)
     {
         $data = $request->validated();
 

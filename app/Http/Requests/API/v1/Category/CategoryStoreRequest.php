@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\API\v1\Country;
+namespace App\Http\Requests\API\v1\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreRequest extends FormRequest
+class CategoryStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => [
-                'required',
-                'string',
-                Rule::unique('countries')->whereNull('deleted_at')
-            ],
+            'title' => ['required', 'string', Rule::unique('categories')->whereNull('deleted_at')],
         ];
     }
 
@@ -36,7 +32,7 @@ class StoreRequest extends FormRequest
         return [
             'title.required' => 'Поле обязательно для заполнения',
             'title.string' => 'Поле должно быть строковым значением',
-            'title.unique' => 'Такая страна уже есть в базе данных',
+            'title.unique' => 'Такая категория уже есть в базе данных',
         ];
     }
 }

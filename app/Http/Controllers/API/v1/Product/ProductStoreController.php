@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\API\v1\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\v1\Product\StoreRequest;
+use App\Http\Requests\API\v1\Product\ProductStoreRequest;
 use App\Http\Resources\API\v1\Product\ProductResource;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 
 class ProductStoreController extends Controller
 {
-    public function __invoke(StoreRequest $request)
+    public function __invoke(ProductStoreRequest $request)
     {
         $data = $request->validated();
 

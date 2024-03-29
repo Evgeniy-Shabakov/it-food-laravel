@@ -5,7 +5,7 @@ namespace App\Http\Requests\API\v1\Restaurant;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateRequest extends FormRequest
+class RestaurantStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,10 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', Rule::unique('restaurants')->whereNull('deleted_at')->ignore($this->restaurant)],
+            'title' => [ 'required', 'string', Rule::unique('restaurants')->whereNull('deleted_at') ],
             'city_id' => [ 'required', 'integer', 'exists:cities,id' ],
             'street' => [ 'required', 'string' ],
-            'house_number' => [ 'required', 'integer', 'min: 1' ],
+            'house_number' => [ 'required', 'integer' , 'min: 1'],
             'corps_number' => [ 'integer', 'nullable', 'min: 1' ],
             'office_number' => [ 'integer', 'nullable', 'min: 1' ],
             'info' => [ 'string', 'nullable' ],
@@ -60,8 +60,8 @@ class UpdateRequest extends FormRequest
             'delivery_available.boolean' => 'Поле "Доступна доставка" должно быть либо "да" либо "нет"',
             'pickup_available.required' => 'Поле "Доступен самовывоз" обязательно для заполнения',
             'pickup_available.boolean' => 'Поле "Доступен самовывоз" должно быть либо "да" либо "нет"',
-            'eating_area_available.required' => 'Поле "Доступна подача в ресторане" обязательно для заполнения',
-            'eating_area_available.boolean' => 'Поле "Доступна подача в ресторане" должно быть либо "да" либо "нет"',
+            'eating_area_available.required' => 'Поле "Доступна подача ресторане" обязательно для заполнения',
+            'eating_area_available.boolean' => 'Поле "Доступна подача ресторане" должно быть либо "да" либо "нет"',
             'is_active.required' => 'Поле "Активировать прием заказов" обязательно для заполнения',
             'is_active.boolean' => 'Поле "Активировать прием заказов" должно быть либо "да" либо "нет"',
         ];

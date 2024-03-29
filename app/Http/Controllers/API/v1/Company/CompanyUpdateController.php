@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\API\v1\Company;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\v1\Company\UpdateRequest;
+use App\Http\Requests\API\v1\Company\CompanyUpdateRequest;
 use App\Http\Resources\API\v1\Company\CompanyResource;
 use App\Models\Company;
 use Illuminate\Support\Facades\Storage;
 
 class CompanyUpdateController extends Controller
 {
-    public function __invoke(UpdateRequest $request, Company $company)
+    public function __invoke(CompanyUpdateRequest $request, Company $company)
     {
         $data = $request->validated();
 
