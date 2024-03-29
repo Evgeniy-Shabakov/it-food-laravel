@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API\v1\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -19,18 +19,13 @@ class LoginController extends Controller
         $data['phone'] = '+'.$data['phone'];
 
         if(Auth::attempt($data)) {
-            $user = Auth::user();
-            $abilities = [];
-
-            foreach ($user->roles as $role) {
-                $abilities[] = $role->title;
-            }
-
-            $abilities = array_unique($abilities);
-
-            return $user->createToken('iPhone X', $abilities)->plainTextToken;
+            $request->session()->regenerate();
+            
+            return response($request->user(), Response::HTTP_CREATED);
         }
 
-        return 'Пользователь не аутентифицирован';
+        return response([
+            'phone' => 'Данные не совпадают'
+        ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

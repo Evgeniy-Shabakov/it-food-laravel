@@ -4,13 +4,17 @@ namespace App\Http\Controllers\API\v1\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LogoutController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $request->user()->tokens()->delete();
+        Auth::logout();
 
-        return 'Токены удалены';
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return response()->noContent();
     }
 }
