@@ -16,11 +16,11 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        $data['phone'] = '+'.$data['phone'];
+//        $data['phone'] = '+'.$data['phone'];
 
         if(Auth::attempt($data)) {
             $request->session()->regenerate();
-            
+
             return response($request->user(), Response::HTTP_CREATED);
         }
 
