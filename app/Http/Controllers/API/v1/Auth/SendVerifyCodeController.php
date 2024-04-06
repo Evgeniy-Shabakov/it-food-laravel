@@ -14,7 +14,6 @@ class SendVerifyCodeController extends Controller
 
         $code = rand(1000, 9999);
 
-//        $data['phone'] = '+'.$data['phone'];
         $data['password'] = $code;
 
         $user = User::firstOrCreate(['phone' => $data['phone']], $data);

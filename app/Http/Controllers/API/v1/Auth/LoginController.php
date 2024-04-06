@@ -16,8 +16,6 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-//        $data['phone'] = '+'.$data['phone'];
-
         if(Auth::attempt($data)) {
             $request->session()->regenerate();
 
