@@ -1,11 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\API\v1\Auth\LoginController;
-use App\Http\Controllers\API\v1\Auth\LogoutController;
-use App\Http\Controllers\API\v1\Auth\SendVerifyCodeController;
+use App\Models\Country;
 
 use App\Http\Controllers\API\v1\Country\CountryDeleteController;
 use App\Http\Controllers\API\v1\Country\CountryIndexController;
@@ -40,6 +35,9 @@ use App\Http\Controllers\API\v1\Product\ProductShowController;
 use App\Http\Controllers\API\v1\Product\ProductStoreController;
 use App\Http\Controllers\API\v1\Product\ProductUpdateController;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -50,9 +48,9 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('/countries/{country}', CountryShowController::class);
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/countries', CountryStoreController::class);
-        Route::patch('/countries/{country}', CountryUpdateController::class);
-        Route::delete('/countries/{country}', CountryDeleteController::class);
+        Route::post('/countries', CountryStoreController::class)->can('create', Country::class);
+        Route::patch('/countries/{country}', CountryUpdateController::class)->can('update', 'country');
+        Route::delete('/countries/{country}', CountryDeleteController::class)->can('delete', 'country');
     });
 
 
