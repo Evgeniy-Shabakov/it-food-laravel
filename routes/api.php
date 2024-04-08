@@ -1,7 +1,10 @@
 <?php
 
+use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Product;
+use App\Models\Restaurant;
 
 use App\Http\Controllers\API\v1\Country\CountryDeleteController;
 use App\Http\Controllers\API\v1\Country\CountryIndexController;
@@ -69,16 +72,16 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('/restaurants/{restaurant}', RestaurantShowController::class);
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/restaurants', RestaurantStoreController::class);
-        Route::patch('/restaurants/{restaurant}', RestaurantUpdateController::class);
-        Route::delete('/restaurants/{restaurant}', RestaurantDeleteController::class);
+        Route::post('/restaurants', RestaurantStoreController::class)->can('create', Restaurant::class);
+        Route::patch('/restaurants/{restaurant}', RestaurantUpdateController::class)->can('update', 'restaurant');
+        Route::delete('/restaurants/{restaurant}', RestaurantDeleteController::class)->can('delete', 'restaurant');
     });
 
 
     Route::get('/companies/{company}', CompanyShowController::class);
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::patch('/companies/{company}', CompanyUpdateController::class);
+        Route::patch('/companies/{company}', CompanyUpdateController::class)->can('update', 'company');
     });
 
 
@@ -86,9 +89,9 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('/categories/{category}', CategoryShowController::class);
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/categories', CategoryStoreController::class);
-        Route::patch('/categories/{category}', CategoryUpdateController::class);
-        Route::delete('/categories/{category}', CategoryDeleteController::class);
+        Route::post('/categories', CategoryStoreController::class)->can('create', Category::class);
+        Route::patch('/categories/{category}', CategoryUpdateController::class)->can('update', 'category');
+        Route::delete('/categories/{category}', CategoryDeleteController::class)->can('delete', 'category');
     });
 
 
@@ -96,9 +99,9 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('/products/{product}', ProductShowController::class);
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/products', ProductStoreController::class);
-        Route::patch('/products/{product}', ProductUpdateController::class);
-        Route::delete('/products/{product}', ProductDeleteController::class);
+        Route::post('/products', ProductStoreController::class)->can('create', Product::class);
+        Route::patch('/products/{product}', ProductUpdateController::class)->can('update', 'product');
+        Route::delete('/products/{product}', ProductDeleteController::class)->can('delete', 'product');
     });
 
 });
