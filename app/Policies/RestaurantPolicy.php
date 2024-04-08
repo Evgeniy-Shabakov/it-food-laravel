@@ -3,14 +3,14 @@
 namespace App\Policies;
 
 use App\Models\Restaurant;
-use App\Models\Role;
 use App\Models\User;
+use App\Service\PermissionsHelper;
 
 class RestaurantPolicy
 {
     public function before(User $user, string $ability): bool|null
     {
-        $allowedRoles = [Role::SUPER_ADMIN, Role::DIRECTOR, Role::ADMINISTRATOR];
+        $allowedRoles = PermissionsHelper::PERMISSIONS['restaurant'];
 
         foreach ($user->roles->pluck('title')->all() as $role) {
             if(in_array($role, $allowedRoles))
