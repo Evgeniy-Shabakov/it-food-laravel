@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\City;
 use App\Models\Country;
 
 use App\Http\Controllers\API\v1\Country\CountryDeleteController;
@@ -58,9 +59,9 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('/cities/{city}', CityShowController::class);
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/cities', CityStoreController::class);
-        Route::patch('/cities/{city}', CityUpdateController::class);
-        Route::delete('/cities/{city}', CityDeleteController::class);
+        Route::post('/cities', CityStoreController::class)->can('create', City::class);
+        Route::patch('/cities/{city}', CityUpdateController::class)->can('update', 'city');
+        Route::delete('/cities/{city}', CityDeleteController::class)->can('delete', 'city');
     });
 
 

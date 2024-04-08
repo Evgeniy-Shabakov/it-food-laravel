@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Country;
+use App\Models\City;
 use App\Models\Role;
 use App\Models\User;
 
-class CountryPolicy
+class CityPolicy
 {
     public function before(User $user, string $ability): bool|null
     {
@@ -25,12 +25,12 @@ class CountryPolicy
         return false;
     }
 
-    public function update(User $user, Country $country): bool
+    public function update(User $user, City $city): bool
     {
         return false;
     }
 
-    public function delete(User $user, Country $country): bool
+    public function delete(User $user, City $city): bool
     {
         return false;
     }
