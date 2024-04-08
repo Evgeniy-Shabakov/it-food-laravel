@@ -10,7 +10,7 @@ class CityDeleteController extends Controller
     public function __invoke(City $city)
     {
         if ($city->restaurants->count())
-            return response('Небходимо сначала удалить рестораны привязанные к городу ', 403);
+            return response('Небходимо сначала удалить рестораны привязанные к городу ', 405);
 
         $city->delete();
         return 'OK';

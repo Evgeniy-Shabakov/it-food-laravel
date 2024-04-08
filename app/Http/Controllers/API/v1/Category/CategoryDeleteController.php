@@ -10,7 +10,7 @@ class CategoryDeleteController extends Controller
     public function __invoke(Category $category)
     {
         if ($category->products->count())
-            return response('Небходимо сначала удалить товары привязанные к категории ', 403);
+            return response('Небходимо сначала удалить товары привязанные к категории ', 405);
 
         $categories = Category::all();
         foreach ($categories as $item) {

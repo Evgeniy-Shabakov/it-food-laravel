@@ -10,7 +10,7 @@ class CountryDeleteController extends Controller
     public function __invoke(Country $country)
     {
         if ($country->cities->count())
-            return response('Небходимо сначала удалить города привязанные к стране ', 403);
+            return response('Небходимо сначала удалить города привязанные к стране ', 405);
 
         $country->delete();
         return 'OK';
