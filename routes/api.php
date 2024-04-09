@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\API\v1\User\UserDeleteController;
+use App\Http\Controllers\API\v1\User\UserIndexController;
+use App\Http\Controllers\API\v1\User\UserShowController;
+use App\Http\Controllers\API\v1\User\UserStoreController;
+use App\Http\Controllers\API\v1\User\UserUpdateController;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
@@ -47,6 +52,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'v1'], function () {
+
+    Route::get('/users', UserIndexController::class);
+    Route::get('/users/{user}', UserShowController::class);
+
+    Route::post('/users', UserStoreController::class);
+    Route::patch('/users/{user}', UserUpdateController::class);
+    Route::delete('/users/{user}', UserDeleteController::class);
+
 
     Route::get('/countries', CountryIndexController::class);
     Route::get('/countries/{country}', CountryShowController::class);
