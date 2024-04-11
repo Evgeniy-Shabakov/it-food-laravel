@@ -16,12 +16,12 @@ class Role extends Model
     protected $guarded = false;
 
     const SUPER_ADMIN = 'super-admin';
-    const DIRECTOR = 'director';
-    const ADMINISTRATOR = 'administrator';
-    const MENU_MANAGER = 'menu-manager';
-    const ORDER_MANAGER = 'order-manager';
-    const COURIER = 'courier';
-    const CUSTOMER = 'customer';
+    const DIRECTOR = 'Директор';
+    const ADMINISTRATOR = 'Администратор';
+    const MENU_MANAGER = 'Менеджер меню';
+    const ORDER_MANAGER = 'Менеджер заказов';
+    const COURIER = 'Курьер';
+    const CUSTOMER = 'Клиент';
 
     public function users(): BelongsToMany
     {

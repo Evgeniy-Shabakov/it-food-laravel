@@ -53,12 +53,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'v1'], function () {
 
-    Route::get('/users', UserIndexController::class);
-    Route::get('/users/{user}', UserShowController::class);
+    Route::get('/employees', UserIndexController::class);
+    Route::get('/employees/{user}', UserShowController::class);
 
-    Route::post('/users', UserStoreController::class);
-    Route::patch('/users/{user}', UserUpdateController::class);
-    Route::delete('/users/{user}', UserDeleteController::class);
+    Route::post('/employees', UserStoreController::class);
+    Route::patch('/employees/{user}', UserUpdateController::class);
+    Route::delete('/employees/{user}', UserDeleteController::class);
 
 
     Route::get('/countries', CountryIndexController::class);
