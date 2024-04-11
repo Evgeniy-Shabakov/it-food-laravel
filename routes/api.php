@@ -1,15 +1,18 @@
 <?php
 
-use App\Http\Controllers\API\v1\User\UserDeleteController;
-use App\Http\Controllers\API\v1\User\UserIndexController;
-use App\Http\Controllers\API\v1\User\UserShowController;
-use App\Http\Controllers\API\v1\User\UserStoreController;
-use App\Http\Controllers\API\v1\User\UserUpdateController;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Product;
 use App\Models\Restaurant;
+
+use App\Http\Controllers\API\v1\Role\RoleIndexController;
+
+use App\Http\Controllers\API\v1\User\UserDeleteController;
+use App\Http\Controllers\API\v1\User\UserIndexController;
+use App\Http\Controllers\API\v1\User\UserShowController;
+use App\Http\Controllers\API\v1\User\UserStoreController;
+use App\Http\Controllers\API\v1\User\UserUpdateController;
 
 use App\Http\Controllers\API\v1\Country\CountryDeleteController;
 use App\Http\Controllers\API\v1\Country\CountryIndexController;
@@ -52,6 +55,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'v1'], function () {
+
+    Route::get('/roles', RoleIndexController::class);
 
     Route::get('/employees', UserIndexController::class);
     Route::get('/employees/{user}', UserShowController::class);
