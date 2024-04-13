@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
@@ -8,11 +9,11 @@ use App\Models\Restaurant;
 
 use App\Http\Controllers\API\v1\Role\RoleIndexController;
 
-use App\Http\Controllers\API\v1\User\UserDeleteController;
-use App\Http\Controllers\API\v1\User\UserIndexController;
-use App\Http\Controllers\API\v1\User\UserShowController;
-use App\Http\Controllers\API\v1\User\UserStoreController;
-use App\Http\Controllers\API\v1\User\UserUpdateController;
+use App\Http\Controllers\API\v1\Employee\EmployeeDeleteController;
+use App\Http\Controllers\API\v1\Employee\EmployeeIndexController;
+use App\Http\Controllers\API\v1\Employee\EmployeeShowController;
+use App\Http\Controllers\API\v1\Employee\EmployeeStoreController;
+use App\Http\Controllers\API\v1\Employee\EmployeeUpdateController;
 
 use App\Http\Controllers\API\v1\Country\CountryDeleteController;
 use App\Http\Controllers\API\v1\Country\CountryIndexController;
@@ -58,12 +59,12 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::get('/roles', RoleIndexController::class);
 
-    Route::get('/employees', UserIndexController::class);
-    Route::get('/employees/{user}', UserShowController::class);
+    Route::get('/employees', EmployeeIndexController::class);
+    Route::get('/employees/{employee}', EmployeeShowController::class);
 
-    Route::post('/employees', UserStoreController::class);
-    Route::patch('/employees/{user}', UserUpdateController::class);
-    Route::delete('/employees/{user}', UserDeleteController::class);
+    Route::post('/employees', EmployeeStoreController::class);
+    Route::patch('/employees/{employee}', EmployeeUpdateController::class);
+    Route::delete('/employees/{employee}', EmployeeDeleteController::class);
 
 
     Route::get('/countries', CountryIndexController::class);
