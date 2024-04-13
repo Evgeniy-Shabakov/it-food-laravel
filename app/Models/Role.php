@@ -16,12 +16,25 @@ class Role extends Model
     protected $guarded = false;
 
     const SUPER_ADMIN = 'super-admin';
+    const SUPER_ADMIN_DESCRIPTION = 'Роль супер-админа';
+
     const DIRECTOR = 'Директор';
+    const DIRECTOR_DESCRIPTION = 'Доступны все возможности';
+
     const ADMINISTRATOR = 'Администратор';
+    const ADMINISTRATOR_DESCRIPTION = 'Доступны все возможности, кроме изменений данных директора';
+
     const MENU_MANAGER = 'Менеджер меню';
+    const MENU_MANAGER_DESCRIPTION = 'Доступно изменение категорий и товаров';
+
     const ORDER_MANAGER = 'Менеджер заказов';
+    const ORDER_MANAGER_DESCRIPTION = 'Доступно изменение статуса заказов';
+
     const COURIER = 'Курьер';
+    const COURIER_DESCRIPTION = 'Доступно изменение статуса заказов на "доставлено"';
+
     const CUSTOMER = 'Клиент';
+    const CUSTOMER_DESCRIPTION = 'Не дает никаких прав, по умолчанию у всех пользователей';
 
     public function users(): BelongsToMany
     {
