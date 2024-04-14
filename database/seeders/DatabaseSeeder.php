@@ -52,6 +52,20 @@ class DatabaseSeeder extends Seeder
             'role_id' => Role::where('title', Role::SUPER_ADMIN)->first()->id,
         ]);
 
+        DB::table('companies')->insert([
+            'title' => 'ООО "Доставка еды"',
+            'brand_title' => 'Food-IT',
+            'tagline' => 'Вкусная и полезная еда с доставкой надом',
+            'favicon_path' => 'images/favicon.png',
+            'favicon_url' => 'http://localhost:8000/storage/images/favicon.png',
+            'logo_path' => 'images/logo.png',
+            'logo_url' => 'http://localhost:8000/storage/images/logo.png',
+        ]);
+
+        DB::table('countries')->insert([
+            'title' => 'Россия',
+        ]);
+
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
