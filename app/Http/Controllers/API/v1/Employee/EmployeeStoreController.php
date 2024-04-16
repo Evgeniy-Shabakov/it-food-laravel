@@ -23,15 +23,20 @@ class EmployeeStoreController extends Controller
             $dataUser['phone'] = $dataEmployee['phone'];
             $dataUser['password'] = rand(1000, 9999);
             $user = User::firstOrCreate(['phone' => $dataUser['phone']], $dataUser);
-            if(isset($dataEmployee['role_ids']))
-            {
-                $user->roles()->attach($dataEmployee['role_ids']);
-            }
 
             $dataEmployee['user_id'] = $user->id;
             unset($dataEmployee['phone']);
-            if(isset($dataEmployee['role_ids'])) unset($dataEmployee['role_ids']);
+            if(isset($dataEmployee['role_ids']))
+            {
+                $roleIds = ($dataEmployee['role_ids']);
+                unset($dataEmployee['role_ids']);
+            }
             $employee = Employee::create($dataEmployee);
+
+            if(isset($roleIds))
+            {
+                $employee->roles()->attach($roleIds);
+            }
 
             DB::commit();
         }

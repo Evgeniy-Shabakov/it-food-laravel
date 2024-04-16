@@ -8,7 +8,7 @@ class PolicyHelper
 {
     static function checkUserOnRoles(User $user, $allowedRoles): bool
     {
-        foreach ($user->roles->pluck('title')->all() as $role) {
+        foreach ($user->employee->roles->pluck('title')->all() as $role) {
             if(in_array($role, $allowedRoles))
                 return true;
         }

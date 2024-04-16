@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Employee;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -36,10 +37,6 @@ class DatabaseSeeder extends Seeder
             'title' => Role::COURIER,
             'description' => Role::COURIER_DESCRIPTION
         ]);
-        DB::table('roles')->insert([
-            'title' => Role::CUSTOMER,
-            'description' => Role::CUSTOMER_DESCRIPTION
-        ]);
 
         DB::table('users')->insert([
             'name' => 'Евгений',
@@ -47,8 +44,14 @@ class DatabaseSeeder extends Seeder
             'password' => '4654619815sdfasdfasvax'
         ]);
 
-        DB::table('role_user')->insert([
+        DB::table('employees')->insert([
             'user_id' => User::where('phone', '+79121312653')->first()->id,
+            'first_name' => 'Евгений',
+            'last_name' => 'Шабаков',
+        ]);
+
+        DB::table('employee_role')->insert([
+            'employee_id' => Employee::where('user_id', User::where('phone', '+79121312653')->first()->id)->first()->id,
             'role_id' => Role::where('title', Role::SUPER_ADMIN)->first()->id,
         ]);
 

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API\v1\Employee;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class EmployeeDeleteController extends Controller
@@ -14,7 +13,7 @@ class EmployeeDeleteController extends Controller
         try {
             DB::beginTransaction();
 
-            $employee->user->roles()->detach();
+            $employee->roles()->detach();
             $employee->delete();
 
             DB::commit();

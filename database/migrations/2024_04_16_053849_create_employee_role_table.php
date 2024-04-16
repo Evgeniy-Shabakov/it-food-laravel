@@ -11,19 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('role_user', function (Blueprint $table) {
+        Schema::create('employee_role', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('employee_id');
             $table->unsignedBigInteger('role_id');
             $table->timestamps();
 
             //IDX
-            $table->index('user_id', 'role_user_user_idx');
-            $table->index('role_id', 'role_user_role_idx');
+            $table->index('employee_id', 'employee_role_employee_idx');
+            $table->index('role_id', 'employee_role_role_idx');
 
             //FK
-            $table->foreign('user_id', 'role_user_user_fk')->on('users')->references('id');
-            $table->foreign('role_id', 'role_user_role_fk')->on('roles')->references('id');
+            $table->foreign('employee_id', 'employee_role_employee_fk')->on('employees')->references('id');
+            $table->foreign('role_id', 'employee_role_role_fk')->on('roles')->references('id');
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('role_user');
+        Schema::dropIfExists('employee_role');
     }
 };

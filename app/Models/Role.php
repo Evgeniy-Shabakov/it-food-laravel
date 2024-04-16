@@ -31,11 +31,8 @@ class Role extends Model
     const COURIER = 'Курьер';
     const COURIER_DESCRIPTION = 'Доступно изменение статуса заказов на "доставлено"';
 
-    const CUSTOMER = 'Клиент';
-    const CUSTOMER_DESCRIPTION = 'Не дает никаких прав, по умолчанию у всех пользователей';
-
-    public function users(): BelongsToMany
+    public function employees(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'role_user', 'role_id', 'user_id');
+        return $this->belongsToMany(Employee::class, 'employee_role', 'role_id', 'employee_id');
     }
 }
