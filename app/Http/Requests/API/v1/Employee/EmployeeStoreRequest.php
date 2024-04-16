@@ -25,8 +25,10 @@ class EmployeeStoreRequest extends FormRequest
             'phone' => ['required', 'string'],
             'first_name' => [ 'required', 'string' ],
             'last_name' => [ 'required', 'string' ],
-            'surname' => ['string'],
-            'job' => ['string'],
+            'surname' => ['string', 'nullable'],
+            'job' => ['string', 'nullable'],
+            'role_ids' => 'nullable|array',
+            'role_ids.*' => 'nullable|integer|exists:roles,id',
         ];
     }
 
