@@ -39,7 +39,7 @@ class EmployeeStoreRequest extends FormRequest
             'last_name' => [ 'required', 'string' ],
             'surname' => ['string', 'nullable'],
             'job' => ['string', 'nullable'],
-            'role_ids' => 'nullable|array',
+            'role_ids' => 'required|array',
             'role_ids.*' => 'nullable|integer|exists:roles,id',
         ];
     }
@@ -53,6 +53,7 @@ class EmployeeStoreRequest extends FormRequest
             'first_name.string' => 'Поле должно быть строковым значением',
             'last_name.required' => 'Поле обязательно для заполнения',
             'last_name.string' => 'Поле должно быть строковым значением',
+            'role_ids.required' => 'Необходимо выбрать хотя бы одно разрешение',
 
         ];
     }
