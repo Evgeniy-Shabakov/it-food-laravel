@@ -22,7 +22,6 @@ return new class extends Migration
             $table->boolean('is_active');
             $table->unsignedBigInteger('category_id');
             $table->timestamps();
-            $table->softDeletes();
 
             $table->index('category_id', 'category_product_idx');
             $table->foreign('category_id', 'category_product_fk')->on('categories')->references('id');

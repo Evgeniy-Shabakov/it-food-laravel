@@ -26,7 +26,7 @@ class CityUpdateRequest extends FormRequest
             'title' => [
                 'required',
                 'string',
-                Rule::unique('cities')->whereNull('deleted_at')->ignore($this->city)],
+                Rule::unique('cities')->ignore($this->city)],
 
             'country_id' => [
                 'required',

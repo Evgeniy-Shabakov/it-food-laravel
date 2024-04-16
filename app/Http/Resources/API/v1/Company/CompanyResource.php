@@ -21,7 +21,6 @@ class CompanyResource extends JsonResource
             'about_us' => $this->about_us,
             'contacts' => $this->contacts,
             'updated_at' => $this->updated_at,
-            'deleted_at' => $this->deleted_at,
         ];
     }
 }

@@ -26,7 +26,7 @@ class CountryStoreRequest extends FormRequest
             'title' => [
                 'required',
                 'string',
-                Rule::unique('countries')->whereNull('deleted_at')
+                Rule::unique('countries')
             ],
         ];
     }

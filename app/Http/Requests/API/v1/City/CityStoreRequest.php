@@ -26,7 +26,7 @@ class CityStoreRequest extends FormRequest
             'title' => [
                 'required',
                 'string',
-                Rule::unique('cities')->whereNull('deleted_at')],
+                Rule::unique('cities')],
 
             'country_id' => [
                 'required',

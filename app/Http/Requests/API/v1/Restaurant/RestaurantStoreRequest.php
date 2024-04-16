@@ -23,7 +23,7 @@ class RestaurantStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => [ 'required', 'string', Rule::unique('restaurants')->whereNull('deleted_at') ],
+            'title' => [ 'required', 'string', Rule::unique('restaurants') ],
             'city_id' => [ 'required', 'integer', 'exists:cities,id' ],
             'street' => [ 'required', 'string' ],
             'house_number' => [ 'required', 'integer' , 'min: 1'],

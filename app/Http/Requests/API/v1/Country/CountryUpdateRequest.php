@@ -26,7 +26,7 @@ class CountryUpdateRequest extends FormRequest
             'title' => [
                 'required',
                 'string',
-                Rule::unique('countries')->whereNull('deleted_at')->ignore($this->country)
+                Rule::unique('countries')->ignore($this->country)
             ],
         ];
     }

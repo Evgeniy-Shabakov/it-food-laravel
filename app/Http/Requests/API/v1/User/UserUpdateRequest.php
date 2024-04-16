@@ -23,7 +23,7 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => ['required', 'string', Rule::unique('users')->whereNull('deleted_at')->ignore($this->user)],
+            'phone' => ['required', 'string', Rule::unique('users')->ignore($this->user)],
         ];
     }
 

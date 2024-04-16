@@ -23,7 +23,7 @@ class RestaurantUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', Rule::unique('restaurants')->whereNull('deleted_at')->ignore($this->restaurant)],
+            'title' => ['required', 'string', Rule::unique('restaurants')->ignore($this->restaurant)],
             'city_id' => [ 'required', 'integer', 'exists:cities,id' ],
             'street' => [ 'required', 'string' ],
             'house_number' => [ 'required', 'integer', 'min: 1' ],

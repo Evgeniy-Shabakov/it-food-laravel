@@ -23,7 +23,7 @@ class ProductStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => [ 'required', 'string', Rule::unique('products')->whereNull('deleted_at') ],
+            'title' => [ 'required', 'string', Rule::unique('products') ],
             'category_id' => [ 'required', 'integer', 'exists:categories,id' ],
             'image_file' => [ 'required', 'image', 'max:50' ],
             'description_short' => [ 'string', 'nullable', 'max: 150' ],

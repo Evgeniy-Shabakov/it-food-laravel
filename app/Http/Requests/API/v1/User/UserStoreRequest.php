@@ -23,7 +23,7 @@ class UserStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => ['required', 'string', Rule::unique('users')->whereNull('deleted_at')],
+            'phone' => ['required', 'string', Rule::unique('users')],
         ];
     }
 

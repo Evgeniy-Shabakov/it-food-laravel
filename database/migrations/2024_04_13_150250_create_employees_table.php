@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('surname')->nullable();
             $table->string('job')->nullable();
             $table->timestamps();
-            $table->softDeletes();
 
             $table->index('user_id', 'employee_user_idx');
             $table->foreign('user_id', 'employee_user_fk')->on('users')->references('id');

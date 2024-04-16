@@ -23,7 +23,7 @@ class CategoryStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', Rule::unique('categories')->whereNull('deleted_at')],
+            'title' => ['required', 'string', Rule::unique('categories')],
         ];
     }
 

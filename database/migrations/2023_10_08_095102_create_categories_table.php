@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('title');
             $table->unsignedTinyInteger('number_in_list');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

@@ -23,7 +23,7 @@ class ProductUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => [ 'required', 'string', Rule::unique('products')->whereNull('deleted_at')->ignore($this->product) ],
+            'title' => [ 'required', 'string', Rule::unique('products')->ignore($this->product) ],
             'image_file' => [ 'image', 'max:50' ],
             'description_short' => [ 'string', 'nullable', 'max: 150' ],
             'description_full' => [ 'string', 'nullable', 'max: 1000' ],

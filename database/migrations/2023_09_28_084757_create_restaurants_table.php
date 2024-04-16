@@ -25,7 +25,6 @@ return new class extends Migration
             $table->boolean('eating_area_available');
             $table->boolean('is_active');
             $table->timestamps();
-            $table->softDeletes();
 
             $table->index('city_id', 'restaurant_city_idx');
             $table->foreign('city_id', 'restaurant_city_fk')->on('cities')->references('id');

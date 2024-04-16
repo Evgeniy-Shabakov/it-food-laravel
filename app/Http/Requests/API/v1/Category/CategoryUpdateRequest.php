@@ -23,7 +23,7 @@ class CategoryUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', Rule::unique('categories')->whereNull('deleted_at')->ignore($this->category)],
+            'title' => ['required', 'string', Rule::unique('categories')->ignore($this->category)],
             'number_in_list' => ['integer'],
         ];
     }

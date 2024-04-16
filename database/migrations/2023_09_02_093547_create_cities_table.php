@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('title');
             $table->unsignedBigInteger('country_id');
             $table->timestamps();
-            $table->softDeletes();
 
             $table->index('country_id', 'city_country_idx');
             $table->foreign('country_id', 'city_country_fk')->on('countries')->references('id');
