@@ -9,6 +9,7 @@ use App\Http\Resources\API\v1\Employee\EmployeeResource;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 
 class EmployeeStoreController extends Controller
@@ -21,7 +22,7 @@ class EmployeeStoreController extends Controller
             DB::beginTransaction();
 
             $dataUser['phone'] = $dataEmployee['phone'];
-            $dataUser['password'] = rand(1000, 9999);
+            $dataUser['password'] = Str::random(16);
             $user = User::firstOrCreate(['phone' => $dataUser['phone']], $dataUser);
 
             $dataEmployee['user_id'] = $user->id;

@@ -8,6 +8,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -41,7 +42,7 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Евгений',
             'phone' => '+79121312653',
-            'password' => '4654619815sdfasdfasvax'
+            'password' => Str::random(16),
         ]);
 
         DB::table('employees')->insert([

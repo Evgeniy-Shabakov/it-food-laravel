@@ -57,7 +57,6 @@ class EmployeeStoreRequest extends FormRequest
             'last_name.required' => 'Поле обязательно для заполнения',
             'last_name.string' => 'Поле должно быть строковым значением',
             'role_ids.required' => 'Необходимо выбрать хотя бы одно разрешение',
-
         ];
     }
 }
