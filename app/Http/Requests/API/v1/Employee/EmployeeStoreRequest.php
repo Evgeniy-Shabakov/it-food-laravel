@@ -25,7 +25,7 @@ class EmployeeStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => ['required', 'string',
+            'phone' => ['required', 'string', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10', 'max:15',
                 function ($attribute, $value, $fail) {
                     $user = User::where('phone', $value)->first();
                     if ($user) {
@@ -49,6 +49,9 @@ class EmployeeStoreRequest extends FormRequest
         return [
             'phone.required' => 'Поле обязательно для заполнения',
             'phone.string' => 'Поле должно быть строковым значением',
+            'phone.regex' => 'Номер телефона должен содержать только цифры, пробелы, тире, плюсы и круглые скобки',
+            'phone.min' => 'Введено слишком мало символов',
+            'phone.max' => 'Введено слишком много символов',
             'first_name.required' => 'Поле обязательно для заполнения',
             'first_name.string' => 'Поле должно быть строковым значением',
             'last_name.required' => 'Поле обязательно для заполнения',
