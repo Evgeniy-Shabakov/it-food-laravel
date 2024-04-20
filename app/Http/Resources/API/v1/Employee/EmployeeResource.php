@@ -13,7 +13,7 @@ class EmployeeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user' => UserResource::make($this->user),
+            'user' => new UserResource($this->user),
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'surname' => $this->surname,

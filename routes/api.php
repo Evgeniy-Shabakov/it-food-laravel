@@ -1,11 +1,12 @@
 <?php
 
-
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Product;
 use App\Models\Restaurant;
+
+use App\Http\Controllers\API\v1\Auth\GetAuthUserController;
 
 use App\Http\Controllers\API\v1\Role\RoleIndexController;
 
@@ -56,6 +57,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'v1'], function () {
+
+    Route::get('/get-auth-user', GetAuthUserController::class);
 
     Route::get('/roles', RoleIndexController::class);
 
