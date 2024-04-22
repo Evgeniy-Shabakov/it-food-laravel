@@ -4,14 +4,13 @@ namespace App\Policies;
 
 use App\Models\Restaurant;
 use App\Models\User;
-use App\Service\PermissionsHelper;
-use App\Service\PolicyHelper;
+use App\Service\Permissions;
 
 class RestaurantPolicy
 {
     public function before(User $user, string $ability): bool|null
     {
-        if(PolicyHelper::checkUserOnRoles($user, PermissionsHelper::PERMISSIONS['restaurant']))
+        if($user->employee->hasPermission(Permissions::RESTAURANT_ALL_ACTIONS))
             return true;
 
         return null;

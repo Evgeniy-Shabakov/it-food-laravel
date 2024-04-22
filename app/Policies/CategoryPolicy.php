@@ -4,14 +4,13 @@ namespace App\Policies;
 
 use App\Models\Category;
 use App\Models\User;
-use App\Service\PermissionsHelper;
-use App\Service\PolicyHelper;
+use App\Service\Permissions;
 
 class CategoryPolicy
 {
     public function before(User $user, string $ability): bool|null
     {
-        if(PolicyHelper::checkUserOnRoles($user, PermissionsHelper::PERMISSIONS['category']))
+        if($user->employee->hasPermission(Permissions::CATEGORY_ALL_ACTIONS))
             return true;
 
         return null;

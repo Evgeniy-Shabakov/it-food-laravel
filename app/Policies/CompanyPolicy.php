@@ -4,14 +4,13 @@ namespace App\Policies;
 
 use App\Models\Company;
 use App\Models\User;
-use App\Service\PermissionsHelper;
-use App\Service\PolicyHelper;
+use App\Service\Permissions;
 
 class CompanyPolicy
 {
     public function before(User $user, string $ability): bool|null
     {
-        if(PolicyHelper::checkUserOnRoles($user, PermissionsHelper::PERMISSIONS['company']))
+        if($user->employee->hasPermission(Permissions::COMPANY_ALL_ACTIONS))
             return true;
 
         return null;

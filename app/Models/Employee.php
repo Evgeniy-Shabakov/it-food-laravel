@@ -22,4 +22,13 @@ class Employee extends Model
     {
         return $this->belongsToMany(Role::class, 'employee_role', 'employee_id', 'role_id');
     }
+
+    public function hasPermission(array $permission): bool
+    {
+        foreach ($this->roles->pluck('title')->all() as $role) {
+            if(in_array($role, $permission))
+                return true;
+        }
+        return false;
+    }
 }
