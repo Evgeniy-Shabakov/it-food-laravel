@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Service\Permissions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -30,5 +31,9 @@ class Employee extends Model
                 return true;
         }
         return false;
+    }
+
+    public function hasAdminPanelAccess(){
+        return $this->hasPermission(Permissions::ADMIN_PANEL_ACCESS);
     }
 }
