@@ -31,12 +31,11 @@ class AppServiceProvider extends ServiceProvider
 
             $roleSuperAdmin = Role::where('title', Role::SUPER_ADMIN)->first();
 
-            if ($value == $roleSuperAdmin->id){
+            if ($value == $roleSuperAdmin->id) {
                 if ($employee) {
-                    if($employee->isSuperAdmin() == false)
+                    if ($employee->isSuperAdmin() == false)
                         return false;
-                }
-                else return false;
+                } else return false;
             }
 
             return true;
@@ -49,12 +48,13 @@ class AppServiceProvider extends ServiceProvider
 
             $roleDirector = Role::where('title', Role::DIRECTOR)->first();
 
-            if ($value == $roleDirector->id){
+            if ($value == $roleDirector->id) {
                 if ($employee) {
-                    if($employee->isDirector() == false)
+                    if (Auth::user()->employee->isSuperAdmin() && $roleDirector->employees()->count() == 0)
+                        return true;
+                    if ($employee->isDirector() == false)
                         return false;
-                }
-                else if ($roleDirector->employees()->count() > 0)
+                } else if ($roleDirector->employees()->count() > 0)
                     return false;
                 else if (Auth::user()->employee->isSuperAdmin())
                     return true;
