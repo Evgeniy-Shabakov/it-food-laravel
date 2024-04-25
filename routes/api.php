@@ -3,6 +3,7 @@
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Employee;
 use App\Models\Product;
 use App\Models\Restaurant;
 
@@ -62,13 +63,14 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::get('/roles', RoleIndexController::class);
 
-    Route::get('/employees', EmployeeIndexController::class);
-    Route::get('/employees/{employee}', EmployeeShowController::class);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/employees', EmployeeIndexController::class)->can('viewAll', Employee::class);
+        Route::get('/employees/{employee}', EmployeeShowController::class)->can('viewOne', 'employee');
 
-    Route::post('/employees', EmployeeStoreController::class);
-    Route::patch('/employees/{employee}', EmployeeUpdateController::class);
-    Route::delete('/employees/{employee}', EmployeeDeleteController::class);
-
+        Route::post('/employees', EmployeeStoreController::class)->can('create', Employee::class);
+        Route::patch('/employees/{employee}', EmployeeUpdateController::class)->can('update', 'employee');
+        Route::delete('/employees/{employee}', EmployeeDeleteController::class)->can('delete', 'employee');
+    });
 
     Route::get('/countries', CountryIndexController::class);
     Route::get('/countries/{country}', CountryShowController::class);

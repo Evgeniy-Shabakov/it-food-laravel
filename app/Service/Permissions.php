@@ -6,6 +6,8 @@ use App\Models\Role;
 
 class Permissions
 {
+    const EMPLOYEE_ALL_ACTIONS = [Role::SUPER_ADMIN, Role::DIRECTOR, Role::ADMINISTRATOR];
+
     const COMPANY_ALL_ACTIONS = [Role::SUPER_ADMIN, Role::DIRECTOR, Role::ADMINISTRATOR];
 
     const COUNTRY_ALL_ACTIONS = [Role::SUPER_ADMIN, Role::DIRECTOR, Role::ADMINISTRATOR];

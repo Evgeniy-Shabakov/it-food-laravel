@@ -24,16 +24,41 @@ class Employee extends Model
         return $this->belongsToMany(Role::class, 'employee_role', 'employee_id', 'role_id');
     }
 
-    public function hasPermission(array $permission): bool
+    public function isSuperAdmin()
     {
-        foreach ($this->roles->pluck('title')->all() as $role) {
-            if(in_array($role, $permission))
+        return $this->hasRoles(Role::SUPER_ADMIN);
+    }
+
+    public function isDirector()
+    {
+        return $this->hasRoles(Role::DIRECTOR);
+    }
+
+    public function isAdministrator()
+    {
+        return $this->hasRoles(Role::ADMINISTRATOR);
+    }
+
+    public function hasRoles(string $role): bool
+    {
+        foreach ($this->roles->pluck('title')->all() as $roleEmployee) {
+            if ($roleEmployee === $role)
                 return true;
         }
         return false;
     }
 
-    public function hasAdminPanelAccess(){
+    public function hasPermission(array $permission): bool
+    {
+        foreach ($this->roles->pluck('title')->all() as $role) {
+            if (in_array($role, $permission))
+                return true;
+        }
+        return false;
+    }
+
+    public function hasAdminPanelAccess()
+    {
         return $this->hasPermission(Permissions::ADMIN_PANEL_ACCESS);
     }
 }
