@@ -15,10 +15,10 @@ class RoleIndexController extends Controller
             $roles = Role::all();
         }
         else if (Auth::user()->employee->isDirector()) {
-            $roles = Role::whereNotIn('title', [Role::SUPER_ADMIN])->get();
+            $roles = Role::whereNotIn('title', [Role::SUPER_ADMIN, Role::DIRECTOR])->get();
         }
         else {
-            $roles = Role::whereNotIn('title', [Role::SUPER_ADMIN, Role::DIRECTOR])->get();
+            $roles = Role::whereNotIn('title', [Role::SUPER_ADMIN, Role::DIRECTOR, Role::ADMINISTRATOR])->get();
         }
 
         return RoleResource::collection($roles);

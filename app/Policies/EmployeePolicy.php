@@ -3,61 +3,85 @@
 namespace App\Policies;
 
 use App\Models\Employee;
+use App\Models\Role;
 use App\Models\User;
 use App\Service\Permissions;
 
 class EmployeePolicy
 {
-    public function before(User $user, string $ability): bool|null
-    {
-        if ($user->employee->isSuperAdmin()  && $ability !== 'delete')
-            return true;
-
-        return null;
-    }
-
     public function viewAll(User $user): bool
     {
-        return $user->employee->hasPermission(Permissions::EMPLOYEE_ALL_ACTIONS);
+        return $user->employee->hasPermission(Permissions::EMPLOYEE_SIMPLE_USER_ALL_ACTIONS);
     }
 
     public function viewOne(User $user, Employee $employee): bool
     {
-        if ($employee->isSuperAdmin()) return false;
+        if ($employee->isSuperAdmin())
+            return $user->employee->hasPermission(Permissions::EMPLOYEE_SUPER_ADMIN_VIEW);
 
-        if ($employee->isDirector() && $user->employee->isDirector() == false) return false;
+        if ($employee->isDirector())
+            return $user->employee->hasPermission(Permissions::EMPLOYEE_DIRECTOR_VIEW);
 
-        return $user->employee->hasPermission(Permissions::EMPLOYEE_ALL_ACTIONS);
+        if ($employee->isAdministrator())
+            return $user->employee->hasPermission(Permissions::EMPLOYEE_ADMINISTRATOR_VIEW);
+
+        return $user->employee->hasPermission(Permissions::EMPLOYEE_SIMPLE_USER_ALL_ACTIONS);
     }
 
     public function create(User $user): bool
     {
-        return $user->employee->hasPermission(Permissions::EMPLOYEE_ALL_ACTIONS);
+        $data = request()->all();
+        $roleSuperAdminID = Role::where('title', Role::SUPER_ADMIN)->first()->id;
+        $roleDirectorID = Role::where('title', Role::DIRECTOR)->first()->id;
+        $roleAdministratorID = Role::where('title', Role::ADMINISTRATOR)->first()->id;
+
+        if (in_array($roleSuperAdminID, $data['role_ids']))
+            return $user->employee->hasPermission(Permissions::EMPLOYEE_SUPER_ADMIN_CREATE);
+
+        if (in_array($roleDirectorID, $data['role_ids']))
+            return $user->employee->hasPermission(Permissions::EMPLOYEE_DIRECTOR_CREATE);
+
+        if (in_array($roleAdministratorID, $data['role_ids']))
+            return $user->employee->hasPermission(Permissions::EMPLOYEE_ADMINISTRATOR_CREATE);
+
+        return $user->employee->hasPermission(Permissions::EMPLOYEE_SIMPLE_USER_ALL_ACTIONS);
     }
 
     public function update(User $user, Employee $employee): bool
     {
-        if ($employee->isSuperAdmin()) return false;
+        $data = request()->all();
+        $roleSuperAdminID = Role::where('title', Role::SUPER_ADMIN)->first()->id;
+        $roleDirectorID = Role::where('title', Role::DIRECTOR)->first()->id;
+        $roleAdministratorID = Role::where('title', Role::ADMINISTRATOR)->first()->id;
 
-        if ($employee->isDirector() && $user->employee->isDirector() != true) return false;
+        if ($employee->isSuperAdmin() || in_array($roleSuperAdminID, $data['role_ids']))
+            if ($employee->isSuperAdmin())
+                return $user->employee->hasPermission(Permissions::EMPLOYEE_SUPER_ADMIN_UPDATE);
+            else return false;
 
-        if ($user->id == $employee->user->id && $user->employee->isDirector() != true) return false;
+        if ($employee->isDirector() || in_array($roleDirectorID, $data['role_ids']))
+            if ($user->employee->isDirector()) {
+                if ($employee->isDirector() == false || in_array($roleDirectorID, $data['role_ids']) == false)
+                    return false;
+            } else return $user->employee->hasPermission(Permissions::EMPLOYEE_DIRECTOR_UPDATE);
 
-        return $user->employee->hasPermission(Permissions::EMPLOYEE_ALL_ACTIONS);
+        if ($employee->isAdministrator() || in_array($roleAdministratorID, $data['role_ids']))
+            return $user->employee->hasPermission(Permissions::EMPLOYEE_ADMINISTRATOR_UPDATE);
+
+        return $user->employee->hasPermission(Permissions::EMPLOYEE_SIMPLE_USER_ALL_ACTIONS);
     }
 
     public function delete(User $user, Employee $employee): bool
     {
-        if ($employee->isSuperAdmin()) return false; //никто не может удалить супер-админа, даже супер-админ
+        if ($employee->isSuperAdmin())
+            return $user->employee->hasPermission(Permissions::EMPLOYEE_SUPER_ADMIN_DELETE);
 
-        if ($user->employee->isSuperAdmin()) return true; //супер админ может удалить всех, кроме себя
+        if ($employee->isDirector())
+            return $user->employee->hasPermission(Permissions::EMPLOYEE_DIRECTOR_DELETE);
 
-        if ($employee->isDirector()) return false; // никто не может удалить директора
+        if ($employee->isAdministrator())
+            return $user->employee->hasPermission(Permissions::EMPLOYEE_ADMINISTRATOR_DELETE);
 
-        if ($employee->isAdministrator() && $user->employee->isDirector() != true) return false; //администратора может удалить только директор
-
-        if ($user->id == $employee->user->id) return false; // никто не может удалисть сам себя
-
-        return $user->employee->hasPermission(Permissions::EMPLOYEE_ALL_ACTIONS);
+        return $user->employee->hasPermission(Permissions::EMPLOYEE_SIMPLE_USER_ALL_ACTIONS);
     }
 }

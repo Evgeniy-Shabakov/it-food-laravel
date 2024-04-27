@@ -40,7 +40,7 @@ class EmployeeStoreRequest extends FormRequest
             'surname' => ['string', 'nullable'],
             'job' => ['string', 'nullable'],
             'role_ids' => 'required|array',
-            'role_ids.*' => 'nullable|integer|exists:roles,id|role_id_not_super_admin|role_id_not_director',
+            'role_ids.*' => 'nullable|integer|exists:roles,id|director_is_single',
         ];
     }
 
@@ -57,8 +57,7 @@ class EmployeeStoreRequest extends FormRequest
             'last_name.required' => 'Поле обязательно для заполнения',
             'last_name.string' => 'Поле должно быть строковым значением',
             'role_ids.required' => 'Необходимо выбрать хотя бы одно разрешение',
-            'role_ids.*.role_id_not_super_admin' => 'Нельзя добавить сотрудника с ролью супер-админа',
-            'role_ids.*.role_id_not_director' => 'Нельзя добавить больше одного директора'
+            'role_ids.*.director_is_single' => 'Директор уже добавлен',
         ];
     }
 }

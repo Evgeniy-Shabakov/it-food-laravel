@@ -20,7 +20,7 @@ class Role extends Model
     const DIRECTOR_DESCRIPTION = 'Доступны все возможности';
 
     const ADMINISTRATOR = 'Администратор';
-    const ADMINISTRATOR_DESCRIPTION = 'Доступны все возможности, кроме изменений данных директора';
+    const ADMINISTRATOR_DESCRIPTION = 'Доступны все возможности, кроме изменений данных директора и добавления других администраторов';
 
     const MENU_MANAGER = 'Менеджер меню';
     const MENU_MANAGER_DESCRIPTION = 'Доступно изменение категорий и товаров';

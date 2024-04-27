@@ -26,20 +26,20 @@ class Employee extends Model
 
     public function isSuperAdmin()
     {
-        return $this->hasRoles(Role::SUPER_ADMIN);
+        return $this->hasRole(Role::SUPER_ADMIN);
     }
 
     public function isDirector()
     {
-        return $this->hasRoles(Role::DIRECTOR);
+        return $this->hasRole(Role::DIRECTOR);
     }
 
     public function isAdministrator()
     {
-        return $this->hasRoles(Role::ADMINISTRATOR);
+        return $this->hasRole(Role::ADMINISTRATOR);
     }
 
-    public function hasRoles(string $role): bool
+    public function hasRole(string $role): bool
     {
         foreach ($this->roles->pluck('title')->all() as $roleEmployee) {
             if ($roleEmployee === $role)
