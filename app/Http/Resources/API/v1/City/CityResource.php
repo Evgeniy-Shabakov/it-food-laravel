@@ -16,6 +16,9 @@ class CityResource extends JsonResource
             'title' => $this->title,
             'country' => CountryResource::make($this->country),
             'restaurants' => RestaurantResource::collection($this->whenLoaded('restaurants')),
+            'min_order_value_for_delivery' => $this->min_order_value_for_delivery,
+            'delivery_price' => $this->delivery_price,
+            'order_value_for_free_delivery' => $this->order_value_for_free_delivery,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
