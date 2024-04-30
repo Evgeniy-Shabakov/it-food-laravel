@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->unsignedBigInteger('country_id');
-            $table->decimal('min_order_value_for_delivery', 8, 2)->default(1);
+            $table->decimal('min_order_value_for_delivery', 8, 2)->default(0);
             $table->decimal('delivery_price', 8, 2)->default(0);
             $table->decimal('order_value_for_free_delivery', 8, 2)->default(0);
             $table->timestamps();
