@@ -20,9 +20,12 @@ return new class extends Migration
             $table->unsignedSmallInteger('corps_number')->nullable();
             $table->unsignedSmallInteger('office_number')->nullable();
             $table->string('info')->nullable();
+            $table->boolean('pick_up_available');
             $table->boolean('delivery_available');
-            $table->boolean('pickup_available');
-            $table->boolean('eating_area_available');
+            $table->boolean('pick_up_available_at_the_restaurant_counter');
+            $table->boolean('delivery_available_at_the_restaurant_to_the_table');
+            $table->boolean('pick_up_available_at_the_car_window');
+            $table->boolean('delivery_available_in_the_parking_to_car');
             $table->boolean('is_active');
             $table->timestamps();
 
