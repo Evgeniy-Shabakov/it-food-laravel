@@ -17,7 +17,7 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        if(Auth::attempt($data)) {
+        if(Auth::attempt($data, true)) {
             $request->session()->regenerate();
 
             return response(new UserResource($request->user()), Response::HTTP_CREATED);
