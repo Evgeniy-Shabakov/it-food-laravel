@@ -14,7 +14,6 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Евгений',
             'phone' => '+79121312653',
-            'password' => Str::random(16),
         ]);
     }
 }
