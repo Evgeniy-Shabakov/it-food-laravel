@@ -17,9 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('city_id');
             $table->string('street');
-            $table->unsignedSmallInteger('house_number');
-            $table->unsignedSmallInteger('corps_number')->nullable();
-            $table->unsignedSmallInteger('apartment_number')->nullable();
+            $table->string('house_number');
+            $table->string('corps_number')->nullable();
+            $table->string('apartment_number')->nullable();
             $table->string('entrance_code')->nullable();
             $table->string('comment')->nullable();
             $table->timestamps();

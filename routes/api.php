@@ -1,5 +1,15 @@
 <?php
 
+use App\Http\Controllers\API\v1\User\UserAddress\UserAddressDeleteController;
+use App\Http\Controllers\API\v1\User\UserAddress\UserAddressIndexController;
+use App\Http\Controllers\API\v1\User\UserAddress\UserAddressShowController;
+use App\Http\Controllers\API\v1\User\UserAddress\UserAddressStoreController;
+use App\Http\Controllers\API\v1\User\UserAddress\UserAddressUpdateController;
+use App\Http\Controllers\API\v1\User\UserDeleteController;
+use App\Http\Controllers\API\v1\User\UserIndexController;
+use App\Http\Controllers\API\v1\User\UserShowController;
+use App\Http\Controllers\API\v1\User\UserStoreController;
+use App\Http\Controllers\API\v1\User\UserUpdateController;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
@@ -62,6 +72,23 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('/get-auth-user', GetAuthUserController::class);
 
     Route::get('/roles', RoleIndexController::class);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/users', UserIndexController::class);
+        Route::get('/users/{user}', UserShowController::class);
+
+        Route::post('/users', UserStoreController::class);
+        Route::patch('/users/{user}', UserUpdateController::class);
+        Route::delete('/users/{user}', UserDeleteController::class);
+
+
+        Route::get('/users/{user}/addresses', UserAddressIndexController::class);
+        Route::get('/users/{user}/addresses/{address}', UserAddressShowController::class);
+
+        Route::post('/users/{user}/addresses', UserAddressStoreController::class);
+        Route::patch('/users/{user}/addresses/{address}', UserAddressUpdateController::class);
+        Route::delete('/users/{user}/addresses/{address}', UserAddressDeleteController::class);
+    });
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/employees', EmployeeIndexController::class)->can('viewAll', Employee::class);
