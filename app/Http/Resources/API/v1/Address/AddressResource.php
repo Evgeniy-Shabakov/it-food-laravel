@@ -18,6 +18,8 @@ class AddressResource extends JsonResource
             'house_number' => $this->house_number,
             'corps_number' => $this->corps_number,
             'apartment_number' => $this->apartment_number,
+            'entrance_number' => $this->entrance_number,
+            'floor' => $this->floor,
             'entrance_code' => $this->entrance_code,
             'comment' => $this->comment,
             'created_at' => $this->created_at,

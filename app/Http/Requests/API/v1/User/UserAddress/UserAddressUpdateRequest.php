@@ -23,15 +23,17 @@ class UserAddressUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['string', 'max:50'],
+            'title' => ['string', 'max:50', 'nullable'],
             'user_id' => ['required', 'integer', 'exists:users,id'],
             'city_id' => ['required', 'integer', 'exists:cities,id'],
             'street' => ['required', 'string', 'max:255'],
             'house_number' => ['required', 'string', 'max:10'],
-            'corps_number' => ['string', 'max:10'],
-            'apartment_number' => ['string', 'max:10'],
-            'entrance_code' => ['string', 'max:20'],
-            'comment' => ['string', 'max:500'],
+            'corps_number' => ['string', 'max:10', 'nullable'],
+            'apartment_number' => ['string', 'max:10', 'nullable'],
+            'entrance_number' => ['integer', 'min:0', 'max:255', 'nullable'],
+            'floor' => ['integer', 'min:0', 'max:255', 'nullable'],
+            'entrance_code' => ['string', 'max:20', 'nullable'],
+            'comment' => ['string', 'max:500', 'nullable'],
         ];
     }
 
@@ -56,6 +58,12 @@ class UserAddressUpdateRequest extends FormRequest
             'corps_number.max' => 'Максимальное число символов - 10',
             'apartment_number.string' => 'Поле должно быть строковым значением',
             'apartment_number.max' => 'Максимальное число символов - 10',
+            'entrance_number.integer' => 'Поле должно быть целым числом',
+            'entrance_number.min' => 'Минимальное значение - 0',
+            'entrance_number.max' => 'Максимальное значение - 255',
+            'floor.integer' => 'Поле должно быть целым числом',
+            'floor.min' => 'Минимальное значение - 0',
+            'floor.max' => 'Максимальное значение - 255',
             'entrance_code.string' => 'Поле должно быть строковым значением',
             'entrance_code.max' => 'Максимальное число символов - 20',
             'comment.string' => 'Поле должно быть строковым значением',
