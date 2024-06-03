@@ -74,14 +74,14 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('/roles', RoleIndexController::class);
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::get('/users', UserIndexController::class);
-        Route::get('/users/{user}', UserShowController::class);
+//        Route::get('/users', UserIndexController::class);
+//        Route::get('/users/{user}', UserShowController::class);
+//
+//        Route::post('/users', UserStoreController::class);
+//        Route::patch('/users/{user}', UserUpdateController::class);
+//        Route::delete('/users/{user}', UserDeleteController::class);
 
-        Route::post('/users', UserStoreController::class);
-        Route::patch('/users/{user}', UserUpdateController::class);
-        Route::delete('/users/{user}', UserDeleteController::class);
-
-
+        //добавить политику безопасности
         Route::get('/users/{user}/addresses', UserAddressIndexController::class);
         Route::get('/users/{user}/addresses/{address}', UserAddressShowController::class);
 
