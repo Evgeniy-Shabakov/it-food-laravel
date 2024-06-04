@@ -22,6 +22,8 @@ return new class extends Migration
             $table->unsignedBigInteger('courier_employee_id')->nullable();
             $table->unsignedBigInteger('user_address_id')->nullable();
             $table->string('order_type');
+            $table->unsignedSmallInteger('table_number')->nullable();
+            $table->string('car_number')->nullable();
             $table->boolean('pack_takeaway');
             $table->decimal('total_price', 8, 2);
             $table->string('payment_type');

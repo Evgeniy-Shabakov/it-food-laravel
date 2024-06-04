@@ -7,6 +7,9 @@ use App\Http\Controllers\API\v1\User\UserAddress\UserAddressStoreController;
 use App\Http\Controllers\API\v1\User\UserAddress\UserAddressUpdateController;
 use App\Http\Controllers\API\v1\User\UserDeleteController;
 use App\Http\Controllers\API\v1\User\UserIndexController;
+use App\Http\Controllers\API\v1\User\UserOrder\UserOrderIndexController;
+use App\Http\Controllers\API\v1\User\UserOrder\UserOrderShowController;
+use App\Http\Controllers\API\v1\User\UserOrder\UserOrderStoreController;
 use App\Http\Controllers\API\v1\User\UserShowController;
 use App\Http\Controllers\API\v1\User\UserStoreController;
 use App\Http\Controllers\API\v1\User\UserUpdateController;
@@ -88,6 +91,11 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/users/{user}/addresses', UserAddressStoreController::class);
         Route::patch('/users/{user}/addresses/{address}', UserAddressUpdateController::class);
         Route::delete('/users/{user}/addresses/{address}', UserAddressDeleteController::class);
+
+        Route::get('/users/{user}/orders', UserOrderIndexController::class);
+        Route::get('/users/{user}/orders/{order}', UserOrderShowController::class);
+
+        Route::post('/users/{user}/orders', UserOrderStoreController::class);
     });
 
     Route::middleware('auth:sanctum')->group(function () {

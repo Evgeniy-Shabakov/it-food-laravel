@@ -12,10 +12,7 @@ class OrderStatus
     const WAITING_COURIER = 'ожидает курьера';
     const IN_TRANSIT = 'в пути';
 
-    const AWAITING_PICKUP = 'готов, ожидает выдачи';
+    const AWAITING_PICKUP = 'готов и ожидает выдачи';
 
     const COMPLETED = 'завершен';
-
-
-
 }
