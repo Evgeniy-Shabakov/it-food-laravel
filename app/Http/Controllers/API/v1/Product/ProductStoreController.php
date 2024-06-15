@@ -19,7 +19,7 @@ class ProductStoreController extends Controller
 
         $imageFileName = $data['title'] .'.'. $imageFile->getClientOriginalExtension();
         $imageFilePath = Storage::disk('public')->putFileAs('/images/products', $imageFile, $imageFileName);
-        $imageFileUrl = url('/storage/' . $imageFilePath);
+        $imageFileUrl = url('/storage/' . $imageFilePath) . '?v=' . time();
 
         $data['image_path'] = $imageFilePath;
         $data['image_url'] = $imageFileUrl;

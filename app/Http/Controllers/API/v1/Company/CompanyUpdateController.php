@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\Company\CompanyUpdateRequest;
 use App\Http\Resources\API\v1\Company\CompanyResource;
 use App\Models\Company;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 class CompanyUpdateController extends Controller
@@ -36,7 +37,7 @@ class CompanyUpdateController extends Controller
 
             $logoFileName = 'logo.' . $logoFile->getClientOriginalExtension();
             $logoFilePath = Storage::disk('public')->putFileAs('/images', $logoFile, $logoFileName);
-            $logoFileUrl = url('/storage/' . $logoFilePath);
+            $logoFileUrl = url('/storage/' . $logoFilePath) . '?v=' . time();
 
             $data['logo_path'] = $logoFilePath;
             $data['logo_url'] = $logoFileUrl;
