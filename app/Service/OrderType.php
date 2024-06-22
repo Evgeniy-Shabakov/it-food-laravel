@@ -4,7 +4,7 @@ namespace App\Service;
 
 class OrderType
 {
-    const CREATED = 'создан';
-
-
+    const DELIVERY = 'доставка';
+    const PICK_UP = 'самовывоз';
+    const IN_RESTAURANT = 'в ресторане';
 }

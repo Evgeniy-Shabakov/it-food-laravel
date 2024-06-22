@@ -27,9 +27,9 @@ return new class extends Migration
             $table->boolean('pack_takeaway');
             $table->decimal('total_price', 8, 2);
             $table->string('payment_type');
-            $table->decimal('banknote_for_change', 8, 2);
+            $table->decimal('banknote_for_change', 8, 2)->nullable();
             $table->boolean('is_payment');
-            $table->string('comment');
+            $table->string('comment')->nullable();
             $table->string('order_status');
 
             $table->timestamps();

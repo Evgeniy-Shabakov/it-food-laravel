@@ -1,68 +1,53 @@
 <?php
 
+use App\Http\Controllers\API\v1\Auth\GetAuthUserController;
+use App\Http\Controllers\API\v1\Category\CategoryDeleteController;
+use App\Http\Controllers\API\v1\Category\CategoryIndexController;
+use App\Http\Controllers\API\v1\Category\CategoryShowController;
+use App\Http\Controllers\API\v1\Category\CategoryStoreController;
+use App\Http\Controllers\API\v1\Category\CategoryUpdateController;
+use App\Http\Controllers\API\v1\City\CityDeleteController;
+use App\Http\Controllers\API\v1\City\CityIndexController;
+use App\Http\Controllers\API\v1\City\CityShowController;
+use App\Http\Controllers\API\v1\City\CityStoreController;
+use App\Http\Controllers\API\v1\City\CityUpdateController;
+use App\Http\Controllers\API\v1\Company\CompanyShowController;
+use App\Http\Controllers\API\v1\Company\CompanyUpdateController;
+use App\Http\Controllers\API\v1\Country\CountryDeleteController;
+use App\Http\Controllers\API\v1\Country\CountryIndexController;
+use App\Http\Controllers\API\v1\Country\CountryShowController;
+use App\Http\Controllers\API\v1\Country\CountryStoreController;
+use App\Http\Controllers\API\v1\Country\CountryUpdateController;
+use App\Http\Controllers\API\v1\Employee\EmployeeDeleteController;
+use App\Http\Controllers\API\v1\Employee\EmployeeIndexController;
+use App\Http\Controllers\API\v1\Employee\EmployeeShowController;
+use App\Http\Controllers\API\v1\Employee\EmployeeStoreController;
+use App\Http\Controllers\API\v1\Employee\EmployeeUpdateController;
+use App\Http\Controllers\API\v1\Order\OrderIndexController;
+use App\Http\Controllers\API\v1\Order\OrderShowController;
+use App\Http\Controllers\API\v1\Order\OrderStoreController;
+use App\Http\Controllers\API\v1\Product\ProductDeleteController;
+use App\Http\Controllers\API\v1\Product\ProductIndexController;
+use App\Http\Controllers\API\v1\Product\ProductShowController;
+use App\Http\Controllers\API\v1\Product\ProductStoreController;
+use App\Http\Controllers\API\v1\Product\ProductUpdateController;
+use App\Http\Controllers\API\v1\Restaurant\RestaurantDeleteController;
+use App\Http\Controllers\API\v1\Restaurant\RestaurantIndexController;
+use App\Http\Controllers\API\v1\Restaurant\RestaurantShowController;
+use App\Http\Controllers\API\v1\Restaurant\RestaurantStoreController;
+use App\Http\Controllers\API\v1\Restaurant\RestaurantUpdateController;
+use App\Http\Controllers\API\v1\Role\RoleIndexController;
 use App\Http\Controllers\API\v1\User\UserAddress\UserAddressDeleteController;
 use App\Http\Controllers\API\v1\User\UserAddress\UserAddressIndexController;
 use App\Http\Controllers\API\v1\User\UserAddress\UserAddressShowController;
 use App\Http\Controllers\API\v1\User\UserAddress\UserAddressStoreController;
 use App\Http\Controllers\API\v1\User\UserAddress\UserAddressUpdateController;
-use App\Http\Controllers\API\v1\User\UserDeleteController;
-use App\Http\Controllers\API\v1\User\UserIndexController;
-use App\Http\Controllers\API\v1\User\UserOrder\UserOrderIndexController;
-use App\Http\Controllers\API\v1\User\UserOrder\UserOrderShowController;
-use App\Http\Controllers\API\v1\User\UserOrder\UserOrderStoreController;
-use App\Http\Controllers\API\v1\User\UserShowController;
-use App\Http\Controllers\API\v1\User\UserStoreController;
-use App\Http\Controllers\API\v1\User\UserUpdateController;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Employee;
 use App\Models\Product;
 use App\Models\Restaurant;
-
-use App\Http\Controllers\API\v1\Auth\GetAuthUserController;
-
-use App\Http\Controllers\API\v1\Role\RoleIndexController;
-
-use App\Http\Controllers\API\v1\Employee\EmployeeDeleteController;
-use App\Http\Controllers\API\v1\Employee\EmployeeIndexController;
-use App\Http\Controllers\API\v1\Employee\EmployeeShowController;
-use App\Http\Controllers\API\v1\Employee\EmployeeStoreController;
-use App\Http\Controllers\API\v1\Employee\EmployeeUpdateController;
-
-use App\Http\Controllers\API\v1\Country\CountryDeleteController;
-use App\Http\Controllers\API\v1\Country\CountryIndexController;
-use App\Http\Controllers\API\v1\Country\CountryShowController;
-use App\Http\Controllers\API\v1\Country\CountryStoreController;
-use App\Http\Controllers\API\v1\Country\CountryUpdateController;
-
-use App\Http\Controllers\API\v1\City\CityDeleteController;
-use App\Http\Controllers\API\v1\City\CityIndexController;
-use App\Http\Controllers\API\v1\City\CityShowController;
-use App\Http\Controllers\API\v1\City\CityStoreController;
-use App\Http\Controllers\API\v1\City\CityUpdateController;
-
-use App\Http\Controllers\API\v1\Restaurant\RestaurantDeleteController;
-use App\Http\Controllers\API\v1\Restaurant\RestaurantIndexController;
-use App\Http\Controllers\API\v1\Restaurant\RestaurantShowController;
-use App\Http\Controllers\API\v1\Restaurant\RestaurantStoreController;
-use App\Http\Controllers\API\v1\Restaurant\RestaurantUpdateController;
-
-use App\Http\Controllers\API\v1\Category\CategoryDeleteController;
-use App\Http\Controllers\API\v1\Category\CategoryIndexController;
-use App\Http\Controllers\API\v1\Category\CategoryShowController;
-use App\Http\Controllers\API\v1\Category\CategoryStoreController;
-use App\Http\Controllers\API\v1\Category\CategoryUpdateController;
-
-use App\Http\Controllers\API\v1\Company\CompanyShowController;
-use App\Http\Controllers\API\v1\Company\CompanyUpdateController;
-
-use App\Http\Controllers\API\v1\Product\ProductDeleteController;
-use App\Http\Controllers\API\v1\Product\ProductIndexController;
-use App\Http\Controllers\API\v1\Product\ProductShowController;
-use App\Http\Controllers\API\v1\Product\ProductStoreController;
-use App\Http\Controllers\API\v1\Product\ProductUpdateController;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -84,6 +69,20 @@ Route::group(['prefix' => 'v1'], function () {
 //        Route::patch('/users/{user}', UserUpdateController::class);
 //        Route::delete('/users/{user}', UserDeleteController::class);
 
+//        Route::get('/orders', UserIndexController::class);
+        Route::get('/orders/{order}', OrderShowController::class);
+
+        Route::post('/orders', OrderStoreController::class);
+//        Route::patch('/orders/{order}', UserUpdateController::class);
+//        Route::delete('/orders/{order}', UserDeleteController::class);
+
+
+//        Route::get('/users/{user}/orders', OrderIndexController::class);
+//        Route::get('/users/{user}/orders/{order}', OrderShowController::class);
+//
+//        Route::post('/users/{user}/orders', OrderStoreController::class);
+
+
         //добавить политику безопасности
         Route::get('/users/{user}/addresses', UserAddressIndexController::class);
         Route::get('/users/{user}/addresses/{address}', UserAddressShowController::class);
@@ -91,11 +90,6 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/users/{user}/addresses', UserAddressStoreController::class);
         Route::patch('/users/{user}/addresses/{address}', UserAddressUpdateController::class);
         Route::delete('/users/{user}/addresses/{address}', UserAddressDeleteController::class);
-
-        Route::get('/users/{user}/orders', UserOrderIndexController::class);
-        Route::get('/users/{user}/orders/{order}', UserOrderShowController::class);
-
-        Route::post('/users/{user}/orders', UserOrderStoreController::class);
     });
 
     Route::middleware('auth:sanctum')->group(function () {
