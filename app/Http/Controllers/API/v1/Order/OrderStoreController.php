@@ -9,6 +9,7 @@ use App\Models\Employee;
 use App\Models\Order;
 use App\Models\Restaurant;
 use App\Service\OrderStatus;
+use Illuminate\Support\Facades\DB;
 
 class OrderStoreController extends Controller
 {
@@ -16,14 +17,31 @@ class OrderStoreController extends Controller
     {
         $data = $request->validated();
 
-        $data['number'] = 35;
-        $data['restaurant_id'] = Restaurant::first()->id;
-        $data['responsible_employee_id'] = Employee::first()->id;
-        $data['order_status'] = OrderStatus::CREATED;
+        try {
+            DB::beginTransaction();
 
-        unset($data['products_in_order']);
-        
-        $order = Order::create($data);
+            $data['number'] = rand(0, 999);
+            $data['restaurant_id'] = Restaurant::first()->id;
+            $data['responsible_employee_id'] = Employee::first()->id;
+            $data['order_status'] = OrderStatus::CREATED;
+
+            $products_in_order = $data['products_in_order'];
+            unset($data['products_in_order']);
+
+            $order = Order::create($data);
+
+            foreach ($products_in_order as $product) {
+                $order->products()->attach($product['id'], [
+                    'quantity' => $product['countInCart'],
+                    'price' => $product['price_default']
+                ]);
+            }
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            abort(500);
+        }
 
         return new OrderResource($order);
     }

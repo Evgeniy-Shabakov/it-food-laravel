@@ -17,25 +17,35 @@ class Order extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function city() {
+    public function city()
+    {
         return $this->belongsTo(City::class, 'city_id', 'id');
     }
 
-    public function restaurant() {
+    public function restaurant()
+    {
         return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
     }
 
-    public function responsibleEmployee() {
+    public function responsibleEmployee()
+    {
         return $this->belongsTo(Employee::class, 'responsible_employee_id', 'id');
     }
 
-    public function coorierEmployee() {
+    public function coorierEmployee()
+    {
         return $this->belongsTo(Employee::class, 'courier_employee_id', 'id');
     }
 
-    public function userAddress() {
+    public function userAddress()
+    {
         return $this->belongsTo(Address::class, 'user_address_id', 'id');
     }
 
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'order_products', 'order_id', 'product_id')
+            ->withPivot('quantity', 'price');
+    }
 
 }

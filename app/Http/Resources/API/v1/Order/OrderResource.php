@@ -5,6 +5,7 @@ namespace App\Http\Resources\API\v1\Order;
 use App\Http\Resources\API\v1\Address\AddressResource;
 use App\Http\Resources\API\v1\City\CityResource;
 use App\Http\Resources\API\v1\Employee\EmployeeResource;
+use App\Http\Resources\API\v1\Product\ProductResource;
 use App\Http\Resources\API\v1\Restaurant\RestaurantResource;
 use App\Http\Resources\API\v1\User\UserResource;
 use App\Models\Address;

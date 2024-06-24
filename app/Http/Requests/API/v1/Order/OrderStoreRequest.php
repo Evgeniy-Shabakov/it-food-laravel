@@ -39,6 +39,7 @@ class OrderStoreRequest extends FormRequest
             'products_in_order' => [ 'required', 'array', 'min:1'],
             'products_in_order.*.id' => ['required', 'integer', 'exists:products,id'],
             'products_in_order.*.countInCart' => ['required', 'integer', 'min:1'],
+            'products_in_order.*.price_default' => ['required', 'decimal: 0,2'],
         ];
     }
 
