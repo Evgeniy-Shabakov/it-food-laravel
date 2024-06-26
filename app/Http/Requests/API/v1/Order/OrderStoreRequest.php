@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API\v1\Order;
 
+use App\Service\OrderType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -26,7 +27,7 @@ class OrderStoreRequest extends FormRequest
             'user_id' => ['required', 'integer', 'exists:users,id'],
             'city_id' => ['required', 'integer', 'exists:cities,id'],
             'restaurant_id' => ['nullable', 'integer', 'exists:restaurants,id'],
-            'user_address_id' => ['nullable', 'integer', 'exists:addresses,id'],
+            'user_address_id' => ['required_if:order_type,' . OrderType::DELIVERY, 'nullable', 'integer', 'exists:addresses,id'],
             'order_type' => ['required', 'string'],
             'table_number' => ['nullable', 'integer'],
             'car_number' => ['nullable', 'string'],
@@ -54,6 +55,8 @@ class OrderStoreRequest extends FormRequest
             'city_id.exists' => 'Поле "city_id" должно содержаться в таблице "cities"',
             'restaurant_id.integer' => 'Поле "restaurant_id" должно быть целым числом',
             'restaurant_id.exists' => 'Поле "restaurant_id" должно содержаться в таблице "restaurants"',
+            'user_address_id.integer' => 'Необходимо добавить или выбрать адрес',
+            'user_address_id.exists' => 'Необходимо добавить или выбрать адрес',
         ];
     }
 }
