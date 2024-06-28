@@ -5,6 +5,7 @@ namespace App\Http\Resources\API\v1\Order;
 use App\Http\Resources\API\v1\Address\AddressResource;
 use App\Http\Resources\API\v1\City\CityResource;
 use App\Http\Resources\API\v1\Employee\EmployeeResource;
+use App\Http\Resources\API\v1\Product\ProductForOrderResource;
 use App\Http\Resources\API\v1\Product\ProductResource;
 use App\Http\Resources\API\v1\Restaurant\RestaurantResource;
 use App\Http\Resources\API\v1\User\UserResource;
@@ -34,6 +35,7 @@ class OrderResource extends JsonResource
             'is_payment' => $this->is_payment,
             'comment' => $this->comment,
             'order_status' => $this->order_status,
+            'products' => ProductForOrderResource::collection($this->products),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
