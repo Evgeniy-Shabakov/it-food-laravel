@@ -20,7 +20,7 @@ class OrderStoreController extends Controller
         try {
             DB::beginTransaction();
 
-            $data['number'] = rand(0, 999);
+            $data['number'] = rand(11, 999);
             $data['restaurant_id'] = Restaurant::first()->id;
             $data['responsible_employee_id'] = Employee::first()->id;
             $data['order_status'] = OrderStatus::CREATED;
