@@ -15,4 +15,7 @@ class OrderStatus
     const AWAITING_PICKUP = 'готов и ожидает выдачи';
 
     const COMPLETED = 'завершен';
+
+    const STATUSES_ORDER_DELIVERY = [OrderStatus::CREATED, OrderStatus::ACCEPTED, OrderStatus::COOKING,
+        OrderStatus::PACKING, OrderStatus::WAITING_COURIER, OrderStatus::IN_TRANSIT, OrderStatus::COMPLETED];
 }

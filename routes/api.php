@@ -25,6 +25,7 @@ use App\Http\Controllers\API\v1\Employee\EmployeeStoreController;
 use App\Http\Controllers\API\v1\Employee\EmployeeUpdateController;
 use App\Http\Controllers\API\v1\Order\OrderIndexController;
 use App\Http\Controllers\API\v1\Order\OrderIndexTodayController;
+use App\Http\Controllers\API\v1\Order\OrderNextStatusController;
 use App\Http\Controllers\API\v1\Order\OrderShowController;
 use App\Http\Controllers\API\v1\Order\OrderStoreController;
 use App\Http\Controllers\API\v1\Product\ProductDeleteController;
@@ -75,8 +76,9 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/orders/{order}', OrderShowController::class);
 
         Route::post('/orders', OrderStoreController::class);
-//        Route::patch('/orders/{order}', UserUpdateController::class);
-//        Route::delete('/orders/{order}', UserDeleteController::class);
+        Route::patch('/orders/{order}/next-status', OrderNextStatusController::class);
+//        Route::patch('/orders/{order}', OrderUpdateController::class);
+//        Route::delete('/orders/{order}', OrderDeleteController::class);
 
 
 //        Route::get('/users/{user}/orders', OrderIndexController::class);
