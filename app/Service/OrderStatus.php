@@ -9,6 +9,7 @@ class OrderStatus
     const ACCEPTED = 'принят в работу';
     const COOKING = 'готовится';
     const PACKING = 'собирается';
+
     const WAITING_COURIER = 'ожидает курьера';
     const IN_TRANSIT = 'в пути';
 

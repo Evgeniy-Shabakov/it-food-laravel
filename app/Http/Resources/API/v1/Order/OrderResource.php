@@ -29,6 +29,8 @@ class OrderResource extends JsonResource
             'user_address' => AddressResource::make($this->userAddress),
             'order_type' => $this->order_type,
             'pack_takeaway' => $this->pack_takeaway,
+            'total_products_price' => $this->total_products_price,
+            'delivery_price' => $this->delivery_price,
             'total_price' => $this->total_price,
             'payment_type' => $this->payment_type,
             'banknote_for_change' => $this->banknote_for_change,

@@ -32,6 +32,8 @@ class OrderStoreRequest extends FormRequest
             'table_number' => ['nullable', 'integer'],
             'car_number' => ['nullable', 'string'],
             'pack_takeaway' => ['nullable', 'boolean'],
+            'total_products_price' => ['required', 'decimal: 0,2'],
+            'delivery_price' => ['required', 'decimal: 0,2'],
             'total_price' => ['required', 'decimal: 0,2'],
             'payment_type' => ['required', 'string'],
             'banknote_for_change' => ['nullable', 'decimal: 0,2'],
