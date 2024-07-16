@@ -17,6 +17,8 @@ class OrderStatus
 
     const COMPLETED = 'завершен';
 
+    const CANSEL = 'отменен';
+
     const STATUSES_ORDER_DELIVERY = [OrderStatus::CREATED, OrderStatus::ACCEPTED, OrderStatus::COOKING,
         OrderStatus::PACKING, OrderStatus::WAITING_COURIER, OrderStatus::IN_TRANSIT, OrderStatus::COMPLETED];
 }

@@ -13,7 +13,12 @@ class OrderPreviousStatusController extends Controller
 {
     public function __invoke(Order $order)
     {
-        if($order->order_type == OrderType::DELIVERY) {
+        if($order->order_status == OrderStatus::CANSEL) {
+            $order->order_status = OrderStatus::CREATED;
+            $order->save();
+        }
+
+        else if($order->order_type == OrderType::DELIVERY) {
             $index = array_search($order->order_status, OrderStatus::STATUSES_ORDER_DELIVERY);
             if ($index !== false && $index > 0) {
                 $index--;
