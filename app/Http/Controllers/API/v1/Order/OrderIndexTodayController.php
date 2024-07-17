@@ -15,9 +15,14 @@ class OrderIndexTodayController extends Controller
         $timezone = $request->query('timezone', 'UTC'); // Получаем часовой пояс из запроса, по умолчанию 'UTC'
 
         $startOfDay = Carbon::now($timezone)->startOfDay()->setTimezone('UTC');
-        $endOfDay = Carbon::now($timezone)->endOfDay()->setTimezone('UTC');
 
-        $orders = Order::whereBetween('created_at', [$startOfDay, $endOfDay])->get();
+        // до 3-00 будут также отображаться заказы оформленные после 21-00 вчерашнего дня
+        if (Carbon::now($timezone)->hour < 3) {
+            $startOfPreviousDay = $startOfDay->copy()->subDay()->addHours(21);
+            $orders = Order::where('created_at', '>=', $startOfPreviousDay)->get();
+        } else {
+            $orders = Order::where('created_at', '>=', $startOfDay)->get();
+        }
 
         return OrderResource::collection($orders);
     }
