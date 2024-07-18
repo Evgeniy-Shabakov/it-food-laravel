@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class OrderIndexTodayController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, $restaurantID = null)
     {
         $timezone = $request->query('timezone', 'UTC'); // Получаем часовой пояс из запроса, по умолчанию 'UTC'
 
@@ -22,6 +22,11 @@ class OrderIndexTodayController extends Controller
             $orders = Order::where('created_at', '>=', $startOfPreviousDay)->get();
         } else {
             $orders = Order::where('created_at', '>=', $startOfDay)->get();
+        }
+
+        // Фильтруем заказы по ресторану, если параметр передан
+        if ($restaurantID) {
+            $orders = $orders->where('restaurant_id', $restaurantID);
         }
 
         return OrderResource::collection($orders);

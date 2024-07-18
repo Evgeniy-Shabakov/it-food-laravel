@@ -74,7 +74,7 @@ Route::group(['prefix' => 'v1'], function () {
 //        Route::delete('/users/{user}', UserDeleteController::class);
 
 //        Route::get('/orders', UserIndexController::class);
-        Route::get('/orders/today', OrderIndexTodayController::class);
+        Route::get('/orders/today/{restaurantID?}', OrderIndexTodayController::class);
         Route::get('/orders/{order}', OrderShowController::class);
 
         Route::post('/orders', OrderStoreController::class);

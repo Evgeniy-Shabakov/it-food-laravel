@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\v1\Order;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\Order\OrderStoreRequest;
 use App\Http\Resources\API\v1\Order\OrderResource;
+use App\Models\City;
 use App\Models\Employee;
 use App\Models\Order;
 use App\Models\Restaurant;
@@ -21,9 +22,13 @@ class OrderStoreController extends Controller
             DB::beginTransaction();
 
             $data['number'] = rand(11, 999);
-            $data['restaurant_id'] = Restaurant::first()->id;
             $data['responsible_employee_id'] = Employee::first()->id;
             $data['order_status'] = OrderStatus::CREATED;
+
+            if ($data['restaurant_id'] == null) {
+                $city = City::find($data['city_id']);
+                $data['restaurant_id'] = $city->restaurants()->first()->id;
+            }
 
             $products_in_order = $data['products_in_order'];
             unset($data['products_in_order']);
