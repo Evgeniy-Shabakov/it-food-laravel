@@ -7,13 +7,12 @@ use App\Http\Resources\API\v1\Order\OrderResource;
 use App\Models\User;
 use App\Service\OrderStatus;
 
-class UserActiveOrderIndexController extends Controller
+class UserOrderIndexController extends Controller
 {
     public function __invoke(User $user)
     {
-        $orders = $user->orders()
-            ->whereNotIn('order_status', [OrderStatus::COMPLETED, OrderStatus::CANSEL])->get();
-
+        $orders = $user->orders()->latest()->limit(50)->get();
+        
         return OrderResource::collection($orders);
     }
 }

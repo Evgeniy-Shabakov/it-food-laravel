@@ -48,6 +48,7 @@ use App\Http\Controllers\API\v1\User\UserAddress\UserAddressStoreController;
 use App\Http\Controllers\API\v1\User\UserAddress\UserAddressUpdateController;
 use App\Http\Controllers\API\v1\User\UserOrder\UserActiveOrderIndexController;
 use App\Http\Controllers\API\v1\User\UserOrder\UserLastOrderShowController;
+use App\Http\Controllers\API\v1\User\UserOrder\UserOrderIndexController;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
@@ -102,6 +103,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::delete('/users/{user}/addresses/{address}', UserAddressDeleteController::class);
 
 
+        Route::get('/users/{user}/orders', UserOrderIndexController::class);
         Route::get('/users/{user}/active-orders', UserActiveOrderIndexController::class);
         Route::get('/users/{user}/last-order', UserLastOrderShowController::class);
     });
