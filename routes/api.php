@@ -49,6 +49,7 @@ use App\Http\Controllers\API\v1\User\UserAddress\UserAddressUpdateController;
 use App\Http\Controllers\API\v1\User\UserOrder\UserActiveOrderIndexController;
 use App\Http\Controllers\API\v1\User\UserOrder\UserLastOrderShowController;
 use App\Http\Controllers\API\v1\User\UserOrder\UserOrderIndexController;
+use App\Http\Controllers\API\v1\User\UserUpdateController;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
@@ -69,11 +70,14 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('/roles', RoleIndexController::class);
 
     Route::middleware('auth:sanctum')->group(function () {
+
+        //добавить политику безопасности
+
 //        Route::get('/users', UserIndexController::class);
 //        Route::get('/users/{user}', UserShowController::class);
 //
 //        Route::post('/users', UserStoreController::class);
-//        Route::patch('/users/{user}', UserUpdateController::class);
+        Route::patch('/users/{user}', UserUpdateController::class);
 //        Route::delete('/users/{user}', UserDeleteController::class);
 
 //        Route::get('/orders', UserIndexController::class);

@@ -23,16 +23,17 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => ['required', 'string', Rule::unique('users')->ignore($this->user)],
+//            'phone' => ['required', 'string', Rule::unique('users')->ignore($this->user)],
+            'name' => ['required', 'string', 'max:50'],
         ];
     }
 
     public function messages(): array
     {
         return [
-            'phone.required' => 'Поле обязательно для заполнения',
-            'phone.string' => 'Поле должно быть строковым значением',
-            'phone.unique' => 'Такая категория уже есть в базе данных',
+            'name.required' => 'Поле обязательно для заполнения',
+            'name.string' => 'Поле должно быть строковым значением',
+            'name.max' => 'Максимальное количество символов - 50',
         ];
     }
 }
