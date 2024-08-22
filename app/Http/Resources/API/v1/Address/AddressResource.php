@@ -22,6 +22,7 @@ class AddressResource extends JsonResource
             'floor' => $this->floor,
             'entrance_code' => $this->entrance_code,
             'comment' => $this->comment,
+            'show_to_user' => $this->show_to_user,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

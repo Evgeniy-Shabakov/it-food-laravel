@@ -16,6 +16,8 @@ class UserAddressStoreController extends Controller
     {
         $data = $request->validated();
 
+        $data['show_to_user'] = true;
+
         $address = Address::create($data);
 
         return new AddressResource($address);

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('floor')->nullable();
             $table->string('entrance_code')->nullable();
             $table->string('comment')->nullable();
+            $table->boolean('show_to_user')->default(true);
             $table->timestamps();
 
             $table->index('user_id', 'address_user_idx');
