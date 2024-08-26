@@ -18,6 +18,6 @@ class UserAddressUpdateController extends Controller
 
         $address->update($data);
 
-        return new AddressResource($address);
+        return new UserResource($user);
     }
 }
