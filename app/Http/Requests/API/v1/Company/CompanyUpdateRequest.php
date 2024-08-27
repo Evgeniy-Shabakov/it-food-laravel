@@ -27,6 +27,9 @@ class CompanyUpdateRequest extends FormRequest
             'tagline' => ['nullable', 'string'],
             'favicon_file' => [ 'image', 'mimes:png', 'max:30', 'dimensions:width=96,height=96' ],
             'logo_file' => ['image', 'max:100'],
+            'phone' => ['nullable', 'string', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10', 'max:15'],
+            'open_time' => ['nullable', 'date_format:H:i'],
+            'close_time' => ['nullable', 'date_format:H:i'],
             'about_us' => ['string', 'nullable'],
             'contacts' => ['string', 'nullable'],
         ];
@@ -46,6 +49,12 @@ class CompanyUpdateRequest extends FormRequest
             'favicon_file.dimensions' => 'Поле "Иконка сайта" должно быть 96 на 96 пикселей',
             'logo_file.image' => 'Поле "Логотип" должно быть картинкой',
             'logo_file.max' => 'Поле "Логотип" должно быть не более 100 Кбайт',
+            'phone.string' => 'Поле должно быть строковым значением',
+            'phone.regex' => 'Номер телефона должен содержать только цифры, пробелы, тире, плюсы и круглые скобки',
+            'phone.min' => 'Введено слишком мало символов',
+            'phone.max' => 'Введено слишком много символов',
+            'open_time.date_format' => 'Неверный формат данных',
+            'close_time.date_format' => 'Неверный формат данных',
             'about_us.string' => 'Поле "О нас" должно быть строковым значением',
             'contacts.string' => 'Поле "Контакты" должно быть строковым значением',
         ];

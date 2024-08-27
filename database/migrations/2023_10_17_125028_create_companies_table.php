@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('favicon_url');
             $table->string('logo_path');
             $table->string('logo_url');
+            $table->string('phone', 30)->nullable();
+            $table->time('open_time')->nullable();
+            $table->time('close_time')->nullable();
             $table->string('about_us')->nullable();
             $table->string('contacts')->nullable();
             $table->timestamps();

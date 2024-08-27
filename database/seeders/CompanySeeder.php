@@ -18,6 +18,9 @@ class CompanySeeder extends Seeder
             'favicon_url' => config('app.url') . '/storage/images/favicon.png',
             'logo_path' => 'images/logo.png',
             'logo_url' => config('app.url') . '/storage/images/logo.png',
+            'phone' => '+79121312653',
+            'open_time' => '09:00:00',
+            'close_time' => '21:00:00',
         ]);
     }
 }
