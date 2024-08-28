@@ -21,4 +21,7 @@ class OrderStatus
 
     const STATUSES_ORDER_DELIVERY = [OrderStatus::CREATED, OrderStatus::ACCEPTED, OrderStatus::COOKING,
         OrderStatus::PACKING, OrderStatus::WAITING_COURIER, OrderStatus::IN_TRANSIT, OrderStatus::COMPLETED];
+
+    const STATUSES_ORDER_PICK_UP = [OrderStatus::CREATED, OrderStatus::ACCEPTED, OrderStatus::COOKING,
+        OrderStatus::PACKING, OrderStatus::AWAITING_PICKUP, OrderStatus::COMPLETED];
 }

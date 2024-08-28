@@ -13,13 +13,14 @@ class OrderNextStatusController extends Controller
 {
     public function __invoke(Order $order)
     {
-        if($order->order_type == OrderType::DELIVERY) {
-            $index = array_search($order->order_status, OrderStatus::STATUSES_ORDER_DELIVERY);
-            if ($index !== false && $index < count(OrderStatus::STATUSES_ORDER_DELIVERY) - 1) {
-                $index++;
-                $order->order_status = OrderStatus::STATUSES_ORDER_DELIVERY[$index];
-                $order->save();
-            }
+        $orderStatuses = OrderStatus::STATUSES_ORDER_DELIVERY;
+        if ($order->order_type == OrderType::PICK_UP) $orderStatuses = OrderStatus::STATUSES_ORDER_PICK_UP;
+
+        $index = array_search($order->order_status, $orderStatuses);
+        if ($index !== false && $index < count($orderStatuses) - 1) {
+            $index++;
+            $order->order_status = $orderStatuses[$index];
+            $order->save();
         }
 
         return new OrderResource($order);

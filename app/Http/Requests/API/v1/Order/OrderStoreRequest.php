@@ -26,8 +26,13 @@ class OrderStoreRequest extends FormRequest
         return [
             'user_id' => ['required', 'integer', 'exists:users,id'],
             'city_id' => ['required', 'integer', 'exists:cities,id'],
-            'restaurant_id' => ['nullable', 'integer', 'exists:restaurants,id'],
-            'user_address_id' => ['required_if:order_type,' . OrderType::DELIVERY, 'nullable', 'integer', 'exists:addresses,id'],
+            'restaurant_id' => [
+                'required_if:order_type,' . OrderType::PICK_UP,
+                'required_if:order_type,' . OrderType::IN_RESTAURANT,
+                'nullable', 'integer', 'exists:restaurants,id'],
+            'user_address_id' => [
+                'required_if:order_type,' . OrderType::DELIVERY,
+                'nullable', 'integer', 'exists:addresses,id'],
             'order_type' => ['required', 'string'],
             'table_number' => ['nullable', 'integer'],
             'car_number' => ['nullable', 'string'],
@@ -39,7 +44,7 @@ class OrderStoreRequest extends FormRequest
             'banknote_for_change' => ['nullable', 'decimal: 0,2'],
             'is_payment' => ['required', 'boolean'],
             'comment' => ['nullable', 'string'],
-            'products_in_order' => [ 'required', 'array', 'min:1'],
+            'products_in_order' => ['required', 'array', 'min:1'],
             'products_in_order.*.id' => ['required', 'integer', 'exists:products,id'],
             'products_in_order.*.countInCart' => ['required', 'integer', 'min:1'],
             'products_in_order.*.price_default' => ['required', 'decimal: 0,2'],
