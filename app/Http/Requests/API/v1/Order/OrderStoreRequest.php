@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API\v1\Order;
 
+use App\Service\OrderInRestaurantType;
 use App\Service\OrderType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -34,7 +35,12 @@ class OrderStoreRequest extends FormRequest
                 'required_if:order_type,' . OrderType::DELIVERY,
                 'nullable', 'integer', 'exists:addresses,id'],
             'order_type' => ['required', 'string'],
-            'table_number' => ['nullable', 'integer'],
+            'order_in_restaurant_type' => [
+                'required_if:order_type,' . OrderType::IN_RESTAURANT,
+                'nullable', 'string'],
+            'table_number' => [
+                'required_if:order_in_restaurant_type,' . OrderInRestaurantType::TABLE,
+                'nullable', 'string'],
             'car_number' => ['nullable', 'string'],
             'pack_takeaway' => ['nullable', 'boolean'],
             'total_products_price' => ['required', 'decimal: 0,2'],

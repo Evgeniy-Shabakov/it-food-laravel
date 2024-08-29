@@ -24,4 +24,10 @@ class OrderStatus
 
     const STATUSES_ORDER_PICK_UP = [OrderStatus::CREATED, OrderStatus::ACCEPTED, OrderStatus::COOKING,
         OrderStatus::PACKING, OrderStatus::AWAITING_PICKUP, OrderStatus::COMPLETED];
+
+    const STATUSES_ORDER_IN_RESTAURANT_COUNTER = [OrderStatus::CREATED, OrderStatus::ACCEPTED, OrderStatus::COOKING,
+        OrderStatus::PACKING, OrderStatus::AWAITING_PICKUP, OrderStatus::COMPLETED];
+
+    const STATUSES_ORDER_IN_RESTAURANT_TABLE = [OrderStatus::CREATED, OrderStatus::ACCEPTED, OrderStatus::COOKING,
+        OrderStatus::PACKING, OrderStatus::COMPLETED];
 }

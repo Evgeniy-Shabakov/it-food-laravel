@@ -28,6 +28,8 @@ class OrderResource extends JsonResource
             'courier_employee' => EmployeeResource::make($this->coorierEmployee),
             'user_address' => AddressResource::make($this->userAddress),
             'order_type' => $this->order_type,
+            'order_in_restaurant_type' => $this->order_in_restaurant_type,
+            'table_number' => $this->table_number,
             'pack_takeaway' => $this->pack_takeaway,
             'total_products_price' => $this->total_products_price,
             'delivery_price' => $this->delivery_price,

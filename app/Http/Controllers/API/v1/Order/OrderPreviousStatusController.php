@@ -14,7 +14,13 @@ class OrderPreviousStatusController extends Controller
     public function __invoke(Order $order)
     {
         $orderStatuses = OrderStatus::STATUSES_ORDER_DELIVERY;
+
         if ($order->order_type == OrderType::PICK_UP) $orderStatuses = OrderStatus::STATUSES_ORDER_PICK_UP;
+
+        if ($order->order_type == OrderType::IN_RESTAURANT) {
+            if($order->table_number) $orderStatuses = OrderStatus::STATUSES_ORDER_IN_RESTAURANT_TABLE;
+            else $orderStatuses = OrderStatus::STATUSES_ORDER_IN_RESTAURANT_COUNTER;
+        }
 
         if($order->order_status == OrderStatus::CANSEL) {
             $order->order_status = OrderStatus::CREATED;
