@@ -65,6 +65,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'v1'], function () {
 
+    //добавил для загрузки политики т.к. ссылка напрямую из фронтенда вызывает ошибку CORS - START
+    Route::get('/download-privacy-policy', function () {
+        return response()->download(storage_path('app/public/pravo/privacy_policy.docx'));
+    });
+    //добавил для загрузки политики т.к. ссылка напрямую из фронтенда вызывает ошибку CORS - END
+
     Route::get('/get-auth-user', GetAuthUserController::class);
 
     Route::get('/roles', RoleIndexController::class);
