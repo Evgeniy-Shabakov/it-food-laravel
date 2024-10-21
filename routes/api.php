@@ -23,6 +23,11 @@ use App\Http\Controllers\API\v1\Employee\EmployeeIndexController;
 use App\Http\Controllers\API\v1\Employee\EmployeeShowController;
 use App\Http\Controllers\API\v1\Employee\EmployeeStoreController;
 use App\Http\Controllers\API\v1\Employee\EmployeeUpdateController;
+use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentDeleteController;
+use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentIndexController;
+use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentShowController;
+use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentStoreController;
+use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentUpdateController;
 use App\Http\Controllers\API\v1\Order\OrderCanselStatusController;
 use App\Http\Controllers\API\v1\Order\OrderIndexController;
 use App\Http\Controllers\API\v1\Order\OrderIndexTodayController;
@@ -181,6 +186,17 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/products', ProductStoreController::class)->can('create', Product::class);
         Route::patch('/products/{product}', ProductUpdateController::class)->can('update', 'product');
         Route::delete('/products/{product}', ProductDeleteController::class)->can('delete', 'product');
+    });
+
+
+    Route::get('/legal-documents', LegalDocumentIndexController::class);
+    Route::get('/legal-documents/{legalDocument}', LegalDocumentShowController::class);
+
+    //добавить политику безопасности к правовым документам
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/legal-documents', LegalDocumentStoreController::class);
+        Route::patch('/legal-documents/{legalDocument}', LegalDocumentUpdateController::class);
+        Route::delete('/legal-documents/{legalDocument}', LegalDocumentDeleteController::class);
     });
 
 });
