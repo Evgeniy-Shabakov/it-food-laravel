@@ -23,7 +23,7 @@ class LegalDocumentUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', Rule::unique('legal_documents')->ignore($this->legal_document)],
+            'title' => ['required', 'string', Rule::unique('legal_documents')->ignore($this->legalDocument)],
             'file' => ['file', 'mimes:docx', 'max:1000'],
             'description' => ['string', 'nullable', 'max: 1000'],
         ];
