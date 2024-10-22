@@ -24,6 +24,7 @@ use App\Http\Controllers\API\v1\Employee\EmployeeShowController;
 use App\Http\Controllers\API\v1\Employee\EmployeeStoreController;
 use App\Http\Controllers\API\v1\Employee\EmployeeUpdateController;
 use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentDeleteController;
+use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentDownloadController;
 use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentIndexController;
 use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentShowController;
 use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentStoreController;
@@ -194,9 +195,7 @@ Route::group(['prefix' => 'v1'], function () {
     });
 
     //добавил для загрузки политики т.к. ссылка напрямую из фронтенда вызывает ошибку CORS - START
-    Route::get('/download-privacy-policy', function () {
-        return response()->download(storage_path('app/public/pravo/privacy_policy.docx'));
-    });
+    Route::get('/legal-documents/download/{legalDocument}', LegalDocumentDownloadController::class);
     //добавил для загрузки политики т.к. ссылка напрямую из фронтенда вызывает ошибку CORS - END
 
 });
