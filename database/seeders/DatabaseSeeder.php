@@ -16,8 +16,11 @@ class DatabaseSeeder extends Seeder
             EmployeeRoleSeeder::class,
             CompanySeeder::class,
             CountrySeeder::class,
+            CitySeeder::class,
+            RestaurantSeeder::class,
             CategorySeeder::class,
             ProductSeeder::class,
+            LegalDocumentSeeder::class,
         ]);
     }
 }

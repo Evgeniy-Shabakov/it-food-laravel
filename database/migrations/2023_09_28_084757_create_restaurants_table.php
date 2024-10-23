@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('title');
             $table->unsignedBigInteger('city_id');
             $table->string('street');
-            $table->unsignedSmallInteger('house_number');
-            $table->unsignedSmallInteger('corps_number')->nullable();
-            $table->unsignedSmallInteger('office_number')->nullable();
+            $table->string('house_number');
+            $table->string('corps_number')->nullable();
+            $table->string('office_number')->nullable();
             $table->string('info')->nullable();
             $table->boolean('delivery_available');
             $table->boolean('pick_up_at_counter_available');
