@@ -18,6 +18,11 @@ use App\Http\Controllers\API\v1\Country\CountryIndexController;
 use App\Http\Controllers\API\v1\Country\CountryShowController;
 use App\Http\Controllers\API\v1\Country\CountryStoreController;
 use App\Http\Controllers\API\v1\Country\CountryUpdateController;
+use App\Http\Controllers\API\v1\Design\DesignDeleteController;
+use App\Http\Controllers\API\v1\Design\DesignIndexController;
+use App\Http\Controllers\API\v1\Design\DesignShowController;
+use App\Http\Controllers\API\v1\Design\DesignStoreController;
+use App\Http\Controllers\API\v1\Design\DesignUpdateController;
 use App\Http\Controllers\API\v1\Employee\EmployeeDeleteController;
 use App\Http\Controllers\API\v1\Employee\EmployeeIndexController;
 use App\Http\Controllers\API\v1\Employee\EmployeeShowController;
@@ -198,5 +203,15 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('/legal-documents/download/{legalDocument}', LegalDocumentDownloadController::class);
     //добавил для загрузки политики т.к. ссылка напрямую из фронтенда вызывает ошибку CORS - END
 
+
+    Route::get('/designs', DesignIndexController::class);
+    Route::get('/designs/{design}', DesignShowController::class);
+
+    //добавить политику безопасности к дизайну
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/designs', DesignStoreController::class);
+        Route::patch('/designs/{design}', DesignUpdateController::class);
+        Route::delete('/designs/{design}', DesignDeleteController::class);
+    });
 });
 
