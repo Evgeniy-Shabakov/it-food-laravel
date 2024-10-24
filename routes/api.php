@@ -23,6 +23,7 @@ use App\Http\Controllers\API\v1\Design\DesignIndexController;
 use App\Http\Controllers\API\v1\Design\DesignShowController;
 use App\Http\Controllers\API\v1\Design\DesignStoreController;
 use App\Http\Controllers\API\v1\Design\DesignUpdateController;
+use App\Http\Controllers\API\v1\Design\GetActiveDesignController;
 use App\Http\Controllers\API\v1\Employee\EmployeeDeleteController;
 use App\Http\Controllers\API\v1\Employee\EmployeeIndexController;
 use App\Http\Controllers\API\v1\Employee\EmployeeShowController;
@@ -213,5 +214,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::patch('/designs/{design}', DesignUpdateController::class);
         Route::delete('/designs/{design}', DesignDeleteController::class);
     });
+
+    Route::get('/get-active-design', GetActiveDesignController::class);
 });
 
