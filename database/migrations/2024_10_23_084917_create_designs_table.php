@@ -18,16 +18,16 @@ return new class extends Migration
             $table->boolean('is_active');
 
             //базовые цвета
-            $table->string('background_color');
-            $table->string('text_color');
+            $table->string('background_page_main_color');
+            $table->string('background_page_elements_color');
 
             $table->string('brand_color');
+
+            $table->string('text_color_main');
             $table->string('text_color_on_brand_color');
+            $table->string('text_color_accent');
 
-            $table->string('supporting_color');
-
-            $table->string('accent_text_color');
-
+            $table->string('bottom_nav_color');
 
             $table->timestamps();
         });

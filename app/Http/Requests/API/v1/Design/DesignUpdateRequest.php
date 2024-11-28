@@ -25,12 +25,13 @@ class DesignUpdateRequest extends FormRequest
         return [
             'title' => [ 'required', 'string', Rule::unique('designs')->ignore($this->design) ],
             'is_active' => [ 'required', 'boolean' ],
-            'background_color' => [ 'required', 'string' ],
-            'text_color' => [ 'required', 'string' ],
+            'background_page_main_color' => [ 'required', 'string' ],
+            'background_page_elements_color' => [ 'required', 'string' ],
             'brand_color' => [ 'required', 'string' ],
+            'text_color_main' => [ 'required', 'string' ],
             'text_color_on_brand_color' => [ 'required', 'string' ],
-            'supporting_color' => [ 'required', 'string' ],
-            'accent_text_color' => [ 'required', 'string' ],
+            'text_color_accent' => [ 'required', 'string' ],
+            'bottom_nav_color' => [ 'required', 'string' ],
         ];
     }
 
