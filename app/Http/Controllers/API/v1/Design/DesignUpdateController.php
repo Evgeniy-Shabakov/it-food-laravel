@@ -13,6 +13,10 @@ class DesignUpdateController extends Controller
     {
         $data = $request->validated();
 
+        if ($data['is_active'] == true) {  //чтобы была только одна активная тема
+            Design::where('is_active', true)->update(['is_active' => false]);
+        }
+
         $design->update($data);
 
         return new DesignResource($design);
