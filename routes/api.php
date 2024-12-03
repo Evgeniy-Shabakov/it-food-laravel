@@ -29,6 +29,11 @@ use App\Http\Controllers\API\v1\Employee\EmployeeIndexController;
 use App\Http\Controllers\API\v1\Employee\EmployeeShowController;
 use App\Http\Controllers\API\v1\Employee\EmployeeStoreController;
 use App\Http\Controllers\API\v1\Employee\EmployeeUpdateController;
+use App\Http\Controllers\API\v1\Ingredient\IngredientDeleteController;
+use App\Http\Controllers\API\v1\Ingredient\IngredientIndexController;
+use App\Http\Controllers\API\v1\Ingredient\IngredientShowController;
+use App\Http\Controllers\API\v1\Ingredient\IngredientStoreController;
+use App\Http\Controllers\API\v1\Ingredient\IngredientUpdateController;
 use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentDeleteController;
 use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentDownloadController;
 use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentIndexController;
@@ -66,6 +71,7 @@ use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Employee;
+use App\Models\Ingredient;
 use App\Models\Product;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
@@ -187,6 +193,15 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/products', ProductStoreController::class)->can('create', Product::class);
         Route::patch('/products/{product}', ProductUpdateController::class)->can('update', 'product');
         Route::delete('/products/{product}', ProductDeleteController::class)->can('delete', 'product');
+    });
+
+    Route::get('/ingredients', IngredientIndexController::class);
+    Route::get('/ingredients/{ingredient}', IngredientShowController::class);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/ingredients', IngredientStoreController::class)->can('create', Ingredient::class);
+        Route::patch('/ingredients/{ingredient}', IngredientUpdateController::class)->can('update', 'ingredient');
+        Route::delete('/ingredients/{ingredient}', IngredientDeleteController::class)->can('delete', 'ingredient');
     });
 
 
