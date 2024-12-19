@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             RestaurantSeeder::class,
             CategorySeeder::class,
             IngredientSeeder::class,
+            IngredientReplacementsSeeder::class,
             ProductSeeder::class,
             LegalDocumentSeeder::class,
             DesignSeeder::class,
