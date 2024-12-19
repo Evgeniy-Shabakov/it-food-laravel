@@ -27,6 +27,8 @@ class IngredientUpdateRequest extends FormRequest
             'image_file' => [ 'image', 'max:50' ],
             'description' => [ 'string', 'nullable', 'max: 300' ],
             'price_default' => [ 'required', 'decimal:0,2'],
+            'ingredient_ids' => [ 'nullable', 'array'],
+            'ingredient_ids.*' => ['nullable', 'integer', 'exists:ingredients,id'],
             'is_active' => [ 'required', 'boolean' ],
         ];
     }

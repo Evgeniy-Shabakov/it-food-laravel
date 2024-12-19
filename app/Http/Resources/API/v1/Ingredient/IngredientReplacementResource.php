@@ -5,7 +5,7 @@ namespace App\Http\Resources\API\v1\Ingredient;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class IngredientResource extends JsonResource
+class IngredientReplacementResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
@@ -16,7 +16,6 @@ class IngredientResource extends JsonResource
             'image_url' => $this->image_url,
             'description' => $this->description,
             'price_default' => $this->price_default,
-            'replacements' => IngredientReplacementResource::collection($this->replacements),
             'is_active' => $this->is_active,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

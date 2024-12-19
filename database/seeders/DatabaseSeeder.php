@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             CitySeeder::class,
             RestaurantSeeder::class,
             CategorySeeder::class,
+            IngredientSeeder::class,
             ProductSeeder::class,
             LegalDocumentSeeder::class,
             DesignSeeder::class,

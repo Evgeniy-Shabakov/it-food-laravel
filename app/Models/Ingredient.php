@@ -11,4 +11,14 @@ class Ingredient extends Model
 
     protected $table = 'ingredients';
     protected $guarded = false;
+
+    public function replacements()
+    {
+        return $this->belongsToMany(
+            Ingredient::class,
+            'ingredient_replacements',
+            'ingredient_id',
+            'replacement_id'
+        );
+    }
 }
