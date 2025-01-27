@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Resources\API\v1\Product;
+namespace App\Http\Resources\API\v1\Ingredient;
 
-use App\Http\Resources\API\v1\Category\CategoryResource;
-use App\Http\Resources\API\v1\Ingredient\BaseIngredientResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductResource extends JsonResource
+class BaseIngredientResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
@@ -16,12 +14,13 @@ class ProductResource extends JsonResource
             'title' => $this->title,
             'image_path' => $this->image_path,
             'image_url' => $this->image_url,
-            'description_short' => $this->description_short,
-            'description_full' => $this->description_full,
+            'description' => $this->description,
             'price_default' => $this->price_default,
             'is_active' => $this->is_active,
-            'category' => CategoryResource::make($this->category),
-            'base_ingredients' => BaseIngredientResource::collection($this->baseIngredients),
+            'can_delete' => $this->pivot->can_delete,
+            'can_replace' => $this->pivot->can_replace,
+            'replacements' =>
+                IngredientReplacementResource::collection($this->baseIngredientsReplacements($this->pivot->product_id)),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

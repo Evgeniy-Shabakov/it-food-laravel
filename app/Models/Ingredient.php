@@ -21,4 +21,17 @@ class Ingredient extends Model
             'replacement_id'
         );
     }
+
+    public function baseIngredientsReplacements($productID)
+    {
+        $productBaseIngredient = ProductBaseIngredient::where('product_id', $productID)
+            ->where('ingredient_id', $this->id)
+            ->first();
+
+        if ($productBaseIngredient) {
+            return $productBaseIngredient->ingredients()->get();
+        }
+
+        return collect();
+    }
 }
