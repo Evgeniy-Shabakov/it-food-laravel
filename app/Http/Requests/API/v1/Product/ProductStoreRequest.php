@@ -35,6 +35,9 @@ class ProductStoreRequest extends FormRequest
             'base_ingredients.*.can_replace' => ['required', 'boolean'],
             'base_ingredients.*.replacements_ids' => ['array'],
             'base_ingredients.*.replacements_ids.*' => ['integer', 'exists:ingredients,id'],
+            'additional_ingredients' => ['array'],
+            'additional_ingredients.*.ingredient_id' => ['required', 'integer', 'exists:ingredients,id'],
+            'additional_ingredients.*.max_quantity' => ['required', 'integer', 'min:1', 'max:255'],
             'is_active' => [ 'required', 'boolean' ],
         ];
     }

@@ -35,6 +35,11 @@ class ProductStoreController extends Controller
                 unset($data['base_ingredients']);
             }
 
+            if (isset($data['additional_ingredients'])) {
+                $additionalIngredients = $data['additional_ingredients'];
+                unset($data['additional_ingredients']);
+            }
+
             $product = Product::create($data);
 
             if (isset($baseIngredients) && !empty($baseIngredients)) {
@@ -52,6 +57,14 @@ class ProductStoreController extends Controller
                         $productBaseIngredient->ingredients()->attach($ingredient['replacements_ids']);
                     }
 
+                }
+            }
+
+            if (isset($additionalIngredients) && !empty($additionalIngredients)) {
+                foreach ($additionalIngredients as $ingredient) {
+                    $product->additionalIngredients()->attach($ingredient['ingredient_id'], [
+                        'max_quantity' => $ingredient['max_quantity'],
+                    ]);
                 }
             }
 

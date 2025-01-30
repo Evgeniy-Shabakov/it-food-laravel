@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('ingredient_id');
-            $table->unsignedSmallInteger('max_quantity')->default(2); // Можно ли добавлять данный ингредиент как дополнительный
+            $table->unsignedSmallInteger('max_quantity')->default(2);
             $table->timestamps();
 
             $table->index('product_id', 'product_additional_ingredients_product_idx');

@@ -41,6 +41,11 @@ class ProductUpdateController extends Controller
                 unset($data['base_ingredients']);
             }
 
+            if (isset($data['additional_ingredients'])) {
+                $additionalIngredients = $data['additional_ingredients'];
+                unset($data['additional_ingredients']);
+            }
+
             $product->update($data);
 
             $product->baseIngredients()->detach();
@@ -59,6 +64,15 @@ class ProductUpdateController extends Controller
                         $productBaseIngredient->ingredients()->attach($ingredient['replacements_ids']);
                     }
 
+                }
+            }
+
+            $product->additionalIngredients()->detach();
+            if (isset($additionalIngredients) && !empty($additionalIngredients)) {
+                foreach ($additionalIngredients as $ingredient) {
+                    $product->additionalIngredients()->attach($ingredient['ingredient_id'], [
+                        'max_quantity' => $ingredient['max_quantity'],
+                    ]);
                 }
             }
 

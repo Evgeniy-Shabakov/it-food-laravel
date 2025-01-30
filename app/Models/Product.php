@@ -27,4 +27,15 @@ class Product extends Model
         )
             ->withPivot('can_delete', 'can_replace', 'product_id');
     }
+
+    public function additionalIngredients()
+    {
+        return $this->belongsToMany(
+            Ingredient::class,
+            'product_additional_ingredients',
+            'product_id',
+            'ingredient_id'
+        )
+            ->withPivot('max_quantity');
+    }
 }
