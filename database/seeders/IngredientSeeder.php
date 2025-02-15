@@ -11,6 +11,15 @@ class IngredientSeeder extends Seeder
     public function run(): void
     {
         DB::table('ingredients')->insert([
+            'title' => 'Курица',
+            'image_path' => 'images/ingredients/Курица.png',
+            'image_url' => config('app.url') . '/storage/images/ingredients/Курица.png',
+            'description' => '',
+            'price_default' => 30,
+            'is_active' => true,
+        ]);
+
+        DB::table('ingredients')->insert([
             'title' => 'Сыр',
             'image_path' => 'images/ingredients/Сыр.png',
             'image_url' => config('app.url') . '/storage/images/ingredients/Сыр.png',
