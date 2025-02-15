@@ -16,14 +16,23 @@ class IngredientReplacementsSeeder extends Seeder
         DB::table('ingredient_replacements')->insert([
             ['ingredient_id' => 1, 'replacement_id' => 2],
             ['ingredient_id' => 2, 'replacement_id' => 1],
+
             ['ingredient_id' => 3, 'replacement_id' => 4],
             ['ingredient_id' => 3, 'replacement_id' => 5],
             ['ingredient_id' => 4, 'replacement_id' => 3],
             ['ingredient_id' => 4, 'replacement_id' => 5],
             ['ingredient_id' => 5, 'replacement_id' => 3],
             ['ingredient_id' => 5, 'replacement_id' => 4],
+
+            ['ingredient_id' => 6, 'replacement_id' => 7],
+            ['ingredient_id' => 6, 'replacement_id' => 8],
+            ['ingredient_id' => 7, 'replacement_id' => 6],
             ['ingredient_id' => 7, 'replacement_id' => 8],
+            ['ingredient_id' => 8, 'replacement_id' => 6],
             ['ingredient_id' => 8, 'replacement_id' => 7],
+            
+            ['ingredient_id' => 10, 'replacement_id' => 11],
+            ['ingredient_id' => 11, 'replacement_id' => 10],
         ]);
     }
 }
