@@ -13,6 +13,9 @@ class ProductForOrderResource extends ProductResource
         return array_merge(parent::toArray($request), [
             'quantity' => $this->pivot->quantity,
             'price' => $this->pivot->price,
+            'is_user_config' => $this->pivot->is_user_config,
+            'user_config_base_ingredients' => json_decode($this->pivot->base_ingredients, true),
+            'user_config_additional_ingredients' => json_decode($this->pivot->additional_ingredients, true),
         ]);
     }
 }

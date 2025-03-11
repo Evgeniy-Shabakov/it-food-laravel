@@ -51,9 +51,14 @@ class OrderStoreRequest extends FormRequest
             'is_payment' => ['required', 'boolean'],
             'comment' => ['nullable', 'string'],
             'products_in_order' => ['required', 'array', 'min:1'],
-            'products_in_order.*.id' => ['required', 'integer', 'exists:products,id'],
+//            'products_in_order.*.id' => ['required', 'integer', 'exists:products,id'],
+            'products_in_order.*.id' => ['required', 'integer'],
             'products_in_order.*.countInCart' => ['required', 'integer', 'min:1'],
             'products_in_order.*.price_default' => ['required', 'decimal: 0,2'],
+            'products_in_order.*.isUserConfig' => ['nullable', 'boolean'],
+            'products_in_order.*.productID' => ['nullable', 'integer'],
+            'products_in_order.*.baseIngredients' => ['nullable', 'array'],
+            'products_in_order.*.additionalIngredients' => ['nullable', 'array'],
         ];
     }
 

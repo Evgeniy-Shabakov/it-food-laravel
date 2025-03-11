@@ -8,7 +8,6 @@ use App\Http\Resources\API\v1\Order\OrderResource;
 use App\Models\City;
 use App\Models\Employee;
 use App\Models\Order;
-use App\Models\Restaurant;
 use App\Service\OrderStatus;
 use App\Service\OrderType;
 use Illuminate\Support\Facades\DB;
@@ -39,10 +38,22 @@ class OrderStoreController extends Controller
             $order = Order::create($data);
 
             foreach ($products_in_order as $product) {
-                $order->products()->attach($product['id'], [
-                    'quantity' => $product['countInCart'],
-                    'price' => $product['price_default']
-                ]);
+                if(isset($product['isUserConfig']) && $product['isUserConfig'] == true) {
+                    $order->products()->attach($product['productID'], [
+                        'quantity' => $product['countInCart'],
+                        'price' => $product['price_default'],
+                        'is_user_config' => true,
+                        'base_ingredients' => json_encode($product['baseIngredients']),
+                        'additional_ingredients' => json_encode($product['additionalIngredients'])
+                    ]);
+                }
+                else {
+                    $order->products()->attach($product['id'], [
+                        'quantity' => $product['countInCart'],
+                        'price' => $product['price_default'],
+                        'is_user_config' => false,
+                    ]);
+                }
             }
 
             DB::commit();
