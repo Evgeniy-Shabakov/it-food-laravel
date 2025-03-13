@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->integer('quantity');
             $table->decimal('price', 10, 2);
-            $table->boolean('is_user_config');
+            $table->unsignedBigInteger('user_config_id')->nullable();
             $table->json('base_ingredients')->nullable();
             $table->json('additional_ingredients')->nullable();
             $table->timestamps();

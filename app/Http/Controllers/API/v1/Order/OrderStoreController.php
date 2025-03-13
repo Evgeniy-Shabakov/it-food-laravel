@@ -42,7 +42,7 @@ class OrderStoreController extends Controller
                     $order->products()->attach($product['productID'], [
                         'quantity' => $product['countInCart'],
                         'price' => $product['price_default'],
-                        'is_user_config' => true,
+                        'user_config_id' => $product['id'],
                         'base_ingredients' => json_encode($product['baseIngredients']),
                         'additional_ingredients' => json_encode($product['additionalIngredients'])
                     ]);
@@ -51,7 +51,6 @@ class OrderStoreController extends Controller
                     $order->products()->attach($product['id'], [
                         'quantity' => $product['countInCart'],
                         'price' => $product['price_default'],
-                        'is_user_config' => false,
                     ]);
                 }
             }

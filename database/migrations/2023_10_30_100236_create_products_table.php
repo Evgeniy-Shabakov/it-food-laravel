@@ -17,8 +17,17 @@ return new class extends Migration
             $table->string('image_path');
             $table->string('image_url');
             $table->string('description_short')->nullable();
-            $table->string('description_full')->nullable();
+            $table->text('description_full')->nullable();
             $table->decimal('price_default', 8, 2);
+
+            $table->text('composition')->nullable();
+            $table->integer('weight')->nullable();
+            $table->integer('calories')->nullable();
+            $table->integer('proteins')->nullable();
+            $table->integer('fats')->nullable();
+            $table->integer('carbohydrates')->nullable();
+
+            $table->boolean('stop_list')->default(false);
             $table->boolean('is_active');
             $table->unsignedBigInteger('category_id');
             $table->timestamps();
