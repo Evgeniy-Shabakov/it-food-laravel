@@ -20,6 +20,8 @@ return new class extends Migration
             $table->text('description_full')->nullable();
             $table->decimal('price_default', 8, 2);
 
+            $table->unsignedTinyInteger('position_in_category')->nullable();
+
             $table->text('composition')->nullable();
             $table->integer('weight')->nullable();
             $table->integer('calories')->nullable();
