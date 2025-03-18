@@ -52,7 +52,7 @@ use App\Http\Controllers\API\v1\Product\ProductIndexController;
 use App\Http\Controllers\API\v1\Product\ProductShowController;
 use App\Http\Controllers\API\v1\Product\ProductStoreController;
 use App\Http\Controllers\API\v1\Product\ProductUpdateController;
-use App\Http\Controllers\API\v1\Product\ProductUpdateStopListController;
+use App\Http\Controllers\API\v1\Product\ProductToggleStopListController;
 use App\Http\Controllers\API\v1\Restaurant\RestaurantDeleteController;
 use App\Http\Controllers\API\v1\Restaurant\RestaurantIndexController;
 use App\Http\Controllers\API\v1\Restaurant\RestaurantShowController;
@@ -196,7 +196,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::delete('/products/{product}', ProductDeleteController::class)->can('delete', 'product');
 
         //добавить политику безопасности
-        Route::patch('/products/{product}/stop-list', ProductUpdateStopListController::class);
+        Route::patch('/products/{product}/stop-list', ProductToggleStopListController::class);
     });
 
     Route::get('/ingredients', IngredientIndexController::class);

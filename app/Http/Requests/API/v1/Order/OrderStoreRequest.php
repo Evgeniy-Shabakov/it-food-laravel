@@ -75,6 +75,7 @@ class OrderStoreRequest extends FormRequest
             'restaurant_id.exists' => 'Поле "restaurant_id" должно содержаться в таблице "restaurants"',
             'user_address_id.integer' => 'Необходимо добавить или выбрать адрес',
             'user_address_id.exists' => 'Необходимо добавить или выбрать адрес',
+            'user_address_id.required_if' => 'Введите адрес доставки',
             'table_number.required_if' => 'Необходимо ввести номер столика',
         ];
     }
