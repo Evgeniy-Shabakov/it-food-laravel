@@ -20,6 +20,7 @@ class ProductResource extends JsonResource
             'description_short' => $this->description_short,
             'description_full' => $this->description_full,
             'price_default' => $this->price_default,
+            'stop_list' => $this->stop_list,
             'is_active' => $this->is_active,
             'category' => CategoryResource::make($this->category),
             'base_ingredients' => BaseIngredientResource::collection($this->baseIngredients),
