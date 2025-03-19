@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('image_url');
             $table->string('description')->nullable();
             $table->decimal('price_default', 8, 2);
-            $table->boolean('stop_list')->default(false);
             $table->unsignedBigInteger('allergen_id')->nullable(); //добавлено на будущее
+            $table->boolean('stop_list')->default(false);
             $table->boolean('is_active');
             $table->timestamps();
         });

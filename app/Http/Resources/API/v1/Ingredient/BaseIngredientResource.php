@@ -16,6 +16,7 @@ class BaseIngredientResource extends JsonResource
             'image_url' => $this->image_url,
             'description' => $this->description,
             'price_default' => $this->price_default,
+            'stop_list' => $this->stop_list,
             'is_active' => $this->is_active,
             'can_delete' => $this->pivot->can_delete,
             'can_replace' => $this->pivot->can_replace,

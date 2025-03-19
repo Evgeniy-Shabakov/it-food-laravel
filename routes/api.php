@@ -33,6 +33,7 @@ use App\Http\Controllers\API\v1\Ingredient\IngredientDeleteController;
 use App\Http\Controllers\API\v1\Ingredient\IngredientIndexController;
 use App\Http\Controllers\API\v1\Ingredient\IngredientShowController;
 use App\Http\Controllers\API\v1\Ingredient\IngredientStoreController;
+use App\Http\Controllers\API\v1\Ingredient\IngredientToggleStopListController;
 use App\Http\Controllers\API\v1\Ingredient\IngredientUpdateController;
 use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentDeleteController;
 use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentDownloadController;
@@ -196,7 +197,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::delete('/products/{product}', ProductDeleteController::class)->can('delete', 'product');
 
         //добавить политику безопасности
-        Route::patch('/products/{product}/stop-list', ProductToggleStopListController::class);
+        Route::patch('/products/{product}/toggle-stop-list', ProductToggleStopListController::class);
     });
 
     Route::get('/ingredients', IngredientIndexController::class);
@@ -206,6 +207,9 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/ingredients', IngredientStoreController::class)->can('create', Ingredient::class);
         Route::patch('/ingredients/{ingredient}', IngredientUpdateController::class)->can('update', 'ingredient');
         Route::delete('/ingredients/{ingredient}', IngredientDeleteController::class)->can('delete', 'ingredient');
+
+        //добавить политику безопасности
+        Route::patch('/ingredients/{ingredient}/toggle-stop-list', IngredientToggleStopListController::class);
     });
 
 
