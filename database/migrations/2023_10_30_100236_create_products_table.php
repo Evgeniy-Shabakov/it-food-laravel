@@ -29,6 +29,12 @@ return new class extends Migration
             $table->integer('fats')->nullable();
             $table->integer('carbohydrates')->nullable();
 
+            $table->boolean('is_new_label')->default(false);
+            $table->boolean('is_promotion_label')->default(false);
+            $table->boolean('is_discount_label')->default(false);
+            $table->boolean('is_popular_label')->default(false);
+            $table->boolean('is_spicy_label')->default(false);
+
             $table->boolean('stop_list')->default(false);
             $table->boolean('is_active');
             $table->unsignedBigInteger('category_id');
