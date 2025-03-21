@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('description_full')->nullable();
             $table->decimal('price_default', 8, 2);
 
+            //добавлено для будущей реализации - СТАРТ
             $table->unsignedTinyInteger('position_in_category')->nullable();
 
             $table->text('composition')->nullable();
@@ -34,6 +35,12 @@ return new class extends Migration
             $table->boolean('is_discount_label')->default(false);
             $table->boolean('is_popular_label')->default(false);
             $table->boolean('is_spicy_label')->default(false);
+
+            $table->time('start_time_of_sale')->nullable();
+            $table->time('end_time_of_sale')->nullable();
+            $table->boolean('is_show_label_time_of_sale')->default(false);
+            //добавлено для будущей реализации - СТОП
+
 
             $table->boolean('is_in_stop_list')->default(false);
             $table->boolean('is_active');
