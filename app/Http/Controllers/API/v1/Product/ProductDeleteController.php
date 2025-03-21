@@ -10,9 +10,11 @@ class ProductDeleteController extends Controller
 {
     public function __invoke(Product $product)
     {
-        Storage::disk('public')->delete($product->image_path);
+        $deletedStatus = $product->delete();
 
-        $product->delete();
+        if ($deletedStatus) {
+            Storage::disk('public')->delete($product->image_path);
+        }
 
         return 'OK';
     }

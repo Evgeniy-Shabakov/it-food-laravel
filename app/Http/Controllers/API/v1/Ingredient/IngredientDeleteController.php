@@ -10,9 +10,11 @@ class IngredientDeleteController extends Controller
 {
     public function __invoke(Ingredient $ingredient)
     {
-        Storage::disk('public')->delete($ingredient->image_path);
+        $deletedStatus = $ingredient->delete();
 
-        $ingredient->delete();
+        if ($deletedStatus) {
+            Storage::disk('public')->delete($ingredient->image_path);
+        }
 
         return 'OK';
     }
