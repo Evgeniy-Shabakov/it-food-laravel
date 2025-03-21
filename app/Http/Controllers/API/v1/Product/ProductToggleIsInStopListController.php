@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\v1\Product\ProductResource;
 use App\Models\Product;
 
-class ProductToggleStopListController extends Controller
+class ProductToggleIsInStopListController extends Controller
 {
     public function __invoke(Product $product)
     {
-        $product->stop_list = !$product->stop_list;
+        $product->is_in_stop_list = !$product->is_in_stop_list;
 
         $product->save();
 

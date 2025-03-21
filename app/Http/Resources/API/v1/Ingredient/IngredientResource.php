@@ -17,7 +17,7 @@ class IngredientResource extends JsonResource
             'description' => $this->description,
             'price_default' => $this->price_default,
             'replacements' => IngredientReplacementResource::collection($this->replacements),
-            'stop_list' => $this->stop_list,
+            'is_in_stop_list' => $this->is_in_stop_list,
             'is_active' => $this->is_active,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

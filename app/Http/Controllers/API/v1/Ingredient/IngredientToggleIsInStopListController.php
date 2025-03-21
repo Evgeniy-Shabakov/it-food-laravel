@@ -9,11 +9,11 @@ use App\Models\Ingredient;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class IngredientToggleStopListController extends Controller
+class IngredientToggleIsInStopListController extends Controller
 {
     public function __invoke(Ingredient $ingredient)
     {
-        $ingredient->stop_list = !$ingredient->stop_list;
+        $ingredient->is_in_stop_list = !$ingredient->is_in_stop_list;
 
         $ingredient->save();
 

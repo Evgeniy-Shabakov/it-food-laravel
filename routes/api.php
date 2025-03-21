@@ -33,7 +33,7 @@ use App\Http\Controllers\API\v1\Ingredient\IngredientDeleteController;
 use App\Http\Controllers\API\v1\Ingredient\IngredientIndexController;
 use App\Http\Controllers\API\v1\Ingredient\IngredientShowController;
 use App\Http\Controllers\API\v1\Ingredient\IngredientStoreController;
-use App\Http\Controllers\API\v1\Ingredient\IngredientToggleStopListController;
+use App\Http\Controllers\API\v1\Ingredient\IngredientToggleIsInStopListController;
 use App\Http\Controllers\API\v1\Ingredient\IngredientUpdateController;
 use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentDeleteController;
 use App\Http\Controllers\API\v1\LegalDocument\LegalDocumentDownloadController;
@@ -53,7 +53,7 @@ use App\Http\Controllers\API\v1\Product\ProductIndexController;
 use App\Http\Controllers\API\v1\Product\ProductShowController;
 use App\Http\Controllers\API\v1\Product\ProductStoreController;
 use App\Http\Controllers\API\v1\Product\ProductUpdateController;
-use App\Http\Controllers\API\v1\Product\ProductToggleStopListController;
+use App\Http\Controllers\API\v1\Product\ProductToggleIsInStopListController;
 use App\Http\Controllers\API\v1\Restaurant\RestaurantDeleteController;
 use App\Http\Controllers\API\v1\Restaurant\RestaurantIndexController;
 use App\Http\Controllers\API\v1\Restaurant\RestaurantShowController;
@@ -197,7 +197,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::delete('/products/{product}', ProductDeleteController::class)->can('delete', 'product');
 
         //добавить политику безопасности
-        Route::patch('/products/{product}/toggle-stop-list', ProductToggleStopListController::class);
+        Route::patch('/products/{product}/toggle-is-in-stop-list', ProductToggleIsInStopListController::class);
     });
 
     Route::get('/ingredients', IngredientIndexController::class);
@@ -209,7 +209,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::delete('/ingredients/{ingredient}', IngredientDeleteController::class)->can('delete', 'ingredient');
 
         //добавить политику безопасности
-        Route::patch('/ingredients/{ingredient}/toggle-stop-list', IngredientToggleStopListController::class);
+        Route::patch('/ingredients/{ingredient}/toggle-is-in-stop-list', IngredientToggleIsInStopListController::class);
     });
 
 

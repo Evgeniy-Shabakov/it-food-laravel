@@ -35,7 +35,7 @@ return new class extends Migration
             $table->boolean('is_popular_label')->default(false);
             $table->boolean('is_spicy_label')->default(false);
 
-            $table->boolean('stop_list')->default(false);
+            $table->boolean('is_in_stop_list')->default(false);
             $table->boolean('is_active');
             $table->unsignedBigInteger('category_id');
             $table->timestamps();
