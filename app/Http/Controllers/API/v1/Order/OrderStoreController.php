@@ -38,21 +38,13 @@ class OrderStoreController extends Controller
             $order = Order::create($data);
 
             foreach ($products_in_order as $product) {
-                if(isset($product['isUserConfig']) && $product['isUserConfig'] == true) {
-                    $order->products()->attach($product['productID'], [
-                        'quantity' => $product['countInCart'],
-                        'price' => $product['price_default'],
-                        'user_config_id' => $product['id'],
-                        'base_ingredients' => json_encode($product['baseIngredients']),
-                        'additional_ingredients' => json_encode($product['additionalIngredients'])
-                    ]);
-                }
-                else {
-                    $order->products()->attach($product['id'], [
-                        'quantity' => $product['countInCart'],
-                        'price' => $product['price_default'],
-                    ]);
-                }
+                $order->products()->attach($product['id'], [
+                    'quantity' => $product['countInCart'],
+                    'price' => $product['price_default'],
+                    'user_config_id' => isset($product['userConfigID']) ? $product['userConfigID'] : null,
+                    'base_ingredients' => isset($product['userConfigID']) ? json_encode($product['baseIngredients']) : null,
+                    'additional_ingredients' => isset($product['userConfigID']) ? json_encode($product['additionalIngredients']) : null
+                ]);
             }
 
             DB::commit();
