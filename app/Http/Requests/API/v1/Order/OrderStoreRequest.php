@@ -51,7 +51,10 @@ class OrderStoreRequest extends FormRequest
             'is_payment' => ['required', 'boolean'],
             'comment' => ['nullable', 'string'],
             'products_in_order' => ['required', 'array', 'min:1'],
-            'products_in_order.*.id' => ['required', 'integer', 'exists:products,id'],
+            'products_in_order.*.id' => ['required', 'integer',
+                Rule::exists('products', 'id')->where(function ($query) {
+                    $query->where('is_active', true)->where('is_in_stop_list', false);
+                }),],
             'products_in_order.*.countInCart' => ['required', 'integer', 'min:1'],
             'products_in_order.*.price_default' => ['required', 'decimal: 0,2'],
             'products_in_order.*.userConfigID' => ['nullable', 'integer'],
@@ -75,6 +78,7 @@ class OrderStoreRequest extends FormRequest
             'user_address_id.exists' => 'Необходимо добавить или выбрать адрес',
             'user_address_id.required_if' => 'Введите адрес доставки',
             'table_number.required_if' => 'Необходимо ввести номер столика',
+            'products_in_order.*.id' => 'Временно недоступен'
         ];
     }
 }
