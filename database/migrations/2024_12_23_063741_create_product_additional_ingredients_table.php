@@ -21,14 +21,12 @@ return new class extends Migration
             $table->index('product_id', 'product_additional_ingredients_product_idx');
             $table->foreign('product_id', 'product_additional_ingredients_product_fk')
                 ->on('products')
-                ->references('id')
-                ->onDelete('cascade');
+                ->references('id');
 
             $table->index('ingredient_id', 'product_additional_ingredients_ingredient_idx');
             $table->foreign('ingredient_id', 'product_additional_ingredients_ingredient_fk')
                 ->on('ingredients')
-                ->references('id')
-                ->onDelete('cascade');
+                ->references('id');
 
             $table->unique(['product_id', 'ingredient_id'], 'product_additional_ingredients_unique_idx');
         });
