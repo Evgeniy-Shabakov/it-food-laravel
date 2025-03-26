@@ -16,7 +16,7 @@ class AdditionalIngredientResource extends JsonResource
             'image_url' => $this->image_url,
             'description' => $this->description,
             'price_default' => $this->price_default,
-            'stop_list' => $this->stop_list,
+            'is_in_stop_list' => $this->is_in_stop_list,
             'is_active' => $this->is_active,
             'max_quantity' => $this->pivot->max_quantity,
             'created_at' => $this->created_at,
