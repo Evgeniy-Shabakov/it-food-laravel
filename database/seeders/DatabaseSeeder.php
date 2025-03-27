@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             LegalDocumentSeeder::class,
             DesignSeeder::class,
+            ProductIngredientsSeeder::class,
         ]);
     }
 }
