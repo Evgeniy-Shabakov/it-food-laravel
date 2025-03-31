@@ -80,164 +80,163 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+   return $request->user();
 });
 
 Route::group(['prefix' => 'v1'], function () {
 
-    Route::get('/get-auth-user', GetAuthUserController::class);
+   Route::get('/get-auth-user', GetAuthUserController::class);
 
-    Route::get('/roles', RoleIndexController::class);
+   Route::get('/roles', RoleIndexController::class);
 
-    Route::middleware('auth:sanctum')->group(function () {
+   Route::middleware('auth:sanctum')->group(function () {
 
-        //добавить политику безопасности
+      //добавить политику безопасности
 
-//        Route::get('/users', UserIndexController::class);
-//        Route::get('/users/{user}', UserShowController::class);
-//
-//        Route::post('/users', UserStoreController::class);
-        Route::patch('/users/{user}', UserUpdateController::class);
-//        Route::delete('/users/{user}', UserDeleteController::class);
+      //        Route::get('/users', UserIndexController::class);
+      //        Route::get('/users/{user}', UserShowController::class);
+      //
+      //        Route::post('/users', UserStoreController::class);
+      Route::patch('/users/{user}', UserUpdateController::class);
+      //        Route::delete('/users/{user}', UserDeleteController::class);
 
-//        Route::get('/orders', UserIndexController::class);
-        Route::get('/orders/today/{restaurantID?}', OrderIndexTodayController::class);
-        Route::get('/orders/{order}', OrderShowController::class);
+      //        Route::get('/orders', UserIndexController::class);
+      Route::get('/orders/today/{restaurantID?}', OrderIndexTodayController::class);
+      Route::get('/orders/{order}', OrderShowController::class);
 
-        Route::post('/orders', OrderStoreController::class);
-        Route::patch('/orders/{order}/next-status', OrderNextStatusController::class);
-        Route::patch('/orders/{order}/previous-status', OrderPreviousStatusController::class);
-        Route::patch('/orders/{order}/cansel-status', OrderCanselStatusController::class);
-//        Route::patch('/orders/{order}', OrderUpdateController::class);
-//        Route::delete('/orders/{order}', OrderDeleteController::class);
-
-
-//        Route::get('/users/{user}/orders', OrderIndexController::class);
-//        Route::get('/users/{user}/orders/{order}', OrderShowController::class);
-//
-//        Route::post('/users/{user}/orders', OrderStoreController::class);
+      Route::post('/orders', OrderStoreController::class);
+      Route::patch('/orders/{order}/next-status', OrderNextStatusController::class);
+      Route::patch('/orders/{order}/previous-status', OrderPreviousStatusController::class);
+      Route::patch('/orders/{order}/cansel-status', OrderCanselStatusController::class);
+      //        Route::patch('/orders/{order}', OrderUpdateController::class);
+      //        Route::delete('/orders/{order}', OrderDeleteController::class);
 
 
-        //добавить политику безопасности
-        Route::get('/users/{user}/addresses', UserAddressIndexController::class);
-        Route::get('/users/{user}/addresses/{address}', UserAddressShowController::class);
-
-        Route::post('/users/{user}/addresses', UserAddressStoreController::class);
-        Route::patch('/users/{user}/addresses/{address}', UserAddressUpdateController::class);
-        Route::delete('/users/{user}/addresses/{address}', UserAddressDeleteController::class);
+      //        Route::get('/users/{user}/orders', OrderIndexController::class);
+      //        Route::get('/users/{user}/orders/{order}', OrderShowController::class);
+      //
+      //        Route::post('/users/{user}/orders', OrderStoreController::class);
 
 
-        Route::get('/users/{user}/orders', UserOrderIndexController::class);
-        Route::get('/users/{user}/active-orders', UserActiveOrderIndexController::class);
-        Route::get('/users/{user}/last-order', UserLastOrderShowController::class);
-    });
+      //добавить политику безопасности
+      Route::get('/users/{user}/addresses', UserAddressIndexController::class);
+      Route::get('/users/{user}/addresses/{address}', UserAddressShowController::class);
 
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::get('/employees', EmployeeIndexController::class)->can('viewAll', Employee::class);
-        Route::get('/employees/{employee}', EmployeeShowController::class)->can('viewOne', 'employee');
-
-        Route::post('/employees', EmployeeStoreController::class)->can('create', Employee::class);
-        Route::patch('/employees/{employee}', EmployeeUpdateController::class)->can('update', 'employee');
-        Route::delete('/employees/{employee}', EmployeeDeleteController::class)->can('delete', 'employee');
-    });
-
-    Route::get('/countries', CountryIndexController::class);
-    Route::get('/countries/{country}', CountryShowController::class);
-
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/countries', CountryStoreController::class)->can('create', Country::class);
-        Route::patch('/countries/{country}', CountryUpdateController::class)->can('update', 'country');
-        Route::delete('/countries/{country}', CountryDeleteController::class)->can('delete', 'country');
-    });
+      Route::post('/users/{user}/addresses', UserAddressStoreController::class);
+      Route::patch('/users/{user}/addresses/{address}', UserAddressUpdateController::class);
+      Route::delete('/users/{user}/addresses/{address}', UserAddressDeleteController::class);
 
 
-    Route::get('/cities', CityIndexController::class);
-    Route::get('/cities/{city}', CityShowController::class);
+      Route::get('/users/{user}/orders', UserOrderIndexController::class);
+      Route::get('/users/{user}/active-orders', UserActiveOrderIndexController::class);
+      Route::get('/users/{user}/last-order', UserLastOrderShowController::class);
+   });
 
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/cities', CityStoreController::class)->can('create', City::class);
-        Route::patch('/cities/{city}', CityUpdateController::class)->can('update', 'city');
-        Route::delete('/cities/{city}', CityDeleteController::class)->can('delete', 'city');
-    });
+   Route::middleware('auth:sanctum')->group(function () {
+      Route::get('/employees', EmployeeIndexController::class)->can('viewAll', Employee::class);
+      Route::get('/employees/{employee}', EmployeeShowController::class)->can('viewOne', 'employee');
 
+      Route::post('/employees', EmployeeStoreController::class)->can('create', Employee::class);
+      Route::patch('/employees/{employee}', EmployeeUpdateController::class)->can('update', 'employee');
+      Route::delete('/employees/{employee}', EmployeeDeleteController::class)->can('delete', 'employee');
+   });
 
-    Route::get('/restaurants', RestaurantIndexController::class);
-    Route::get('/restaurants/{restaurant}', RestaurantShowController::class);
+   Route::get('/countries', CountryIndexController::class);
+   Route::get('/countries/{country}', CountryShowController::class);
 
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/restaurants', RestaurantStoreController::class)->can('create', Restaurant::class);
-        Route::patch('/restaurants/{restaurant}', RestaurantUpdateController::class)->can('update', 'restaurant');
-        Route::delete('/restaurants/{restaurant}', RestaurantDeleteController::class)->can('delete', 'restaurant');
-    });
-
-
-    Route::get('/companies/{company}', CompanyShowController::class);
-
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::patch('/companies/{company}', CompanyUpdateController::class)->can('update', 'company');
-    });
+   Route::middleware('auth:sanctum')->group(function () {
+      Route::post('/countries', CountryStoreController::class)->can('create', Country::class);
+      Route::patch('/countries/{country}', CountryUpdateController::class)->can('update', 'country');
+      Route::delete('/countries/{country}', CountryDeleteController::class)->can('delete', 'country');
+   });
 
 
-    Route::get('/categories', CategoryIndexController::class);
-    Route::get('/categories/{category}', CategoryShowController::class);
+   Route::get('/cities', CityIndexController::class);
+   Route::get('/cities/{city}', CityShowController::class);
 
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/categories', CategoryStoreController::class)->can('create', Category::class);
-        Route::patch('/categories/{category}', CategoryUpdateController::class)->can('update', 'category');
-        Route::delete('/categories/{category}', CategoryDeleteController::class)->can('delete', 'category');
-    });
-
-
-    Route::get('/products', ProductIndexController::class);
-    Route::get('/products/{product}', ProductShowController::class);
-
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/products', ProductStoreController::class)->can('create', Product::class);
-        Route::patch('/products/{product}', ProductUpdateController::class)->can('update', 'product');
-        Route::delete('/products/{product}', ProductDeleteController::class)->can('delete', 'product');
-
-        //добавить политику безопасности
-        Route::patch('/products/{product}/toggle-is-in-stop-list', ProductToggleIsInStopListController::class);
-    });
-
-    Route::get('/ingredients', IngredientIndexController::class);
-    Route::get('/ingredients/{ingredient}', IngredientShowController::class);
-
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/ingredients', IngredientStoreController::class)->can('create', Ingredient::class);
-        Route::patch('/ingredients/{ingredient}', IngredientUpdateController::class)->can('update', 'ingredient');
-        Route::delete('/ingredients/{ingredient}', IngredientDeleteController::class)->can('delete', 'ingredient');
-
-        //добавить политику безопасности
-        Route::patch('/ingredients/{ingredient}/toggle-is-in-stop-list', IngredientToggleIsInStopListController::class);
-    });
+   Route::middleware('auth:sanctum')->group(function () {
+      Route::post('/cities', CityStoreController::class)->can('create', City::class);
+      Route::patch('/cities/{city}', CityUpdateController::class)->can('update', 'city');
+      Route::delete('/cities/{city}', CityDeleteController::class)->can('delete', 'city');
+   });
 
 
-    Route::get('/legal-documents', LegalDocumentIndexController::class);
-    Route::get('/legal-documents/{legalDocument}', LegalDocumentShowController::class);
+   Route::get('/restaurants', RestaurantIndexController::class);
+   Route::get('/restaurants/{restaurant}', RestaurantShowController::class);
 
-    //добавить политику безопасности к правовым документам
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/legal-documents', LegalDocumentStoreController::class);
-        Route::patch('/legal-documents/{legalDocument}', LegalDocumentUpdateController::class);
-        Route::delete('/legal-documents/{legalDocument}', LegalDocumentDeleteController::class);
-    });
-
-    //добавил для загрузки политики т.к. ссылка напрямую из фронтенда вызывает ошибку CORS - START
-    Route::get('/legal-documents/download/{legalDocument}', LegalDocumentDownloadController::class);
-    //добавил для загрузки политики т.к. ссылка напрямую из фронтенда вызывает ошибку CORS - END
+   Route::middleware('auth:sanctum')->group(function () {
+      Route::post('/restaurants', RestaurantStoreController::class)->can('create', Restaurant::class);
+      Route::patch('/restaurants/{restaurant}', RestaurantUpdateController::class)->can('update', 'restaurant');
+      Route::delete('/restaurants/{restaurant}', RestaurantDeleteController::class)->can('delete', 'restaurant');
+   });
 
 
-    Route::get('/designs', DesignIndexController::class);
-    Route::get('/designs/{design}', DesignShowController::class);
+   Route::get('/companies/{company}', CompanyShowController::class);
 
-    //добавить политику безопасности к дизайну
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/designs', DesignStoreController::class);
-        Route::patch('/designs/{design}', DesignUpdateController::class);
-        Route::delete('/designs/{design}', DesignDeleteController::class);
-    });
+   Route::middleware('auth:sanctum')->group(function () {
+      Route::patch('/companies/{company}', CompanyUpdateController::class)->can('update', 'company');
+   });
 
-    Route::get('/get-active-design', GetActiveDesignController::class);
+
+   Route::get('/categories', CategoryIndexController::class);
+   Route::get('/categories/{category}', CategoryShowController::class);
+
+   Route::middleware('auth:sanctum')->group(function () {
+      Route::post('/categories', CategoryStoreController::class)->can('create', Category::class);
+      Route::patch('/categories/{category}', CategoryUpdateController::class)->can('update', 'category');
+      Route::delete('/categories/{category}', CategoryDeleteController::class)->can('delete', 'category');
+   });
+
+
+   Route::get('/products', ProductIndexController::class);
+   Route::get('/products/{product}', ProductShowController::class);
+
+   Route::middleware('auth:sanctum')->group(function () {
+      Route::post('/products', ProductStoreController::class)->can('create', Product::class);
+      Route::patch('/products/{product}', ProductUpdateController::class)->can('update', 'product');
+      Route::delete('/products/{product}', ProductDeleteController::class)->can('delete', 'product');
+
+      //добавить политику безопасности
+      Route::patch('/products/{product}/toggle-is-in-stop-list', ProductToggleIsInStopListController::class);
+   });
+
+   Route::get('/ingredients', IngredientIndexController::class);
+   Route::get('/ingredients/{ingredient}', IngredientShowController::class);
+
+   Route::middleware('auth:sanctum')->group(function () {
+      Route::post('/ingredients', IngredientStoreController::class)->can('create', Ingredient::class);
+      Route::patch('/ingredients/{ingredient}', IngredientUpdateController::class)->can('update', 'ingredient');
+      Route::delete('/ingredients/{ingredient}', IngredientDeleteController::class)->can('delete', 'ingredient');
+
+      //добавить политику безопасности
+      Route::patch('/ingredients/{ingredient}/toggle-is-in-stop-list', IngredientToggleIsInStopListController::class);
+   });
+
+
+   Route::get('/legal-documents', LegalDocumentIndexController::class);
+   Route::get('/legal-documents/{legalDocument}', LegalDocumentShowController::class);
+
+   //добавить политику безопасности к правовым документам
+   Route::middleware('auth:sanctum')->group(function () {
+      Route::post('/legal-documents', LegalDocumentStoreController::class);
+      Route::patch('/legal-documents/{legalDocument}', LegalDocumentUpdateController::class);
+      Route::delete('/legal-documents/{legalDocument}', LegalDocumentDeleteController::class);
+   });
+
+   //добавил для загрузки политики т.к. ссылка напрямую из фронтенда вызывает ошибку CORS - START
+   Route::get('/legal-documents/download/{legalDocument}', LegalDocumentDownloadController::class);
+   //добавил для загрузки политики т.к. ссылка напрямую из фронтенда вызывает ошибку CORS - END
+
+
+   Route::get('/designs', DesignIndexController::class);
+   Route::get('/designs/{design}', DesignShowController::class);
+
+   //добавить политику безопасности к дизайну
+   Route::middleware('auth:sanctum')->group(function () {
+      Route::post('/designs', DesignStoreController::class);
+      Route::patch('/designs/{design}', DesignUpdateController::class);
+      Route::delete('/designs/{design}', DesignDeleteController::class);
+   });
+
+   Route::get('/get-active-design', GetActiveDesignController::class);
 });
-

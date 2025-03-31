@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\v1\Auth\LoginController;
 use App\Http\Controllers\API\v1\Auth\LogoutController;
 use App\Http\Controllers\API\v1\Auth\SendVerifyCodeController;
+use App\Http\Controllers\API\v1\Auth\SendVerifyCodeForEmployeeController;
 
 
 /*
@@ -25,6 +26,7 @@ Route::get('/', function () {
 
 Route::middleware('guest')->group(function (){
     Route::post('/send-verify-code', SendVerifyCodeController::class);
+    Route::post('/send-verify-code-for-employee', SendVerifyCodeForEmployeeController::class);
     Route::post('/login', LoginController::class);
 });
 
