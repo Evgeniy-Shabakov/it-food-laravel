@@ -15,7 +15,7 @@ class SendVerifyCodeForEmployeeController extends Controller
       $user = User::where('phone', $data['phone'])->first();
 
       if (!$user || !$user->employee) {
-         return response()->json(['error' => 'Пользователь не является сотрудником.'], 404);
+         return response()->json(['message' => 'Пользователь не является сотрудником.'], 404);
       }
 
       $sms_code = rand(1000, 9999);
