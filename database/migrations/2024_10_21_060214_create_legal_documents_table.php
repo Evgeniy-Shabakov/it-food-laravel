@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('file_path');
             $table->string('file_url');
             $table->string('description')->nullable();
+            $table->text('content')->nullable(); //на будущее, если захочу отображать данные не через файл
             $table->boolean('is_active');
 
             $table->timestamps();
