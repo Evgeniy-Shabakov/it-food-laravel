@@ -19,11 +19,13 @@ return new class extends Migration {
 
             $table->foreign('ingredient_id')
                 ->references('id')
-                ->on('ingredients');
+                ->on('ingredients')
+                ->onDelete('cascade');
 
             $table->foreign('replacement_id')
                 ->references('id')
-                ->on('ingredients');
+                ->on('ingredients')
+                ->onDelete('cascade');
 
             $table->unique(['ingredient_id', 'replacement_id']);
         });

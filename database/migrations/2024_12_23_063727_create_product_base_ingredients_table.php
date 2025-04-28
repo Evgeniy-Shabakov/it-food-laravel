@@ -22,7 +22,8 @@ return new class extends Migration
             $table->index('product_id', 'product_base_ingredients_product_idx');
             $table->foreign('product_id', 'product_base_ingredients_product_fk')
                 ->on('products')
-                ->references('id');
+                ->references('id')
+                ->onDelete('cascade');
 
             $table->index('ingredient_id', 'product_base_ingredients_ingredient_idx');
             $table->foreign('ingredient_id', 'product_base_ingredients_ingredient_fk')
