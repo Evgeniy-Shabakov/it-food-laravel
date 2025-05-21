@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('house_number');
             $table->string('corps_number')->nullable();
             $table->string('apartment_number')->nullable();
-            $table->unsignedTinyInteger('entrance_number')->nullable();
-            $table->unsignedTinyInteger('floor')->nullable();
+            $table->smallInteger('entrance_number')->nullable();
+            $table->smallInteger('floor')->nullable();
             $table->string('entrance_code')->nullable();
             $table->string('comment')->nullable();
             $table->boolean('show_to_user')->default(true);

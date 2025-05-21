@@ -18,8 +18,8 @@ class DesignSeeder extends Seeder
             'brand_color' => '#f97316',
             'text_color_main' => '#000000',
             'text_color_on_brand_color' => '#ffffff',
-            'text_color_accent' => '#42db00',
-            'bottom_nav_color' => '#a6a6a6',
+            'text_color_accent' => '#008000',
+            'bottom_nav_color' => '#757575',
         ]);
     }
 }
