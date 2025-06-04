@@ -13,9 +13,9 @@ class CitySeeder extends Seeder
         DB::table('cities')->insert([
             'title' => 'Нижний Новгород',
             'country_id' => 1,
-            'min_order_value_for_delivery' => 1000,
-            'delivery_price' => 200,
-            'order_value_for_free_delivery' => 2000,
+            'min_order_value_for_delivery_by_default' => 1000,
+            'delivery_price_by_default' => 200,
+            'order_value_for_free_delivery_by_default' => 2000,
         ]);
     }
 }
