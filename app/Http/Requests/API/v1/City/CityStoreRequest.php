@@ -36,7 +36,7 @@ class CityStoreRequest extends FormRequest
          ],
          'min_order_value_for_delivery_by_default' => 'numeric|min:0|max:999999',
          'delivery_price_by_default' => 'numeric|min:0|max:999999',
-         'order_value_for_free_delivery_by_default' => 'numeric|min:0|max:999999',
+         'order_value_for_free_delivery_by_default' => 'nullable|numeric|min:0|max:999999',
          'map_iframe' => 'nullable|string',
          'geojson' => 'nullable|json',
       ];

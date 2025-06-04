@@ -20,7 +20,7 @@ class CityResource extends JsonResource
             'delivery_price_by_default' => $this->delivery_price_by_default,
             'order_value_for_free_delivery_by_default' => $this->order_value_for_free_delivery_by_default,
             'map_iframe' => $this->map_iframe,
-            'geojson' => $this->geojson,
+            'geojson' => json_decode($this->geojson, true),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
