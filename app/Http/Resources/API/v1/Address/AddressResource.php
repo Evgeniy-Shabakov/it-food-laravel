@@ -23,6 +23,9 @@ class AddressResource extends JsonResource
             'entrance_code' => $this->entrance_code,
             'comment' => $this->comment,
             'show_to_user' => $this->show_to_user,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
+            'value_string' => $this->value_string,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

@@ -23,10 +23,12 @@ return new class extends Migration
          $table->smallInteger('entrance_number')->nullable();
          $table->smallInteger('floor')->nullable();
          $table->string('entrance_code')->nullable();
-         $table->string('comment')->nullable();
+         $table->string('comment', 500)->nullable();
          $table->boolean('show_to_user')->default(true); //для фейкового удаления адреса,т.к. адрес не может быть удален если привязан к заказу
          $table->decimal('latitude', 21, 18)->nullable(); // широта
          $table->decimal('longitude', 21, 18)->nullable(); // долгота
+         $table->string('value_string', 500)->nullable(); // адрес в виде строки
+         $table->json('data')->nullable(); // для хранения данных со стороннего API
          $table->timestamps();
 
          $table->index('user_id', 'address_user_idx');
