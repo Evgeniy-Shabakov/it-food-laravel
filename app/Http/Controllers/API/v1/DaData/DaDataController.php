@@ -10,8 +10,8 @@ class DaDataController extends Controller
 {
    public function __invoke(Request $request)
    {
-      $dadataApiUrl = env('DADATA_ADDRESS_API_URL');
-      $dadataApiKey = env('DADATA_API_KEY');
+      $dadataApiUrl = config('dadata.address_api_url');
+      $dadataApiKey = config('dadata.api_key');
 
       // Проверка наличия обязательных переменных окружения
       if (!$dadataApiUrl || !$dadataApiKey) {
