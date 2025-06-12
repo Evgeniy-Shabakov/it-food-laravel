@@ -69,6 +69,8 @@ use App\Http\Controllers\API\v1\User\UserOrder\UserActiveOrderIndexController;
 use App\Http\Controllers\API\v1\User\UserOrder\UserLastOrderShowController;
 use App\Http\Controllers\API\v1\User\UserOrder\UserOrderIndexController;
 use App\Http\Controllers\API\v1\User\UserUpdateController;
+use App\Http\Controllers\API\v1\DaData\DaDataController;
+
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
@@ -76,6 +78,7 @@ use App\Models\Employee;
 use App\Models\Ingredient;
 use App\Models\Product;
 use App\Models\Restaurant;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -239,4 +242,10 @@ Route::group(['prefix' => 'v1'], function () {
    });
 
    Route::get('/get-active-design', GetActiveDesignController::class);
+
+   Route::get('/dadata-addresses', DaDataController::class);
+
+   Route::middleware('auth:sanctum')->group(function () {
+      Route::post('/dadata-addresses', DaDataController::class);
+   });
 });
