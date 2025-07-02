@@ -19,7 +19,12 @@ return [
 
    'allowed_methods' => ['*'],
 
-   'allowed_origins' => [env('FRONTEND_URL_CLIENT'), env('FRONTEND_URL_ADMIN'), env('FRONTEND_URL_ORDERS')],
+   'allowed_origins' => [
+      env('FRONTEND_URL_CLIENT'),
+      env('FRONTEND_URL_ADMIN'),
+      env('FRONTEND_URL_ORDERS'),
+      env('FRONTEND_URL_VK_AUTH'),
+   ],
 
    'allowed_origins_patterns' => [],
 
