@@ -23,7 +23,7 @@ return [
       env('FRONTEND_URL_CLIENT'),
       env('FRONTEND_URL_ADMIN'),
       env('FRONTEND_URL_ORDERS'),
-      env('FRONTEND_URL_VK_AUTH'),
+      env('FRONTEND_URL_VK_AUTH_FOR_DEV'),
    ],
 
    'allowed_origins_patterns' => [],

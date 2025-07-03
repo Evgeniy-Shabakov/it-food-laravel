@@ -37,7 +37,31 @@ class VKLoginController extends Controller
       }
 
       $phone = '+' . $vkData['user']['phone'];
-      $user = User::firstOrCreate(['phone' => $phone], ['phone' => $phone]);
+
+      $trustedDomain = config('app.trusted_domain_for_new_user');
+      $origin = parse_url($request->headers->get('origin'), PHP_URL_HOST);
+      $port = parse_url($request->headers->get('origin'), PHP_URL_PORT);
+      $originWithPort = $origin . ($port ? ':' . $port : '');
+
+      if ($originWithPort === $trustedDomain) {
+         $user = User::firstOrCreate(['phone' => $phone], ['phone' => $phone]);
+      } else {
+         // Для других доменов - только поиск
+         $user = User::where('phone', $phone)->first();
+
+         if (!$user) {
+            return response([
+               'message' => 'Пользователь не найден'
+            ], Response::HTTP_UNAUTHORIZED);
+         }
+
+         // Проверяем, является ли пользователь сотрудником с доступом к админке
+         if (!$user->employee || !$user->employee->hasAdminPanelAccess()) {
+            return response([
+               'message' => 'Доступ разрешен только сотрудникам'
+            ], 403);
+         }
+      }
 
       Auth::login($user, true);
       $request->session()->regenerate();
