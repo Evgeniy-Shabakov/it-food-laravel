@@ -18,7 +18,7 @@ class TelegramBotController extends Controller
          $chatId = $update['message']['chat']['id'];
          $text = trim($update['message']['text']);
 
-         if ($text === '/start') {
+         if ($text === '/start' || $text === 'start') {
             // Отправляем сообщение с кнопкой для отправки номера телефона
             $response = Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
                'chat_id' => $chatId,
@@ -43,7 +43,7 @@ class TelegramBotController extends Controller
                'text' => $responseText,
             ]);
          } else {
-            $responseText = 'Не понимаю команду. Напишите /help';
+            $responseText = "Не понимаю команду: ' {$text} '. Напишите /help";
             Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
                'chat_id' => $chatId,
                'text' => $responseText,
