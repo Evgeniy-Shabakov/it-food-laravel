@@ -17,15 +17,50 @@ class TelegramBotController extends Controller
          $chatId = $update['message']['chat']['id'];
          $text = trim($update['message']['text']);
 
-         $responseText = match ($text) {
-            '/start' => 'Привет! Я бот на Laravel',
-            '/help' => 'Доступные команды: /start, /help',
-            default => 'Не понимаю команду. Напишите /help',
-         };
+         if ($text === '/start') {
+            // Отправляем сообщение с кнопкой для отправки номера телефона
+            $response = Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
+               'chat_id' => $chatId,
+               'text' => 'Привет! Для продолжения поделитесь своим номером телефона',
+               'reply_markup' => json_encode([
+                  'keyboard' => [
+                     [
+                        [
+                           'text' => 'Отправить мой номер телефона',
+                           'request_contact' => true
+                        ]
+                     ]
+                  ],
+                  'resize_keyboard' => true,
+                  'one_time_keyboard' => true
+               ])
+            ]);
+         } elseif ($text === '/help') {
+            $responseText = 'Доступные команды: /start, /help';
+            Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
+               'chat_id' => $chatId,
+               'text' => $responseText,
+            ]);
+         } else {
+            $responseText = 'Не понимаю команду. Напишите /help';
+            Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
+               'chat_id' => $chatId,
+               'text' => $responseText,
+            ]);
+         }
+      }
+
+      // Обработка полученного контакта
+      if (isset($update['message']['contact'])) {
+         $chatId = $update['message']['chat']['id'];
+         $phoneNumber = $update['message']['contact']['phone_number'];
+
+         // Здесь вы можете сохранить номер телефона в базу данных
+         // или выполнить другие действия
 
          Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
             'chat_id' => $chatId,
-            'text' => $responseText,
+            'text' => "Спасибо! Ваш номер телефона: {$phoneNumber}",
          ]);
       }
 
