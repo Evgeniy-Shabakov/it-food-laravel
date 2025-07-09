@@ -12,6 +12,7 @@ class TelegramBotController extends Controller
    {
       $update = $request->all();
       $botToken = config('telegram.bot_token');
+      $serviceName = 'Demopizza';
 
       if (isset($update['message']['text'])) {
          $chatId = $update['message']['chat']['id'];
@@ -21,12 +22,12 @@ class TelegramBotController extends Controller
             // Отправляем сообщение с кнопкой для отправки номера телефона
             $response = Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
                'chat_id' => $chatId,
-               'text' => 'Привет! Для продолжения поделитесь своим номером телефона',
+               'text' => "Для входа в сервис {$serviceName} необходимо подтвердить номер телефона",
                'reply_markup' => json_encode([
                   'keyboard' => [
                      [
                         [
-                           'text' => 'Отправить мой номер телефона',
+                           'text' => '✅ Подтвердить мой номер телефона',
                            'request_contact' => true
                         ]
                      ]
