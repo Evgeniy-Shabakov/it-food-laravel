@@ -38,25 +38,20 @@ class VKLoginController extends Controller
 
       $phone = '+' . $vkData['user']['phone'];
 
-      $trustedDomain = config('app.trusted_domain_for_new_user');
-      $origin = parse_url($request->headers->get('origin'), PHP_URL_HOST);
-      $port = parse_url($request->headers->get('origin'), PHP_URL_PORT);
-      $originWithPort = $origin . ($port ? ':' . $port : '');
+      $frontendUrl = parse_url(config('domain.frontend_url_client'), PHP_URL_HOST);
+      $frontendPort = parse_url(config('domain.frontend_url_client'), PHP_URL_PORT);
+      $clientDomain = $frontendUrl . ($frontendPort ? ':' . $frontendPort : '');
 
-      if ($originWithPort === $trustedDomain) {
+      $origin = parse_url($request->headers->get('origin'), PHP_URL_HOST);
+      $port = parse_url($request->headers->get('origin'), PHP_URL_PORT); // для локальной разработки
+      $originWithPort = $origin . ($port ? ':' . $port : ''); // для локальной разработки
+
+      if ($originWithPort === $clientDomain) {
          $user = User::firstOrCreate(['phone' => $phone], ['phone' => $phone]);
       } else {
-         // Для других доменов - только поиск
          $user = User::where('phone', $phone)->first();
 
-         if (!$user) {
-            return response([
-               'message' => 'Пользователь не найден'
-            ], Response::HTTP_UNAUTHORIZED);
-         }
-
-         // Проверяем, является ли пользователь сотрудником с доступом к админке
-         if (!$user->employee || !$user->employee->hasAdminPanelAccess()) {
+         if (!$user || !$user->employee || !$user->employee->hasAdminPanelAccess()) {
             return response([
                'message' => 'Доступ разрешен только сотрудникам'
             ], 403);

@@ -184,6 +184,4 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
-
-    'trusted_domain_for_new_user' => env('TRUSTED_DOMAIN_FOR_NEW_USER'),
 ];
