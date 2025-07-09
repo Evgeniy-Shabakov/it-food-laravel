@@ -70,6 +70,7 @@ use App\Http\Controllers\API\v1\User\UserOrder\UserLastOrderShowController;
 use App\Http\Controllers\API\v1\User\UserOrder\UserOrderIndexController;
 use App\Http\Controllers\API\v1\User\UserUpdateController;
 use App\Http\Controllers\API\v1\DaData\DaDataController;
+use App\Http\Controllers\API\v1\Auth\Telegram\TelegramBotController;
 
 use App\Models\Category;
 use App\Models\City;
@@ -248,4 +249,6 @@ Route::group(['prefix' => 'v1'], function () {
    Route::middleware('auth:sanctum')->group(function () {
       Route::post('/dadata-addresses', DaDataController::class);
    });
+
+   Route::post('/telegram/webhook', TelegramBotController::class);
 });
