@@ -25,92 +25,62 @@ class TelegramBotController extends Controller
    {
 
       $update = $request->all();
-      $botToken = config('telegram.bot_token');
-      $serviceName = Company::first()->brand_title;
 
       if (isset($update['message']['text'])) {
-         $chatId = $update['message']['chat']['id'];
-         $text = trim($update['message']['text']);
-
-         if (str_starts_with($text, '/start')) {
-            $parts = explode(' ', $text);
-            $userAuthtoken = $parts[1] ?? null;
-
-            if ($userAuthtoken) {
-               // Проверяем токен в кеше
-               $cacheKey = 'telegram_auth_' . $userAuthtoken;
-               $data = Cache::get($cacheKey);
-
-               if ($data) {          // Токен валиден - предлагаем подтвердить номер
-                  Cache::put($cacheKey, array_merge($data, [
-                     'telegram_chat_id' => $chatId,
-                     'status' => 'waiting_phone'
-                  ]), now()->addMinutes(15));
-
-                  Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
-                     'chat_id' => $chatId,
-                     'text' => "Для входа в сервис {$serviceName} необходимо подтвердить номер телефона",
-                     'reply_markup' => json_encode([
-                        'keyboard' => [
-                           [
-                              [
-                                 'text' => '✅ ПОДТВЕРДИТЬ НОМЕР ТЕЛЕФОНА',
-                                 'request_contact' => true
-                              ]
-                           ]
-                        ],
-                        'resize_keyboard' => true,
-                        'one_time_keyboard' => true
-                     ])
-                  ]);
-               } else {
-                  $responseText = "⚠️ Ссылка недействительна или устарела. Обновите ссылку в приложении.";
-
-                  Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
-                     'chat_id' => $chatId,
-                     'text' => $responseText,
-                  ]);
-               }
-            } else {
-               // Команда /start без токена
-               $responseText = "Для входа используйте ссылку из приложения {$serviceName}";
-               Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
-                  'chat_id' => $chatId,
-                  'text' => $responseText,
-               ]);
-            }
-         } elseif ($text === '/help') {
-            $responseText = 'Доступные команды: /start, /help';
-            Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
-               'chat_id' => $chatId,
-               'text' => $responseText,
-            ]);
-         } else {
-            $responseText = "Не понимаю команду: ' {$text} '. Напишите /help";
-            Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
-               'chat_id' => $chatId,
-               'text' => $responseText,
-            ]);
-         }
+         $this->handleTextMessage($update['message']);
       }
 
-      // Обработка полученного контакта
-      if (isset($update['message']['contact'])) {
-         $chatId = $update['message']['chat']['id'];
-         $phoneNumber = $update['message']['contact']['phone_number'];
-
-         // Здесь вы можете сохранить номер телефона в базу данных
-         // или выполнить другие действия
-
-         Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
-            'chat_id' => $chatId,
-            'text' => "Спасибо! Ваш номер телефона: {$phoneNumber}",
-         ]);
-
-         $this->sendSimpleMessage($chatId, "Спасибо! Ваш номер телефона: {$phoneNumber}");
+      if (isset($update['message']['contact'])) {        // Обработка полученного контакта
+         $this->handleContactMessage($update['message']);
       }
 
       return response()->noContent();
+   }
+
+   protected function handleTextMessage($message)
+   {
+      $chatId = $message['chat']['id'];
+      $text = trim($message['text']);
+
+      if (str_starts_with($text, '/start')) {
+         $parts = explode(' ', $text);
+         $userAuthtoken = $parts[1] ?? null;
+
+         if ($userAuthtoken) {
+            $cacheKey = 'telegram_auth_' . $userAuthtoken; // Проверяем токен в кеше
+            $data = Cache::get($cacheKey);
+
+            if ($data) {          // Токен валиден - предлагаем подтвердить номер
+               Cache::put($cacheKey, array_merge($data, [
+                  'telegram_chat_id' => $chatId,
+                  'status' => 'waiting_phone'
+               ]), now()->addMinutes(15));
+
+               $this->sendPhoneRequest($chatId);
+            } else {
+               $responseText = "⚠️ Ссылка недействительна или устарела. Обновите ссылку в приложении.";
+               $this->sendSimpleMessage($chatId, $responseText);
+            }
+         } else {           // Команда /start без токена
+            $responseText = "Для входа используйте ссылку из приложения {$this->serviceName}";
+            $this->sendSimpleMessage($chatId, $responseText);
+         }
+      } elseif ($text === '/help') {
+         $responseText = 'Доступные команды: /start, /help';
+         $this->sendSimpleMessage($chatId, $responseText);
+      } else {
+         $responseText = "Не понимаю команду: ' {$text} '. Напишите /help";
+         $this->sendSimpleMessage($chatId, $responseText);
+      }
+   }
+
+   protected function handleContactMessage($message)
+   {
+      $chatId = $message['chat']['id'];
+      $phoneNumber = $message['contact']['phone_number'];
+
+      $responseText = "Спасибо! Ваш номер телефона: {$phoneNumber}";
+      $this->sendSimpleMessage($chatId, $responseText);
    }
 
    protected function sendSimpleMessage($chatID, $text)
@@ -118,6 +88,26 @@ class TelegramBotController extends Controller
       Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
          'chat_id' => $chatID,
          'text' => $text
+      ]);
+   }
+
+   protected function sendPhoneRequest($chatID)
+   {
+      Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
+         'chat_id' => $chatID,
+         'text' => "Для входа в сервис {$this->serviceName} необходимо подтвердить номер телефона",
+         'reply_markup' => json_encode([
+            'keyboard' => [
+               [
+                  [
+                     'text' => '✅ ПОДТВЕРДИТЬ НОМЕР ТЕЛЕФОНА',
+                     'request_contact' => true
+                  ]
+               ]
+            ],
+            'resize_keyboard' => true,
+            'one_time_keyboard' => true
+         ])
       ]);
    }
 }
