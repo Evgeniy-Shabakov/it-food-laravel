@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\v1\Auth\Telegram;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -12,13 +13,15 @@ class TelegramBotController extends Controller
    {
       $update = $request->all();
       $botToken = config('telegram.bot_token');
-      $serviceName = 'Demopizza';
+      $serviceName = Company::first()->brand_title;
 
       if (isset($update['message']['text'])) {
          $chatId = $update['message']['chat']['id'];
          $text = trim($update['message']['text']);
 
-         if ($text === '/start' || $text === '/start start') {
+         if (str_starts_with($text, '/start')) {
+
+            
             // Отправляем сообщение с кнопкой для отправки номера телефона
             $response = Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
                'chat_id' => $chatId,
