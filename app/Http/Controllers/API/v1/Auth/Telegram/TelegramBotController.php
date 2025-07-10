@@ -27,7 +27,7 @@ class TelegramBotController extends Controller
                   'keyboard' => [
                      [
                         [
-                           'text' => '✅ Подтвердить мой номер телефона',
+                           'text' => '\n ✅ Подтвердить мой номер телефона \n',
                            'request_contact' => true
                         ]
                      ]
