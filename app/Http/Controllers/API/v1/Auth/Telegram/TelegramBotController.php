@@ -10,8 +10,20 @@ use Illuminate\Support\Facades\Cache;
 
 class TelegramBotController extends Controller
 {
+   protected string $botToken;
+   protected string $serviceName;
+
+   public function __construct()
+   {
+      $this->botToken = config('telegram.bot_token'); // Конфиг всегда в памяти
+      $this->serviceName = cache()->remember('company_brand', 3600, function () {
+         return Company::first()->brand_title; // Кешируем на 1 час
+      });
+   }
+
    public function __invoke(Request $request)
    {
+
       $update = $request->all();
       $botToken = config('telegram.bot_token');
       $serviceName = Company::first()->brand_title;
@@ -94,8 +106,18 @@ class TelegramBotController extends Controller
             'chat_id' => $chatId,
             'text' => "Спасибо! Ваш номер телефона: {$phoneNumber}",
          ]);
+
+         $this->sendSimpleMessage($chatId, "Спасибо! Ваш номер телефона: {$phoneNumber}");
       }
 
       return response()->noContent();
+   }
+
+   protected function sendSimpleMessage($chatID, $text)
+   {
+      Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
+         'chat_id' => $chatID,
+         'text' => $text
+      ]);
    }
 }
