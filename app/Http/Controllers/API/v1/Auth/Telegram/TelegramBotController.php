@@ -7,6 +7,7 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class TelegramBotController extends Controller
 {
@@ -30,7 +31,7 @@ class TelegramBotController extends Controller
          $this->handleTextMessage($update['message']);
       }
 
-      if (isset($update['message']['contact'])) {        // Обработка полученного контакта
+      if (isset($update['message']['contact'])) {
          $this->handleContactMessage($update['message']);
       }
 
@@ -42,35 +43,17 @@ class TelegramBotController extends Controller
       $chatId = $message['chat']['id'];
       $text = trim($message['text']);
 
-      if (str_starts_with($text, '/start')) {
-         $parts = explode(' ', $text);
-         $userAuthtoken = $parts[1] ?? null;
+      switch (true) {
+         case str_starts_with($text, '/start'):
+            $this->handleStartCommand($chatId, $text);
+            break;
 
-         if ($userAuthtoken) {
-            $cacheKey = 'telegram_auth_' . $userAuthtoken; // Проверяем токен в кеше
-            $data = Cache::get($cacheKey);
+         case $text === '/help':
+            $this->sendSimpleMessage($chatId, 'Доступные команды: /start, /help');
+            break;
 
-            if ($data) {          // Токен валиден - предлагаем подтвердить номер
-               Cache::put($cacheKey, array_merge($data, [
-                  'telegram_chat_id' => $chatId,
-                  'status' => 'waiting_phone'
-               ]), now()->addMinutes(15));
-
-               $this->sendPhoneRequest($chatId);
-            } else {
-               $responseText = "⚠️ Ссылка недействительна или устарела. Обновите ссылку в приложении.";
-               $this->sendSimpleMessage($chatId, $responseText);
-            }
-         } else {           // Команда /start без токена
-            $responseText = "Для входа используйте ссылку из приложения {$this->serviceName}";
-            $this->sendSimpleMessage($chatId, $responseText);
-         }
-      } elseif ($text === '/help') {
-         $responseText = 'Доступные команды: /start, /help';
-         $this->sendSimpleMessage($chatId, $responseText);
-      } else {
-         $responseText = "Не понимаю команду: ' {$text} '. Напишите /help";
-         $this->sendSimpleMessage($chatId, $responseText);
+         default:
+            $this->sendSimpleMessage($chatId, "Не понимаю команду: '{$text}'. Напишите /help");
       }
    }
 
@@ -83,31 +66,65 @@ class TelegramBotController extends Controller
       $this->sendSimpleMessage($chatId, $responseText);
    }
 
-   protected function sendSimpleMessage($chatID, $text)
+   protected function handleStartCommand(int $chatId, string $text)
    {
-      Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
-         'chat_id' => $chatID,
-         'text' => $text
-      ]);
+      $parts = explode(' ', $text);
+      $userAuthToken = $parts[1] ?? null;
+
+      if (!$userAuthToken) {
+         $this->sendSimpleMessage($chatId, "Для входа используйте ссылку из приложения {$this->serviceName}");
+         return;
+      }
+
+      $cacheKey = 'telegram_auth_' . $userAuthToken;
+      $data = Cache::get($cacheKey);
+
+      if (!$data) {
+         $this->sendSimpleMessage($chatId, "⚠️ Ссылка недействительна или устарела. Обновите ссылку в приложении.");
+         return;
+      }
+
+      Cache::put($cacheKey, array_merge($data, [ // Токен валиден - обновляем данные
+         'telegram_chat_id' => $chatId,
+         'status' => 'waiting_phone'
+      ]), now()->addMinutes(15));
+
+      $this->sendPhoneRequest($chatId);
+   }
+
+   protected function sendSimpleMessage(int $chatId, string $text)
+   {
+      try {
+         Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
+            'chat_id' => $chatId,
+            'text' => $text
+         ]);
+      } catch (\Exception $e) {
+         Log::error("Telegram API error: " . $e->getMessage());
+      }
    }
 
    protected function sendPhoneRequest($chatID)
    {
-      Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
-         'chat_id' => $chatID,
-         'text' => "Для входа в сервис {$this->serviceName} необходимо подтвердить номер телефона",
-         'reply_markup' => json_encode([
-            'keyboard' => [
-               [
+      try {
+         Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
+            'chat_id' => $chatID,
+            'text' => "Для входа в сервис {$this->serviceName} необходимо подтвердить номер телефона",
+            'reply_markup' => json_encode([
+               'keyboard' => [
                   [
-                     'text' => '✅ ПОДТВЕРДИТЬ НОМЕР ТЕЛЕФОНА',
-                     'request_contact' => true
+                     [
+                        'text' => '✅ ПОДТВЕРДИТЬ НОМЕР ТЕЛЕФОНА',
+                        'request_contact' => true
+                     ]
                   ]
-               ]
-            ],
-            'resize_keyboard' => true,
-            'one_time_keyboard' => true
-         ])
-      ]);
+               ],
+               'resize_keyboard' => true,
+               'one_time_keyboard' => true
+            ])
+         ]);
+      } catch (\Exception $e) {
+         Log::error("Telegram API error: " . $e->getMessage());
+      }
    }
 }
