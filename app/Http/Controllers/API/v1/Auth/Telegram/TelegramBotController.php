@@ -114,16 +114,16 @@ class TelegramBotController extends Controller
 
       Cache::forget('telegram_chat_' . $chatId);   // Удаляем временную связь chat_id → token
 
-      $this->sendSimpleMessage(
-         $chatId,
-         "✅ Номер {$phoneNumber} подтверждён.\nВернитесь в сервис {$this->serviceName}, вход произойдет автоматически"
-      );
+      // $this->sendSimpleMessage(
+      //    $chatId,
+      //    "✅ Номер {$phoneNumber} подтверждён.\nВернитесь в сервис {$this->serviceName}. Вход произойдет автоматически"
+      // );
 
       $this->sendMessageWithButtonLink(
          $chatId,
-         "✅ Номер {$phoneNumber} подтверждён.\nВернитесь в сервис {$this->serviceName}, вход произойдет автоматически",
+         "✅ Номер {$phoneNumber} подтверждён.\nВернитесь в сервис {$this->serviceName}. Вход произойдет автоматически",
          "Вернуться в {$this->serviceName}",
-         config('domain.frontend_url_orders')
+         $this->createExternalBrowserLink(config('domain.frontend_url_orders'))
       );
    }
 
@@ -198,5 +198,19 @@ class TelegramBotController extends Controller
       }
 
       return $cleaned;
+   }
+
+   protected function createExternalBrowserLink(string $url): string
+   {
+      $botUsername = config('telegram.bot_username');
+      $encodedUrl = urlencode($url);
+
+      // Основной вариант (работает на Android и новых версиях iOS)
+      $link = "tg://resolve?domain={$botUsername}&startapp={$encodedUrl}";
+
+      // Fallback для старых версий iOS
+      // $link = "https://t.me/{$botUsername}?startapp={$encodedUrl}";
+
+      return $link;
    }
 }
