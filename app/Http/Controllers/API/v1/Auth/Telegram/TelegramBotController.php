@@ -121,7 +121,8 @@ class TelegramBotController extends Controller
 
       $this->sendMessageWithButtonLink(
          $chatId,
-         "✅ Номер {$phoneNumber} подтверждён.\nВернитесь в сервис {$this->serviceName}. Вход произойдет автоматически",
+         "✅ Номер {$phoneNumber} подтверждён.\nВернитесь в сервис {$this->serviceName}. 
+         Вход произойдет автоматически " . config('domain.frontend_url_orders'),
          "Вернуться в {$this->serviceName}",
          config('domain.frontend_url_orders')
       );
