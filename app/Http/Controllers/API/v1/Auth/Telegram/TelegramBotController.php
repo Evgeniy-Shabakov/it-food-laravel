@@ -90,6 +90,8 @@ class TelegramBotController extends Controller
       $chatId = $message['chat']['id'];
       $phoneNumber = $message['contact']['phone_number'];
 
+      $phoneNumber = $this->normalizePhoneNumber($phoneNumber);
+
       $userAuthToken = Cache::get('telegram_chat_' . $chatId); // Находим токен по chat_id
 
       if (!$userAuthToken) {
@@ -114,7 +116,7 @@ class TelegramBotController extends Controller
 
       $this->sendSimpleMessage(
          $chatId,
-         "✅ Номер подтверждён: {$phoneNumber}\nТеперь вы можете вернуться в приложение."
+         "✅ Номер {$phoneNumber} подтверждён.\nТеперь вы можете вернуться в приложение."
       );
    }
 
@@ -152,5 +154,20 @@ class TelegramBotController extends Controller
       } catch (\Exception $e) {
          Log::error("Telegram API error: " . $e->getMessage());
       }
+   }
+
+   protected function normalizePhoneNumber(string $phone): string
+   {
+      $phone = trim($phone);
+
+      // Удаляем все нецифровые символы, кроме ведущего '+'
+      $cleaned = preg_replace('/[^\d+]/', '', $phone);
+
+      // Если номер не начинается с '+', добавляем его
+      if (strpos($cleaned, '+') !== 0) {
+         $cleaned = '+' . ltrim($cleaned, '+');
+      }
+
+      return $cleaned;
    }
 }
