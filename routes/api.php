@@ -256,9 +256,9 @@ Route::group(['prefix' => 'v1'], function () {
 
    Route::post('/telegram/webhook', TelegramBotController::class);
    Route::post('/telegram/auth/get-token', TelegramAuthTokenGenerateController::class)
-      ->middleware('throttle:5,1');
+      ->middleware('throttle:20,1');
    Route::get('/telegram/auth/check-token/{token}', TelegramAuthCheckController::class)
       ->middleware(['throttle:20,1']);
    Route::post('/telegram/auth/login', TelegramAuthLoginController::class)
-      ->middleware(['throttle:5,1']);
+      ->middleware(['throttle:20,1']);
 });
