@@ -72,6 +72,8 @@ use App\Http\Controllers\API\v1\User\UserUpdateController;
 use App\Http\Controllers\API\v1\DaData\DaDataController;
 use App\Http\Controllers\API\v1\Auth\Telegram\TelegramBotController;
 use App\Http\Controllers\API\v1\Auth\Telegram\TelegramAuthTokenGenerateController;
+use App\Http\Controllers\API\v1\Auth\Telegram\TelegramAuthCheckController;
+use App\Http\Controllers\API\v1\Auth\Telegram\TelegramAuthLoginController;
 
 
 use App\Models\Category;
@@ -255,4 +257,8 @@ Route::group(['prefix' => 'v1'], function () {
    Route::post('/telegram/webhook', TelegramBotController::class);
    Route::post('/telegram/auth/get-token', TelegramAuthTokenGenerateController::class)
       ->middleware('throttle:5,1');
+   Route::get('/telegram/auth/check-token/{token}', TelegramAuthCheckController::class)
+      ->middleware(['throttle:20,1']);
+   Route::post('/telegram/auth/login', TelegramAuthLoginController::class)
+      ->middleware(['throttle:5,1']);
 });

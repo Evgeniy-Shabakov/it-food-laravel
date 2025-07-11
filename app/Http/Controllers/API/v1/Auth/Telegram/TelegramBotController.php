@@ -57,15 +57,6 @@ class TelegramBotController extends Controller
       }
    }
 
-   protected function handleContactMessage($message)
-   {
-      $chatId = $message['chat']['id'];
-      $phoneNumber = $message['contact']['phone_number'];
-
-      $responseText = "Спасибо! Ваш номер телефона: {$phoneNumber}";
-      $this->sendSimpleMessage($chatId, $responseText);
-   }
-
    protected function handleStartCommand(int $chatId, string $text)
    {
       $parts = explode(' ', $text);
@@ -85,11 +76,46 @@ class TelegramBotController extends Controller
       }
 
       Cache::put($cacheKey, array_merge($data, [ // Токен валиден - обновляем данные
-         'telegram_chat_id' => $chatId,
          'status' => 'waiting_phone'
       ]), now()->addMinutes(15));
 
+      // 🔥 Добавляем связь chat_id → token для быстрого поиска
+      Cache::put('telegram_chat_' . $chatId, $userAuthToken, now()->addMinutes(15));
+
       $this->sendPhoneRequest($chatId);
+   }
+
+   protected function handleContactMessage($message)
+   {
+      $chatId = $message['chat']['id'];
+      $phoneNumber = $message['contact']['phone_number'];
+
+      $userAuthToken = Cache::get('telegram_chat_' . $chatId); // Находим токен по chat_id
+
+      if (!$userAuthToken) {
+         $this->sendSimpleMessage($chatId, "⚠️ Сначала начните процесс входа через приложение.");
+         return;
+      }
+
+      $cacheKey = 'telegram_auth_' . $userAuthToken;  // Получаем данные аутентификации
+      $authData = Cache::get($cacheKey);
+
+      if (!$authData || ($authData['status'] !== 'waiting_phone')) {
+         $this->sendSimpleMessage($chatId, "⚠️ Запрос на подтверждение номера не найден.");
+         return;
+      }
+
+      Cache::put($cacheKey, array_merge($authData, [      // Обновляем данные (добавляем номер и меняем статус)
+         'status' => 'verified',
+         'phone_number' => $phoneNumber,
+      ]), now()->addMinutes(15));
+
+      Cache::forget('telegram_chat_' . $chatId);   // Удаляем временную связь chat_id → token
+
+      $this->sendSimpleMessage(
+         $chatId,
+         "✅ Номер подтверждён: {$phoneNumber}\nТеперь вы можете вернуться в приложение."
+      );
    }
 
    protected function sendSimpleMessage(int $chatId, string $text)
