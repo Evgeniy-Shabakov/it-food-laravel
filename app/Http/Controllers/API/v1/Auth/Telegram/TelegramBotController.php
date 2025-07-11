@@ -123,7 +123,7 @@ class TelegramBotController extends Controller
          $chatId,
          "✅ Номер {$phoneNumber} подтверждён.\nВернитесь в сервис {$this->serviceName}. Вход произойдет автоматически",
          "Вернуться в {$this->serviceName}",
-         parse_url(config('domain.frontend_url_orders'), PHP_URL_HOST)
+         config('domain.frontend_url_orders')
       );
    }
 
@@ -169,7 +169,6 @@ class TelegramBotController extends Controller
          Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
             'chat_id' => $chatId,
             'text' => $text,
-            'parse_mode' => 'Markdown',
             'reply_markup' => json_encode([
                'inline_keyboard' => [
                   [
@@ -199,19 +198,5 @@ class TelegramBotController extends Controller
       }
 
       return $cleaned;
-   }
-
-   protected function createExternalBrowserLink(string $url): string
-   {
-      $botUsername = config('telegram.bot_username');
-      $encodedUrl = urlencode($url);
-
-      // Основной вариант (работает на Android и новых версиях iOS)
-      $link = "tg://resolve?domain={$botUsername}&startapp={$encodedUrl}";
-
-      // Fallback для старых версий iOS
-      // $link = "https://t.me/{$botUsername}?startapp={$encodedUrl}";
-
-      return $link;
    }
 }
