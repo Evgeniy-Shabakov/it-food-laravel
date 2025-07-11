@@ -116,7 +116,14 @@ class TelegramBotController extends Controller
 
       $this->sendSimpleMessage(
          $chatId,
-         "✅ Номер {$phoneNumber} подтверждён.\nТеперь вы можете вернуться в приложение."
+         "✅ Номер {$phoneNumber} подтверждён.\nВернитесь в сервис {$this->serviceName}, вход произойдет автоматически"
+      );
+
+      $this->sendMessageWithButtonLink(
+         $chatId,
+         "✅ Номер {$phoneNumber} подтверждён.\nВернитесь в сервис {$this->serviceName}, вход произойдет автоматически",
+         "Вернуться в {$this->serviceName}",
+         config('domain.frontend_url_orders')
       );
    }
 
@@ -153,6 +160,28 @@ class TelegramBotController extends Controller
          ]);
       } catch (\Exception $e) {
          Log::error("Telegram API error: " . $e->getMessage());
+      }
+   }
+
+   protected function sendMessageWithButtonLink($chatId, $text, $buttonText, $buttonUrl)
+   {
+      try {
+         Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
+            'chat_id' => $chatId,
+            'text' => $text,
+            'reply_markup' => json_encode([
+               'inline_keyboard' => [
+                  [
+                     [
+                        'text' => $buttonText,
+                        'url' => $buttonUrl
+                     ]
+                  ]
+               ]
+            ])
+         ]);
+      } catch (\Exception $e) {
+         Log::error("Telegram sendMessage error: " . $e->getMessage());
       }
    }
 
