@@ -123,7 +123,7 @@ class TelegramBotController extends Controller
          $chatId,
          "✅ Номер {$phoneNumber} подтверждён.\nВернитесь в сервис {$this->serviceName}. Вход произойдет автоматически",
          "Вернуться в {$this->serviceName}",
-         $this->parse_url(config('domain.frontend_url_orders'), PHP_URL_HOST)
+         parse_url(config('domain.frontend_url_orders'), PHP_URL_HOST)
       );
    }
 
