@@ -169,6 +169,7 @@ class TelegramBotController extends Controller
          Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
             'chat_id' => $chatId,
             'text' => $text,
+            'parse_mode' => 'Markdown',
             'reply_markup' => json_encode([
                'inline_keyboard' => [
                   [
