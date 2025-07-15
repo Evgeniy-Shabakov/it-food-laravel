@@ -114,18 +114,20 @@ class TelegramBotController extends Controller
 
       Cache::forget('telegram_chat_' . $chatId);   // Удаляем временную связь chat_id → token
 
-      // $this->sendSimpleMessage(
-      //    $chatId,
-      //    "✅ Номер {$phoneNumber} подтверждён.\nВернитесь в сервис {$this->serviceName}. Вход произойдет автоматически"
-      // );
-
       $this->sendMessageWithButtonLink(
          $chatId,
-         "✅ Номер {$phoneNumber} подтверждён.\nВернитесь в сервис {$this->serviceName}. 
+         "✅ Номер {$phoneNumber} подтверждён.\nВернитесь в сервис {$this->serviceName}.\n
          Вход произойдет автоматически " . config('domain.frontend_url_orders'),
          "Вернуться в {$this->serviceName}",
          config('domain.frontend_url_orders')
       );
+
+      $url = config('domain.frontend_url_orders');
+      Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
+         'chat_id' => $chatId,
+         'text' => "Нажмите <a href='$url'>ссылку</a>, чтобы открыть в браузере.",
+         'parse_mode' => 'HTML',
+      ]);
    }
 
    protected function sendSimpleMessage(int $chatId, string $text)
