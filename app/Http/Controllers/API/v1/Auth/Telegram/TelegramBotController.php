@@ -122,11 +122,20 @@ class TelegramBotController extends Controller
          config('domain.frontend_url_orders')
       );
 
-      $url = config('domain.frontend_url_orders');
       Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
          'chat_id' => $chatId,
-         'text' => "Нажмите <a href='$url'>ссылку</a>, чтобы открыть в браузере.",
+         'text' => "✅ Номер {$phoneNumber} подтверждён.\nВернитесь в сервис {$this->serviceName}",
          'parse_mode' => 'HTML',
+         'reply_markup' => json_encode([
+            'inline_keyboard' => [
+               [
+                  [
+                     'text' => "Вернуться в {$this->serviceName}",
+                     'url' => "demopizza.ru",
+                  ]
+               ]
+            ]
+         ])
       ]);
    }
 
