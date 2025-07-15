@@ -114,29 +114,8 @@ class TelegramBotController extends Controller
 
       Cache::forget('telegram_chat_' . $chatId);   // Удаляем временную связь chat_id → token
 
-      $this->sendMessageWithButtonLink(
-         $chatId,
-         "✅ Номер {$phoneNumber} подтверждён.\nВернитесь в сервис {$this->serviceName}.\n
-         Вход произойдет автоматически " . config('domain.frontend_url_orders'),
-         "Вернуться в {$this->serviceName}",
-         config('domain.frontend_url_orders')
-      );
-
-      Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
-         'chat_id' => $chatId,
-         'text' => "✅ Номер {$phoneNumber} подтверждён.\nВернитесь в сервис {$this->serviceName}",
-         'parse_mode' => 'HTML',
-         'reply_markup' => json_encode([
-            'inline_keyboard' => [
-               [
-                  [
-                     'text' => "Вернуться в {$this->serviceName}",
-                     'url' => "https://orders.demopizza.ru",
-                  ]
-               ]
-            ]
-         ])
-      ]);
+      $this->sendSimpleMessage($chatId, "✅ Номер подтверждён.
+      \nВернитесь в сервис {$this->serviceName}. Вход произойдет автоматически");
    }
 
    protected function sendSimpleMessage(int $chatId, string $text)
@@ -172,29 +151,6 @@ class TelegramBotController extends Controller
          ]);
       } catch (\Exception $e) {
          Log::error("Telegram API error: " . $e->getMessage());
-      }
-   }
-
-   protected function sendMessageWithButtonLink($chatId, $text, $buttonText, $buttonUrl)
-   {
-      try {
-         Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
-            'chat_id' => $chatId,
-            'text' => $text,
-            'parse_mode' => 'HTML',
-            'reply_markup' => json_encode([
-               'inline_keyboard' => [
-                  [
-                     [
-                        'text' => $buttonText,
-                        'url' => $buttonUrl
-                     ]
-                  ]
-               ]
-            ])
-         ]);
-      } catch (\Exception $e) {
-         Log::error("Telegram sendMessage error: " . $e->getMessage());
       }
    }
 
