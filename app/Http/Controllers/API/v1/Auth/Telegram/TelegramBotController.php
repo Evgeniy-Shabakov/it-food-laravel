@@ -131,7 +131,7 @@ class TelegramBotController extends Controller
                [
                   [
                      'text' => "Вернуться в {$this->serviceName}",
-                     'url' => "demopizza.ru",
+                     'url' => "orders.demopizza.ru",
                   ]
                ]
             ]
