@@ -95,13 +95,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'v1'], function () {
 
-   Route::post('/telegram-bot/webhook', TelegramBotController::class); //заменить вебхук в телеграм боте
+   Route::post('/telegram-bot/webhook', TelegramBotController::class);
 
    Route::middleware('guest')->group(function () {
       Route::post('/auth/vkid/login', VKIDLoginController::class)->middleware(['throttle:20,1']);
       Route::post('/auth/telegram-bot/login', TelegramBotLoginController::class)->middleware(['throttle:20,1']);
       Route::post('/auth/telegram-bot/get-token', TelegramBotTokenGenerateController::class)->middleware('throttle:20,1');
-      Route::get('/auth/telegram-bot/check-token/{token}', TelegramBotTokenCheckController::class)->middleware(['throttle:20,1']);
+      Route::get('/auth/telegram-bot/check-token/{token}', TelegramBotTokenCheckController::class)->middleware(['throttle:100,1']);
 
       // Route::post('/send-verify-code', SendVerifyCodeController::class);
       // Route::post('/send-verify-code-for-employee', SendVerifyCodeForEmployeeController::class);
