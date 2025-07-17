@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API\v1\Auth\Telegram;
+namespace App\Http\Controllers\API\v1\Auth\TelegramBot;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
-class TelegramAuthCheckController extends Controller
+class TelegramBotTokenCheckController extends Controller
 {
    public function __invoke(Request $request, string $token)
    {

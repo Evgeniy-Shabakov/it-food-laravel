@@ -1,6 +1,15 @@
 <?php
 
+use App\Http\Controllers\API\v1\Auth\TelegramBot\TelegramBotController;
+use App\Http\Controllers\API\v1\Auth\TelegramBot\TelegramBotTokenGenerateController;
+use App\Http\Controllers\API\v1\Auth\TelegramBot\TelegramBotTokenCheckController;
+use App\Http\Controllers\API\v1\Auth\TelegramBot\TelegramBotLoginController;
+
+use App\Http\Controllers\API\v1\Auth\VKID\VKIDLoginController;
+
 use App\Http\Controllers\API\v1\Auth\GetAuthUserController;
+use App\Http\Controllers\API\v1\Auth\LogoutController;
+
 use App\Http\Controllers\API\v1\Category\CategoryDeleteController;
 use App\Http\Controllers\API\v1\Category\CategoryIndexController;
 use App\Http\Controllers\API\v1\Category\CategoryShowController;
@@ -70,10 +79,6 @@ use App\Http\Controllers\API\v1\User\UserOrder\UserLastOrderShowController;
 use App\Http\Controllers\API\v1\User\UserOrder\UserOrderIndexController;
 use App\Http\Controllers\API\v1\User\UserUpdateController;
 use App\Http\Controllers\API\v1\DaData\DaDataController;
-use App\Http\Controllers\API\v1\Auth\Telegram\TelegramBotController;
-use App\Http\Controllers\API\v1\Auth\Telegram\TelegramAuthTokenGenerateController;
-use App\Http\Controllers\API\v1\Auth\Telegram\TelegramAuthCheckController;
-use App\Http\Controllers\API\v1\Auth\Telegram\TelegramAuthLoginController;
 
 
 use App\Models\Category;
@@ -84,14 +89,29 @@ use App\Models\Ingredient;
 use App\Models\Product;
 use App\Models\Restaurant;
 
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-   return $request->user();
-});
 
 Route::group(['prefix' => 'v1'], function () {
+
+   Route::post('/telegram-bot/webhook', TelegramBotController::class); //заменить вебхук в телеграм боте
+
+   Route::middleware('guest')->group(function () {
+      Route::post('/auth/vkid/login', VKIDLoginController::class)->middleware(['throttle:20,1']);
+      Route::post('/auth/telegram-bot/login', TelegramBotLoginController::class)->middleware(['throttle:20,1']);
+      Route::post('/auth/telegram-bot/get-token', TelegramBotTokenGenerateController::class)->middleware('throttle:20,1');
+      Route::get('/auth/telegram-bot/check-token/{token}', TelegramBotTokenCheckController::class)->middleware(['throttle:20,1']);
+
+      // Route::post('/send-verify-code', SendVerifyCodeController::class);
+      // Route::post('/send-verify-code-for-employee', SendVerifyCodeForEmployeeController::class);
+      // Route::post('/login', LoginController::class);
+   });
+
+   Route::middleware('auth')->group(function () {
+      Route::delete('/logout', LogoutController::class);
+   });
+
 
    Route::get('/get-auth-user', GetAuthUserController::class);
 
@@ -253,12 +273,4 @@ Route::group(['prefix' => 'v1'], function () {
    Route::middleware('auth:sanctum')->group(function () {
       Route::post('/dadata-addresses', DaDataController::class);
    });
-
-   Route::post('/telegram/webhook', TelegramBotController::class);
-   Route::post('/telegram/auth/get-token', TelegramAuthTokenGenerateController::class)
-      ->middleware('throttle:20,1');
-   Route::get('/telegram/auth/check-token/{token}', TelegramAuthCheckController::class)
-      ->middleware(['throttle:20,1']);
-   Route::post('/telegram/auth/login', TelegramAuthLoginController::class)
-      ->middleware(['throttle:20,1']);
 });

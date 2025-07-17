@@ -1,42 +1,32 @@
 <?php
 
-namespace App\Http\Controllers\API\v1\Auth\VK;
+namespace App\Http\Controllers\API\v1\Auth\TelegramBot;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\v1\User\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
+use App\Http\Resources\API\v1\User\UserResource;
+use Illuminate\Http\Response;
 
-class VKLoginController extends Controller
+class TelegramBotLoginController extends Controller
 {
    public function __invoke(Request $request)
    {
-      $data = $request->validate(['access_token' => 'required|string']);
-
-      // POST запрос к VK OAuth API для проверки номера телефона
-      $response = Http::asForm()->post('https://id.vk.com/oauth2/user_info', [
-         'client_id' => config('vk-auth.app_id'),
-         'access_token' => $data['access_token']
+      $request->validate([
+         'access_token' => 'required|string|size:40'
       ]);
 
-      $vkData = $response->json();
+      $cacheKey = 'telegram_auth_' . $request->access_token;
+      $authData = Cache::get($cacheKey);
 
-      if ($response->failed() || isset($vkData['error'])) {
-         return response([
-            'message' => 'Ошибка проверки токена ВК: ' . ($vkData['error_description'] ?? 'Unknown error')
-         ], Response::HTTP_UNAUTHORIZED);
+      if (!$authData || $authData['status'] !== 'verified') {
+         return response()->json(['error' => 'Invalid or expired token'], 401);
       }
 
-      if (empty($vkData['user']['phone'])) {
-         return response([
-            'message' => 'Номер телефона не определен'
-         ], Response::HTTP_UNAUTHORIZED);
-      }
-
-      $phone = '+' . $vkData['user']['phone'];
+      $phone = $authData['phone_number'];
+      Cache::forget($cacheKey);
 
       $frontendUrl = parse_url(config('domain.frontend_url_client'), PHP_URL_HOST);
       $frontendPort = parse_url(config('domain.frontend_url_client'), PHP_URL_PORT);
