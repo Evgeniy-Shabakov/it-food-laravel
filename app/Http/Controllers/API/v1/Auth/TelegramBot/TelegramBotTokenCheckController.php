@@ -12,7 +12,12 @@ class TelegramBotTokenCheckController extends Controller
    {
       $authData = Cache::get('telegram_auth_' . $token);
 
-      if (!$authData) return response()->json(['status' => 'invalid'], 404);
+      if (!$authData) return response()->json(
+         [
+            'message' => 'Ссылка на телеграм устарела, обновите страницу '
+         ],
+         403 // Forbidden - доступ запрещен
+      );
 
       return response()->json([
          'status' => $authData['status'],
